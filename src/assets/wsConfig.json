@@ -1,0 +1,9 @@
+{
+  "wsIP": "192.168.1.227",
+  "wsPort": "1338",
+  "detectServer": false,
+  "credentials": {
+    "login": "admin",
+    "password": "admin"
+  }
+}

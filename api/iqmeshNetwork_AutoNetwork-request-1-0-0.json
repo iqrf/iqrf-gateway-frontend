@@ -1,0 +1,74 @@
+{
+  "$schema": "https://apidocs.iqrf.org/iqrf-gateway-daemon/com.iqrftech.self-desc/schema/jsonschema/1-0-0#",
+  "self": {
+    "vendor": "com.iqrftech.self-desc",
+    "name": "iqmeshNetwork_AutoNetwork-request",
+    "format": "jsonschema",
+    "version": "1-0-0"
+  },
+  "type": "object",
+  "properties": {
+    "mType": {
+      "type": "string",
+      "description": "IQMESH Network management - AutoNetwork request.",
+      "enum": [
+        "iqmeshNetwork_AutoNetwork"
+      ]
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "msgId": {
+          "type": "string",
+          "description": "Message identification for binding request with response."
+        },
+        "req": {
+          "type": "object",
+          "properties": {
+            "actionRetries": {
+              "type": "integer",
+              "description": "Number of retries DPA transactions.",
+              "default": 1
+            },
+            "discoveryTxPower": {
+              "type": "integer",
+              "description": "TX power to use in discovery process.",
+              "default": 7
+            },
+            "discoveryBeforeStart": {
+              "type": "boolean",
+              "description": "Run discovery before start.",
+              "default": false
+            },
+            "waves": {
+              "type": "integer",
+              "description": "Maximum number of waves.",
+              "default": 2
+            },
+            "emptyWaves": {
+              "type": "integer",
+              "description": "Number of consecutive waves, i which no new nodes were added into network.",
+              "default": 2
+            }
+          },
+          "required": [
+            "waves",
+            "emptyWaves"
+          ]
+        },
+        "returnVerbose": {
+          "type": "boolean",
+          "description": "Flag that includes additional parameters in the response."
+        }
+      },
+      "required": [
+        "msgId",
+        "req"
+      ]
+    }
+  },
+  "required": [
+    "mType",
+    "data"
+  ]
+}

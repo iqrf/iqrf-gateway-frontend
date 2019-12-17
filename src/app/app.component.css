@@ -1,0 +1,61 @@
+
+
+.ui-toolbar {
+    background-color: #367fa9 !important;  
+    height: 50px;
+}
+
+
+.box,
+.sample-layout > div {
+   /* background-color: #681159;*/
+    text-align: left;
+    padding-top: 0em;
+    padding-left: 0em;
+    padding-bottom: 0em;
+    border-radius: 0px;
+    padding-right: 0px;   
+    
+}
+
+.box-stretched {
+    height: 100%;
+}
+
+.sample-layout {
+    margin: -10px;
+ 
+ 
+  
+}
+
+.sample-layout > div {
+    border: 0px solid #ffffff;
+
+}
+
+.toplevel {
+    height: 100vh;
+    min-height: 800px;
+    /*border: solid 1px blue;*/
+    background-color: #ecf0f5;
+    margin: -10px;
+  }
+/*
+.vertical-container {
+    margin: 0;
+    height: 200px;
+    background: #efefef;
+    border-radius: 0px;
+}
+*/
+.nested-grid .p-col-4 {
+    padding-bottom: 0em;
+}
+
+.content {
+    padding: 10px;
+    padding-right: 20px;
+}
+
+

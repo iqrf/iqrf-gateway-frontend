@@ -1,0 +1,53 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$id": "http://example.com/example.json",
+    "self": {
+        "vendor": "com.logimic",
+        "name": "wsConfig",
+        "format": "jsonschema",
+        "version": "1-0-0"
+    },
+    "type": "object",
+    "properties": {
+        "wsIP": {
+            "type": "string",
+            "description": "IP address e.g. 192.168.1.1",
+            "default": "127.0.0.1"
+        },
+        "wsPort": {
+            "type": "string",
+            "description": "port e.g. 1341",
+            "default": "1341"
+        },
+        "detectServer": {
+            "type": "boolean",
+            "description": "If the IP should be taken from the server where the client is provided.",
+            "default": false
+        },
+        "credentials": {
+            "type": "object",
+            "properties": {
+                "login": {
+                    "type": "string",
+                    "description": "User login",
+                    "default": "admin"
+                },
+                "password": {
+                    "type": "string",
+                    "description": "User password",
+                    "default": "admin"
+                }
+            },
+            "required": [
+                "login",
+                "password"
+            ]
+        }
+    },
+    "required": [
+        "wsIP",
+        "wsPort",
+        "detectServer",
+        "credentials"
+    ]
+}

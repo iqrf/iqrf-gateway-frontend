@@ -1,0 +1,59 @@
+<p-card header="Send JSON request" subheader="" styleClass="ui-card-shadow">
+
+  <div class="p-grid p-dir-col">
+
+    <div class="p-col">
+      <label for="orgid">Insert JSON message</label>
+      <textarea id="orgid" rows="8" cols="30" pInputTextarea autoResize="true" [(ngModel)]="msgTextSend"></textarea>
+    </div>
+
+  </div>
+
+  <p-footer>
+    <button pButton type="button" label="Send" icon="pi pi-check" style="margin-right: .65em"
+      (click)="OnSend()"></button>
+
+      <button pButton type="button" class="ui-button-secondary" label="Show API documentation" icon="pi pi-check" style="margin-right: .25em"
+      (click)="OnDocuments()"></button>      
+
+  </p-footer>
+</p-card>
+
+<br>
+<span *ngIf="this.msg === 'waiting'">
+  <p-card header="JSON response" subheader="" styleClass="ui-card-shadow">
+
+    <div class="p-grid p-dir-col">
+
+      <div class="p-col">
+        <p-progressSpinner [style]="{width: '100px', height: '100px'}" strokeWidth="3" animationDuration="1.5s">
+        </p-progressSpinner>
+      </div>
+
+    </div>
+
+    <p-footer>
+
+    </p-footer>
+  </p-card>
+
+</span>
+<span *ngIf="this.msg === 'done'">
+  <p-card header="Send JSON request" subheader="" styleClass="ui-card-shadow">
+
+    <div class="p-grid p-dir-col">
+
+      <div class="p-col">
+        <label for="orgid">Response</label>
+        <textarea id="orgid" rows="8" cols="30" pInputTextarea autoResize="true" [(ngModel)]="msgTextRec"></textarea>
+      </div>
+
+    </div>
+
+    <p-footer>
+
+    </p-footer>
+  </p-card>
+</span>
+
+<p-toast position="top-right"></p-toast>

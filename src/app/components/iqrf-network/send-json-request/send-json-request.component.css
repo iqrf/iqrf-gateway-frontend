@@ -1,0 +1,31 @@
+textarea {
+    /*height: 300px;*/
+    width: 100%;
+    /*max-width: 100%;*/
+    
+}
+
+.wrapper{
+    display: block;
+    width: 100%;
+    overflow: hidden;
+}
+
+@keyframes ui-progress-spinner-color {
+    100%,
+    0% {
+        stroke: #0e6edd;
+    }
+    /*
+    40% {
+        stroke: #0057e7;
+    }
+    66% {
+        stroke: #008744;
+    }
+    80%,
+    90% {
+        stroke: #ffa700;
+    }
+    */
+}
