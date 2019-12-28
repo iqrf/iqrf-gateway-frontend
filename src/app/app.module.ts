@@ -18,6 +18,12 @@ import {SplitButtonModule} from 'primeng/splitbutton';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {ToastModule} from 'primeng/toast';
+import {TabViewModule} from 'primeng/tabview';
+import {InputTextModule} from 'primeng/inputtext';
+import {CheckboxModule} from 'primeng/checkbox';
+import {DropdownModule} from 'primeng/dropdown';
+import {PasswordModule} from 'primeng/password';
+import {PanelModule} from 'primeng/panel';
 
 
 
@@ -108,7 +114,13 @@ import {CardModule} from 'primeng/card';
     InputTextareaModule,
     FormsModule,
     ProgressSpinnerModule,
-    ToastModule
+    ToastModule,
+    TabViewModule,
+    InputTextModule,
+    CheckboxModule,
+    DropdownModule,
+    PasswordModule,
+    PanelModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,23 @@
+.buttonOne {
+    margin-right: .65em; 
+    margin-top: .55em;
+}
+
+.cardOne {
+
+    height: 100%;
+}
+
+.box {
+    /*  background-color: #cce4f7;*/
+    /* text-align: center;*/
+    padding-top: 1em;
+    padding-bottom: 1em;
+    border-radius: 4px;
+    height: 100%;
+}
+
+.box-stretched {
+    height: 100%;
+}
+ 

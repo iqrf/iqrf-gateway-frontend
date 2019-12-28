@@ -1,3 +1,108 @@
-<p>
-  standard-manager works!
-</p>
+<h1>IQRF Standard manager</h1>
+<div class="p-grid">
+  <div class="p-col-12 p-md-6 p-lg-6">
+    <div class="box">
+      <p-card header="IQRF Binary output" styleClass="ui-card-shadow" class="cardOne">
+        <div class="ui-g" style="width:100%;margin-bottom:10px">
+          <div class="ui-g-12">
+            <label for="frm-binaryOutputForm-boAddress">Address</label>
+            <input style="width:100%;" id="frm-binaryOutputForm-boAddress" type="number" size="30" min="1" max="239"
+              pInputText [(ngModel)]="boAddress">
+          </div>
+          <div class="ui-g-12">
+            <label for="frm-binaryOutputForm-boIndex">Index of the binary output</label>
+            <input style="width:100%;" id="frm-iqrfNetAddressForm-boIndex" type="number" size="30" min="0" max="67"
+              pInputText [(ngModel)]="boIndex">
+          </div>
+          <div class="ui-g-12">
+            <p-checkbox binary="false" label="State of the binary output" [(ngModel)]="boState"></p-checkbox>
+          </div>
+          <div class="ui-g-12">
+            <button pButton type="button" label="Enumerate" style="margin-right: .65em"></button>
+            <button pButton type="button" label="Get States" style="margin-right: .65em"
+              class="ui-button-secondary"></button>
+            <button pButton type="button" label="Set State" style="margin-right: .65em"
+              class="ui-button-secondary"></button>
+          </div>
+        </div>
+      </p-card>
+    </div>
+  </div>
+  <div class="p-col-12 p-md-6 p-lg-6">
+    <div class="box">
+      <p-card header="IQRF Light" styleClass="ui-card-shadow">
+        <div class="ui-g" style="width:100%;margin-bottom:10px">
+          <div class="ui-g-12">
+            <label for="frm-binaryOutputForm-lgAddress">Address</label>
+            <input style="width:100%;" id="frm-binaryOutputForm-lgAddress" type="number" size="30" min="1" max="239"
+              pInputText [(ngModel)]="lgAddress">
+          </div>
+          <div class="ui-g-12">
+            <label for="frm-binaryOutputForm-lgIndex">Index of the light</label>
+            <input style="width:100%;" id="frm-iqrfNetAddressForm-lgIndex" type="number" size="30" min="0" max="31"
+              pInputText [(ngModel)]="lgIndex">
+          </div>
+          <div class="ui-g-12">
+            <label for="frm-binaryOutputForm-lgPower">Power of the light</label>
+            <input style="width:100%;" id="frm-iqrfNetAddressForm-lgPower" type="number" size="30" min="0" max="100"
+              pInputText [(ngModel)]="lgPower">
+          </div>
+          <div class="ui-g-12">
+            <button pButton type="button" label="Enumerate" class="buttonOne"></button>
+            <button pButton type="button" label="Get Power" class="ui-button-secondary buttonOne"></button>
+            <button pButton type="button" label="Set Power" class="ui-button-secondary buttonOne"></button>
+            <button pButton type="button" label="Increment Power" class="ui-button-secondary buttonOne"></button>
+            <button pButton type="button" label="Decrement Power" class="ui-button-secondary buttonOne"></button>
+          </div>
+        </div>
+      </p-card>
+    </div>
+  </div>
+  <div class="p-col-12 p-md-6 p-lg-6">
+    <div class="box">
+      <p-card header="IQRF Sensor" styleClass="ui-card-shadow">
+        <div class="ui-g" style="width:100%;margin-bottom:10px">
+          <div class="ui-g-12">
+            <label for="frm-binaryOutputForm-snsAddress">Address</label>
+            <input style="width:100%;" id="frm-binaryOutputForm-snsAddress" type="number" size="30" min="1" max="239"
+              pInputText [(ngModel)]="snsAddress">
+          </div>
+          <div class="ui-g-12">
+            <button pButton type="button" label="Enumerate" class="buttonOne"></button>
+            <button pButton type="button" label="Read All" class="ui-button-secondary buttonOne"></button>
+            <button pButton type="button" label="Set Power" class="ui-button-secondary buttonOne"></button>
+          </div>
+        </div>
+      </p-card>
+    </div>
+  </div>
+  <div class="p-col-12 p-md-6 p-lg-6">
+    <div class="box">
+      <p-card header="IQRF DALI" styleClass="ui-card-shadow">
+        <div class="ui-g" style="width:100%;margin-bottom:10px">
+          <div class="ui-g-12">
+            <label for="frm-binaryOutputForm-daliAddress">Address</label>
+            <input style="width:100%;" id="frm-binaryOutputForm-daliAddress" type="number" size="30" min="1" max="239"
+              pInputText [(ngModel)]="daliAddress">
+          </div>
+
+          <div class="ui-g-12" *ngFor="let cmd of daliCommands; index as i;">
+            <label for="frm-binaryOutputForm-daliAddress-{{i}}">Command</label>
+            <input style="width:100%;" id="frm-binaryOutputForm-daliAddress-{{i}}" type="number" size="30" min="1"
+              max="65535" pInputText [(ngModel)]="daliCommands[i]">
+          </div>
+
+          <div class="ui-g-12">
+            <button pButton type="button" label="Add command" class="ui-button-secondary buttonOne"
+              (click)="OnAddCommand()"></button>
+              <button *ngIf="daliCommands.length > 1" pButton type="button" label="Remove Command" class="ui-button-warning buttonOne"
+                (click)="OnRemoveCommand()"></button>              
+          </div>
+          <div class="ui-g-12">
+            <button pButton type="button" label="Send Commands" class="buttonOne"></button>
+          </div>
+        </div>
+      </p-card>
+    </div>
+  </div>
+</div>

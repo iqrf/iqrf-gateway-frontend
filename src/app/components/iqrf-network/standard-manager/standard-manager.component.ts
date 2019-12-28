@@ -7,9 +7,36 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StandardManagerComponent implements OnInit {
 
-  constructor() { }
+  // IQRF Binary output
+  public boAddress: number;
+  public boIndex: number;
+  public boState = false;
+
+  // IQRF Light
+  public lgAddress: number;
+  public lgIndex: number;
+  public lgPower: number;
+
+  // IQRF Sensor
+  public snsAddress: number;
+
+  // IQRF DALI
+  public daliAddress: number;
+  public daliCommands: number [] = [];
+
+  constructor() { 
+    this.daliCommands.push(1);
+  }
 
   ngOnInit() {
   }
+
+  OnAddCommand() {
+    this.daliCommands.push(1);
+  }
+
+  OnRemoveCommand() {
+    this.daliCommands.pop();
+  }  
 
 }
