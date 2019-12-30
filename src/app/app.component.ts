@@ -47,8 +47,7 @@ export class AppComponent implements OnInit {
                 {label: 'Logger file',  routerLink: ['/gateway-logger-file']},        
                 {label: 'Change mode', routerLink: ['/gateway-change-mode']},
                 {label: 'Service control', routerLink: ['/gateway-service-control']},
-                {label: 'Power control', routerLink: ['/gateway-power-control']},
-                {label: 'PIXLA', routerLink: ['/gateway-pixla']}
+                {label: 'Power control', routerLink: ['/gateway-power-control']}
             ]
         },
         {
@@ -80,6 +79,13 @@ export class AppComponent implements OnInit {
                 {label: 'TR upload', routerLink: ['/iqrf-network-tr-upload']},
                 {label: 'Network manager', routerLink: ['/iqrf-network-network-manager']},
                 {label: 'Standard manager', routerLink: ['/iqrf-network-standard-manager']}               
+            ]
+        },
+        {
+            label: 'Network manager',
+            icon: 'pi pi-fw pi-share-alt',
+            items: [
+                {label: 'Ethernet connections', routerLink: ['/network-manager-ethernet-connections']}             
             ]
         },
         {

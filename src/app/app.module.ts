@@ -26,6 +26,7 @@ import {PasswordModule} from 'primeng/password';
 import {PanelModule} from 'primeng/panel';
 import {MenubarModule} from 'primeng/menubar';
 import {FileUploadModule} from 'primeng/fileupload';
+import {TableModule} from 'primeng/table';
 
 
 
@@ -62,6 +63,7 @@ import { PixlaComponent } from './components/clouds/pixla/pixla.component';
 import { FieldsetModule } from 'primeng/fieldset';
 import { CardModule } from 'primeng/card';
 import { HexioComponent } from './components/clouds/hexio/hexio.component';
+import { EthernetConnectionsComponent } from './components/network-manager/ethernet-connections/ethernet-connections.component';
 
 
 
@@ -98,7 +100,8 @@ import { HexioComponent } from './components/clouds/hexio/hexio.component';
     ServiceControlComponent,
     PowerControlComponent,
     PixlaComponent,
-    HexioComponent
+    HexioComponent,
+    EthernetConnectionsComponent
   ],
   imports: [
     BrowserModule,
@@ -123,7 +126,8 @@ import { HexioComponent } from './components/clouds/hexio/hexio.component';
     PasswordModule,
     PanelModule,
     MenubarModule,
-    FileUploadModule
+    FileUploadModule,
+    TableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

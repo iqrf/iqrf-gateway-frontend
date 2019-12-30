@@ -31,6 +31,7 @@ import { HexioComponent } from './components/clouds/hexio/hexio.component';
 import { InteliglueComponent } from './components/clouds/inteliglue/inteliglue.component';
 import { PixlaComponent } from './components/clouds/pixla/pixla.component';
 import { UserManagerComponent } from './components/user-manager/user-manager.component';
+import { EthernetConnectionsComponent } from './components/network-manager/ethernet-connections/ethernet-connections.component'
 
 
 
@@ -59,6 +60,7 @@ const routes: Routes = [
   { path: 'iqrf-network-tr-upload', component: TrUploadComponent },
   { path: 'iqrf-network-network-manager', component: NetworkManagerComponent },
   { path: 'iqrf-network-standard-manager', component: StandardManagerComponent },
+  { path: 'network-manager-ethernet-connections', component: EthernetConnectionsComponent },
   { path: 'clouds-ibm', component: IbmComponent },
   { path: 'clouds-azure', component: AzureComponent },
   { path: 'clouds-aws', component: AwsComponent },

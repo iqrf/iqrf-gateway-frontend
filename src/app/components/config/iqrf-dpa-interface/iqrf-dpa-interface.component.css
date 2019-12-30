@@ -1,0 +1,10 @@
+input {
+    height: 35px;
+    width: 100%;
+    font-size: medium;
+}
+
+.buttonOne {
+    margin-right: .65em; 
+    margin-top: .55em;
+}
