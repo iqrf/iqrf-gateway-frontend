@@ -1,3 +1,48 @@
-<p>
-  send-dpa-packet works!
-</p>
+<h1>Send DPA packet</h1>
+<div class="p-grid">
+  <div class="ui-g-12">
+    <div class="box">
+      <p-card header="IQRF Binary output" styleClass="ui-card-shadow" class="cardOne">
+        <div class="ui-g" style="width:100%;margin-bottom:10px">
+          <div class="ui-g-12">
+            <label for="frm-dpaPacket-dpaPacket">DPA packet</label>
+            <input style="width:100%;" id="frm-dpaPacket-dpaPacket" type="string"
+              pInputText [(ngModel)]="dpaPacket" value="dpaPacket">
+          </div>
+          <div class="ui-g-6">
+            <p-checkbox binary="true" label="Set own NADR" [(ngModel)]="ownNadr"></p-checkbox>
+          </div>     
+          <div class="ui-g-6">
+            <p-checkbox binary="true" label="Set own DPA timeout" [(ngModel)]="ownDpaTimeout"></p-checkbox>
+          </div>                 
+          <div class="p-col-12 p-md-6 p-lg-6">
+            <label for="frm-dpaPacket-custNadr">Custom NADR</label>
+            <input style="width:100%;" id="frm-dpaPacket-custNadr" type="number" size="30" min="0" max="67" [disabled]="!ownNadr"
+              pInputText [(ngModel)]="custNadr">
+          </div>
+          <div class="p-col-12 p-md-6 p-lg-6">
+            <label for="frm-dpaPacket-dpaTimeout">DPA timeout (ms)</label>
+            <input style="width:100%;" id="frm-dpaPacket-dpaTimeout" type="number" size="30" min="0" max="67" [disabled]="!ownDpaTimeout"
+              pInputText [(ngModel)]="dpaTimeout">
+          </div>
+          <div class="ui-g-12">
+            <button pButton type="button" label="Save" style="margin-right: .65em"></button>
+          </div>                   
+        </div>
+      </p-card>
+    </div>
+  </div>
+  <div class="ui-g-12">
+    <div class="box">
+      <p-card header="Macros" styleClass="ui-card-shadow" class="cardOne">
+        <div class="ui-g" style="width:100%;margin-bottom:10px">
+          <div class="ui-g-12">
+            <p-menubar [model]="items"></p-menubar>
+          </div>                            
+        </div>
+      </p-card>
+    </div>
+  </div>
+  
+
+</div>

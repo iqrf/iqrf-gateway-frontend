@@ -24,7 +24,8 @@ import {CheckboxModule} from 'primeng/checkbox';
 import {DropdownModule} from 'primeng/dropdown';
 import {PasswordModule} from 'primeng/password';
 import {PanelModule} from 'primeng/panel';
-
+import {MenubarModule} from 'primeng/menubar';
+import {FileUploadModule} from 'primeng/fileupload';
 
 
 
@@ -120,7 +121,9 @@ import {CardModule} from 'primeng/card';
     CheckboxModule,
     DropdownModule,
     PasswordModule,
-    PanelModule
+    PanelModule,
+    MenubarModule,
+    FileUploadModule
   ],
   providers: [],
   bootstrap: [AppComponent]

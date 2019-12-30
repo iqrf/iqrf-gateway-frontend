@@ -1,3 +1,41 @@
-<p>
-  tr-upload works!
-</p>
+<h1>TR upload</h1>
+<div class="p-grid">
+  <div class="ui-g-12">
+    <div class="box">
+      <p-card header="Coordinator DPA Handler upload" styleClass="ui-card-shadow" class="cardOne">
+        <div class="ui-g" style="width:100%;margin-bottom:10px">
+          <div class="ui-g-12">
+            <p-fileUpload name="uploadedFiles[]" url="./upload.php" (onUpload)="onUpload($event)"></p-fileUpload>
+
+          </div>
+          <!--
+          <div class="ui-g-12">
+            <button pButton type="button" label="Upload" icon="pi pi-check"
+              style="margin-right: .65em"></button>
+          </div>   
+        -->       
+        </div>
+      </p-card>
+    </div>
+  </div>
+  <div class="ui-g-12">
+    <div class="box">
+      <p-card header="DPA upload" styleClass="ui-card-shadow" class="cardOne">
+        <div class="ui-g" style="width:100%;margin-bottom:10px">
+          <div class="ui-g-12">
+            <label for="frm-iqrfNetTrUpload-dpaver">UART interface baud rate</label>
+            <div style="width: 100%;">
+              <p-dropdown id="frm-iqrfNetTrUpload-dpaver" [options]="dpaVersions" [(ngModel)]="dpaVer"></p-dropdown>
+            </div>
+          </div>
+          <div class="ui-g-12">
+            <button pButton type="button" label="Upload" icon="pi pi-check"
+              style="margin-right: .65em"></button>
+          </div>          
+        </div>
+      </p-card>
+    </div>
+  </div>
+
+
+</div>
