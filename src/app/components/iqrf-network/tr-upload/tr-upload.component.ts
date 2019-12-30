@@ -37,6 +37,6 @@ export class TrUploadComponent implements OnInit {
     }
 
     this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: ''});
-}  
+  }  
 
 }

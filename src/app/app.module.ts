@@ -51,7 +51,6 @@ import { StandardManagerComponent } from './components/iqrf-network/standard-man
 import { AzureComponent } from './components/clouds/azure/azure.component';
 import { AwsComponent } from './components/clouds/aws/aws.component';
 import { IbmComponent } from './components/clouds/ibm/ibm.component';
-import { TcPisekComponent } from './components/clouds/tc-pisek/tc-pisek.component';
 import { InteliglueComponent } from './components/clouds/inteliglue/inteliglue.component';
 import { UserManagerComponent } from './components/user-manager/user-manager.component';
 import { InfoComponent } from './components/gateway/info/info.component';
@@ -59,9 +58,10 @@ import { LoggerFileComponent } from './components/gateway/logger-file/logger-fil
 import { ChangeModeComponent } from './components/gateway/change-mode/change-mode.component';
 import { ServiceControlComponent } from './components/gateway/service-control/service-control.component';
 import { PowerControlComponent } from './components/gateway/power-control/power-control.component';
-import { PixlaComponent } from './components/gateway/pixla/pixla.component';
-import {FieldsetModule} from 'primeng/fieldset';
-import {CardModule} from 'primeng/card';
+import { PixlaComponent } from './components/clouds/pixla/pixla.component';
+import { FieldsetModule } from 'primeng/fieldset';
+import { CardModule } from 'primeng/card';
+import { HexioComponent } from './components/clouds/hexio/hexio.component';
 
 
 
@@ -89,8 +89,7 @@ import {CardModule} from 'primeng/card';
     StandardManagerComponent,
     AzureComponent,
     AwsComponent,
-    IbmComponent,
-    TcPisekComponent,
+    IbmComponent,    
     InteliglueComponent,
     UserManagerComponent,
     InfoComponent,
@@ -98,7 +97,8 @@ import {CardModule} from 'primeng/card';
     ChangeModeComponent,
     ServiceControlComponent,
     PowerControlComponent,
-    PixlaComponent
+    PixlaComponent,
+    HexioComponent
   ],
   imports: [
     BrowserModule,

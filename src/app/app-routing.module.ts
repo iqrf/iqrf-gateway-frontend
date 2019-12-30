@@ -5,7 +5,6 @@ import { LoggerFileComponent } from './components/gateway/logger-file/logger-fil
 import { ChangeModeComponent } from './components/gateway/change-mode/change-mode.component';
 import { ServiceControlComponent } from './components/gateway/service-control/service-control.component';
 import { PowerControlComponent } from './components/gateway/power-control/power-control.component';
-import { PixlaComponent } from './components/gateway/pixla/pixla.component';
 import { SelectedComponentsComponent } from './components/config/selected-components/selected-components.component';
 import { IqrfSpiInterfaceComponent } from './components/config/iqrf-spi-interface/iqrf-spi-interface.component';
 import { IqrfCdcInterfaceComponent } from './components/config/iqrf-cdc-interface/iqrf-cdc-interface.component';
@@ -28,9 +27,10 @@ import { StandardManagerComponent } from './components/iqrf-network/standard-man
 import { IbmComponent } from './components/clouds/ibm/ibm.component';
 import { AzureComponent } from './components/clouds/azure/azure.component';
 import { AwsComponent } from './components/clouds/aws/aws.component';
-import { TcPisekComponent } from './components/clouds/tc-pisek/tc-pisek.component';
+import { HexioComponent } from './components/clouds/hexio/hexio.component';
 import { InteliglueComponent } from './components/clouds/inteliglue/inteliglue.component';
-import { UserManagerComponent } from './components//user-manager/user-manager.component';
+import { PixlaComponent } from './components/clouds/pixla/pixla.component';
+import { UserManagerComponent } from './components/user-manager/user-manager.component';
 
 
 
@@ -40,7 +40,6 @@ const routes: Routes = [
   { path: 'gateway-logger-file', component: LoggerFileComponent },
   { path: 'gateway-service-control', component: ServiceControlComponent },
   { path: 'gateway-power-control', component: PowerControlComponent },
-  { path: 'gateway-pixla', component: PixlaComponent },
   { path: 'config-selected-components', component: SelectedComponentsComponent },
   { path: 'config-iqrf-spi-interface', component: IqrfSpiInterfaceComponent },
   { path: 'config-iqrf-cdc-interface', component: IqrfCdcInterfaceComponent },
@@ -63,7 +62,8 @@ const routes: Routes = [
   { path: 'clouds-ibm', component: IbmComponent },
   { path: 'clouds-azure', component: AzureComponent },
   { path: 'clouds-aws', component: AwsComponent },
-  { path: 'clouds-tcp-pisek', component: TcPisekComponent },
+  { path: 'clouds-pixla', component: PixlaComponent },
+  { path: 'clouds-hexio', component: HexioComponent },
   { path: 'clouds-inteliglue', component: InteliglueComponent },
   { path: 'user-manager', component: UserManagerComponent }
 ];

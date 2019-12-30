@@ -88,9 +88,10 @@ export class AppComponent implements OnInit {
             items: [
                 {label: 'IBM Cloud', routerLink: ['/clouds-ibm']},
                 {label: 'Microsoft Azure', routerLink: ['/clouds-azure']},
-                {label: 'Amazon AWS', routerLink: ['/clouds-aws']},
-                {label: 'TC Pisek IoT Platform', routerLink: ['/clouds-tcp-pisek']},
-                {label: 'Inteliments inteliGlue', routerLink: ['/clouds-inteliglue']}              
+                {label: 'Amazon AWS', routerLink: ['/clouds-aws']},                
+                {label: 'Hexio IoT Platform', routerLink: ['/clouds-hexio']},
+                {label: 'Inteliments inteliGlue', routerLink: ['/clouds-inteliglue']},
+                {label: 'Pixla', routerLink: ['/clouds-pixla']},                
             ]
         },
         {

@@ -1,3 +1,29 @@
-<p>
-  aws works!
-</p>
+<h1>Amazon AWS IoT MQTT connection wizard</h1>
+<p-card subheader="" styleClass="ui-card-shadow">
+  <div class="p-grid p-dir-col">
+    <div class="p-col">
+      <button pButton type="button" label="Pdf Guide" class="ui-button-warning"
+        style="background-color: rgb(116, 170, 187)"></button>
+      &nbsp;
+      <button pButton type="button" label="Video Guide" class="ui-button-danger"
+        style="background-color: salmon;"></button>
+    </div>
+
+    <div class="p-col">
+      <label for="orgid">Endpoint</label>
+      <input id="orgid" type="text">
+    </div>    
+    <div class="p-col">
+      <p>Certificate</p>
+      <p-fileUpload mode="basic" name="uploadedFiles[]" url="./upload.php" (onUpload)="onUpload($event)"></p-fileUpload>
+    </div>    
+    <div class="p-col">
+      <p>Private key</p>
+      <p-fileUpload mode="basic" name="uploadedFiles[]" url="./upload.php" (onUpload)="onUpload($event)"></p-fileUpload>
+    </div>   
+  </div>
+  <p-footer>
+    <button pButton type="button" label="Save" style="margin-right: .25em"></button>
+    <button pButton type="button" label="Save and Restart" class="ui-button-secondary"></button>
+  </p-footer>
+</p-card>
