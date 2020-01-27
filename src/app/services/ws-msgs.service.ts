@@ -25,13 +25,14 @@ export class WsMsgsService {
   // Emitors...
   public emitorJson$: EventEmitter<any> = new EventEmitter();
   public emitorDpa$: EventEmitter<any> = new EventEmitter();
+  public emitorNtwMgr$: EventEmitter<any> = new EventEmitter();
 
   constructor(public ws: WsService) {
     // Indicates online/offline change
-    ws.emitorOnlineStatus$.subscribe( w => { this.EventWsOnlineStatus(w); });  
+    ws.emitorOnlineStatus$.subscribe( w => { this.EventWsOnlineStatus(w); });
 
     // Incomming message
-    ws.emitorMessage$.subscribe( w => { this.parseIncomingMsg(w); });    
+    ws.emitorMessage$.subscribe( w => { this.parseIncomingMsg(w); });
 
    }
 
@@ -85,8 +86,8 @@ export class WsMsgsService {
 
 
   /* Sends message over WS */
-  public sendMessage(data: any) {
-    this.ws.sendMessage(JSON.stringify(data));
+  public sendMessage(data: any): boolean {
+    return this.ws.sendMessage(JSON.stringify(data));
 
   }
 
@@ -94,15 +95,23 @@ export class WsMsgsService {
 
     try {
         if (json.mType) {
+          if (json.mType === 'iqrfEmbedCoordinator_Discovery') {
+            this.emitorNtwMgr$.emit(json);
+
+          } else if (json.mType === 'iqrfEmbedCoordinator_DiscoveredDevices') {
+            this.emitorNtwMgr$.emit(json);
+
+          } else if (json.mType === 'iqrfEmbedCoordinator_BondedDevices') {
+            this.emitorNtwMgr$.emit(json);
+
+          }
 
           this.SendToComponent(json);
-
-
 
           if (this.traces) {
 
             console.log('---------WsMsgsService:parseIncomingMsg()---------')
-            console.log(json)
+            console.log(json);
 
           }
 
@@ -128,13 +137,13 @@ export class WsMsgsService {
 
   public SendToComponent(json: any) {
 
-    if (this.msgBack != undefined) {
+    if (this.msgBack !== undefined) {
       if (this.msgBack.confirm) {
         if (json.mType) {
           if (json.data) {
             if (json.data.msgId) {
 
-              if (json.mType === this.msgBack.mType 
+              if (json.mType === this.msgBack.mType
                 && json.data.msgId === this.msgBack.msgId) {
 
                   /*

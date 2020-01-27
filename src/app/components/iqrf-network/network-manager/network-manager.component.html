@@ -1,3 +1,98 @@
-<p>
-  network-manager works!
-</p>
+<h1>Network manager</h1>
+<p-tabView>
+  <p-tabPanel header="Control">
+    <div class="p-grid">
+      <div class="p-col-12 p-md-12 p-lg-6">
+        <div class="p-grid">
+          <div class="ui-g-12">
+            <p-card header="Bonding" styleClass="ui-card-shadow" class="cardOne">
+              <div class="p-grid">
+                <div class="ui-g-12">
+                  <label for="bondMethod">Bonding method</label>
+                  <p-dropdown id="bondMethod" [options]="bondMethod" [(ngModel)]="selBondMethod"
+                    [style]="{'width':'100%'}"></p-dropdown>
+                </div>
+                <div class="ui-g-12">
+                  <label for="bondAddress">Address</label>
+                  <input id="bondAddress" type="number" pInputText [(ngModel)]="bondAddress" style="width:100%">
+                </div>
+                <div class="ui-g-12">
+                  <p-checkbox [(ngModel)]="bondAutoAddr" binary="true" label="Auto address"></p-checkbox>
+                </div>
+                <div class="ui-g-12">
+                  <label for="bondTestRetries">Bonding test retries</label>
+                  <input id="bondTestRetries" type="number" pInputText [(ngModel)]="bondTestRetries" style="width:100%">
+                </div>
+                <div class="ui-g-12" *ngIf="selBondMethod === 'smart'">
+                  <label for="bondSmartConnectCode">IQRF Smart Connect Code</label>
+                  <input id="bondSmartConnectCode" type="text" pInputText [(ngModel)]="bondSmartConnectCode"
+                    style="width:100%">
+                </div>
+                <div class="ui-g-12">
+                  <p-checkbox [(ngModel)]="bondUnbondCoordOnly" binary="true"
+                    label="Unbonds the Node only on Coordinator side"></p-checkbox>
+                </div>
+                <div class="ui-g-12">
+                  <button pButton type="button" label="Bond Node" style="margin-right: .65em"></button>
+                  <button pButton type="button" label="Unbond Node" style="margin-right: .65em"></button>
+                  <button pButton type="button" label="Clear All Bonds" style="margin-right: .65em"></button>
+                </div>
+              </div>
+            </p-card>
+          </div>
+          <div class="ui-g-12">
+            <p-card header="Discovery" styleClass="ui-card-shadow" class="cardOne">
+              <div class="p-grid">
+                <div class="ui-g-12">
+                  <label for="discTxPower">TX Power</label>
+                  <input id="discTxPower" type="number" pInputText [(ngModel)]="discTxPower" style="width:100%"
+                    [min]="0" [max]="7">
+                </div>
+                <div class="ui-g-12">
+                  <label for="discMaxNdAddr">Max. Node Address</label>
+                  <input id="discMaxNdAddr" type="number" pInputText [(ngModel)]="discMaxNdAddr" style="width:100%">
+                </div>
+                <div class="ui-g-12">
+                  <button pButton type="button" label="Discovery" style="margin-right: .65em"
+                    (click)="OnDiscovery()"></button>
+                </div>
+              </div>
+            </p-card>
+          </div>
+        </div>
+      </div>
+      <div class="p-col-12 p-md-12 p-lg-6">
+        <p-card header="Devices info" styleClass="ui-card-shadow" class="cardOne">
+          <div class="p-grid">
+            <div class="ui-g-12">
+              <div #container></div>
+            </div>
+            <div>
+              <i class="pi pi-circle-on" style="color:var(--gcolor-node-discovered); vertical-align: bottom;"></i>
+              <span> - discovered nodes</span>
+              <br>
+              <i class="pi pi-circle-on" style="color:var(--gcolor-node-bonded); vertical-align: bottom;"></i>
+              <span> - bonded nodes</span>
+              <br>
+              <i class="pi pi-circle-on" style="color:var(--gcolor-node-slot); vertical-align: bottom;"></i>
+              <span> - empty slots</span>
+            </div>
+          </div>
+        </p-card>
+      </div>
+    </div>
+  </p-tabPanel>
+  <!--
+  <p-tabPanel header="Map View">
+    <div class="p-grid">
+      <div class="ui-g-12">
+
+      </div>
+    </div>
+  </p-tabPanel>
+-->
+</p-tabView>
+<p-toast position="top-right"></p-toast>
+<div class="loading-indicator" *ngIf="msg === 'waiting'">
+  <p-progressSpinner></p-progressSpinner>
+</div>

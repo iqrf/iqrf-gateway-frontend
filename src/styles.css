@@ -1,6 +1,54 @@
 /* You can add global styles to this file, and also import other style files */
 
 
+:root {
+    /* Colors... */
+    --main-color: #008000;
+    --bkg-color: #ffffff;
+    --bottom-color: #1b1b1b;
+    --grey-color: #e4e4e4;
+    --dark-color: #57585b;
+  
+    /* Color of header panel */    
+    --header-color: var(--grey-color);
+    /* Color of side panel menu including icons */
+    --side-nave-text-color: var(--main-color);
+    /* Color of tables */
+    --table-header-bkg-color: var(--grey-color);    
+    --table-header-text-color: var(--dark-color);
+    --table-bkg-color: var(--bkg-color);    
+    --table-text-color: var(--dark-color);  
+    --table-highlight-color: #96b996;  
+    /* Color of cards */
+    --card-bkg-color: var(--bkg-color);
+    /* Color of buttons */
+    --button-bkg-color: var(--grey-color);    
+    --button-color: black;  
+    --online-color: green;  
+    --offline-color: black;  
+  
+    /* Font */
+    --font-big: bold 26px 'Open Sans', sans-serif;
+    --font-subtitle: 16px 'Open Sans', sans-serif;
+    --font-normal: 16px 'Open Sans', sans-serif;
+    --font-small: 14px 'Open Sans', sans-serif;
+    --font-table-header: bold 19px 'Open Sans', sans-serif;
+    --font-table: normal 19px 'Open Sans', sans-serif;
+    --font-button: normal 16px 'Open Sans', sans-serif;
+  
+    /* Graphics gateway */
+    --gfont-gw-title: 'Open Sans';
+    --gfont-gw-title-size: 22;
+    --gcolor-gw-fill: #AED6F1;
+    --gcolor-gw-border: #85C1E9;
+    --gcolor-gw-progress: rgb(81, 174, 236);
+    --gcolor-node-slot: rgb(158, 177, 190);
+    --gcolor-node-on: rgb(84, 108, 243);
+    --gcolor-node-discovered: rgb(188, 196, 82);
+    --gcolor-node-bonded: rgb(57, 149, 202);
+    --gcolor-node-localized: rgb(17, 184, 92);
+  }
+
 h1 {
     font: bold 24px 'Open Sans', sans-serif;
 }

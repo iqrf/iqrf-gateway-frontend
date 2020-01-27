@@ -163,9 +163,15 @@ export class WsService {
     *
     * This sends message to gateway.
     */
-   public sendMessage(msg: string) {
-      this.connection.send(msg);
-  
+   public sendMessage(msg: string): boolean {
+      if (this.connection !== null) {
+        this.connection.send(msg);
+        return true;
+
+      }
+
+      return false;
+
     }
    /*
     *

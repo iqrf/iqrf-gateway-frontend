@@ -14,7 +14,7 @@ export class TrConfigurationComponent implements OnInit {
 
   //RF
   public rfBand: SelectItem [];
-  public selRfBand: string = '868';
+  public selRfBand = '868';
   public address: number;
   public rfChannelA: number;
   public rfChannelB: number;
@@ -53,19 +53,19 @@ export class TrConfigurationComponent implements OnInit {
   public stayAwake = false;  
 
   public baudRates: SelectItem [];
-  public selBaudRate: string = '57600 Bd';  
+  public selBaudRate = '57600 Bd';
 
   public inputformat: SelectItem [];
-  public selInputFormat: string = 'ASCII';    
+  public selInputFormat = 'ASCII';
 
   public password: string;
 
   constructor() {
     this.rfBand = [
-      {label:'Select Band', value: null},
-      {label:'433', value: '433'},
-      {label:'868', value: '868'},
-      {label:'916', value: '916'}
+      {label: 'Select Band', value: null},
+      {label: '433', value: '433'},
+      {label: '868', value: '868'},
+      {label: '916', value: '916'}
     ];
 
     this.baudRates = [
