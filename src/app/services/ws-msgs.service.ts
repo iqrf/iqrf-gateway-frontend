@@ -2,7 +2,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { WsService } from '../shared/ws/services/ws.service';
 import * as api from '../api';
 
-export interface msgHeader {
+export interface MsgHeader {
   mType: string;
   msgId: string;
   confirm: boolean;
@@ -14,20 +14,22 @@ export interface msgHeader {
 })
 export class WsMsgsService {
 
-  //Debug traces
+  // Debug traces
   private traces = true;
 
-  public status: boolean = false;
+  public status = false;
 
-  public msgBack: msgHeader;
+  // Where to dispatch message back...
+  public msgBack: MsgHeader;
 
-  // emitors...
+  // Emitors...
   public emitorJson$: EventEmitter<any> = new EventEmitter();
+  public emitorDpa$: EventEmitter<any> = new EventEmitter();
 
   constructor(public ws: WsService) {
     // Indicates online/offline change
     ws.emitorOnlineStatus$.subscribe( w => { this.EventWsOnlineStatus(w); });  
-    
+
     // Incomming message
     ws.emitorMessage$.subscribe( w => { this.parseIncomingMsg(w); });    
 
@@ -43,7 +45,8 @@ export class WsMsgsService {
         console.log('--------WsMsgsService--------');
         console.log('>> online <<');
         console.log('-----------------------------');
-      }            
+      }
+
     } else {
       this.status = w;
 
@@ -53,27 +56,25 @@ export class WsMsgsService {
         console.log('-----------------------------');
       }
     }
-  }  
+  }
 
   /* Sends with confirmation */
   public sendMessageConfirm(msg: any, sender: EventEmitter<any>): boolean {
-    if (msg == undefined) {
+    if (msg === undefined) {
       return;
     }
     if ('mType' in msg) {
       if ('data' in msg) {
-        if ('msgId' in msg.data) {     
+        if ('msgId' in msg.data) {
           this.msgBack = {
             mType: msg.mType,
             msgId: msg.data.msgId,
             confirm: true,
             emit: sender
-          }       
-          //console.log('--->>> Sending <<<----')
+          };
 
           this.sendMessage(msg);
           return true;
-      
         }
       }
     }
@@ -87,8 +88,8 @@ export class WsMsgsService {
   public sendMessage(data: any) {
     this.ws.sendMessage(JSON.stringify(data));
 
-  }  
-  
+  }
+
   private parseIncomingMsg(json: any) {
 
     try {
@@ -107,12 +108,10 @@ export class WsMsgsService {
 
 
           if (json.mType === 'rdsGetProjectList') {
-            
+
 
           } else if (json.mType === 'rdsGetProject') {
-            
 
-                   
 
           } else {
             // Unknown Message
@@ -125,7 +124,7 @@ export class WsMsgsService {
               console.log('exception: ', e.toString());
               return;
       }
-  }    
+  }
 
   public SendToComponent(json: any) {
 
@@ -134,8 +133,6 @@ export class WsMsgsService {
         if (json.mType) {
           if (json.data) {
             if (json.data.msgId) {
-
-              //console.log('---------***---------')
 
               if (json.mType === this.msgBack.mType 
                 && json.data.msgId === this.msgBack.msgId) {
@@ -152,10 +149,9 @@ export class WsMsgsService {
 
               if (json.mType === 'messageError') {
                 this.msgBack.emit.emit(json);
-                return;     
+                return;
               }
 
-              
             }
           }
         }

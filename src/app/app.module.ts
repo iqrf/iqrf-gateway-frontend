@@ -27,6 +27,7 @@ import {PanelModule} from 'primeng/panel';
 import {MenubarModule} from 'primeng/menubar';
 import {FileUploadModule} from 'primeng/fileupload';
 import {TableModule} from 'primeng/table';
+import {DynamicDialogModule} from 'primeng/dynamicdialog';
 
 
 
@@ -64,6 +65,7 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { CardModule } from 'primeng/card';
 import { HexioComponent } from './components/clouds/hexio/hexio.component';
 import { EthernetConnectionsComponent } from './components/network-manager/ethernet-connections/ethernet-connections.component';
+import { EthernetConnectionsDlgComponent } from './components/network-manager/ethernet-connections-dlg/ethernet-connections-dlg.component';
 
 
 
@@ -101,7 +103,8 @@ import { EthernetConnectionsComponent } from './components/network-manager/ether
     PowerControlComponent,
     PixlaComponent,
     HexioComponent,
-    EthernetConnectionsComponent
+    EthernetConnectionsComponent,
+    EthernetConnectionsDlgComponent
   ],
   imports: [
     BrowserModule,
@@ -127,9 +130,13 @@ import { EthernetConnectionsComponent } from './components/network-manager/ether
     PanelModule,
     MenubarModule,
     FileUploadModule,
-    TableModule
+    TableModule,
+    DynamicDialogModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    EthernetConnectionsDlgComponent
+  ]
 })
 export class AppModule { }

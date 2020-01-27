@@ -11,3 +11,9 @@
     height: 100%;
 }
  
+textarea {
+    /*height: 300px;*/
+    width: 100%;
+    /*max-width: 100%;*/
+    
+}
