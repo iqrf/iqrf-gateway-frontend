@@ -4,6 +4,7 @@ import Konva from 'konva';
 import { MessageService } from 'primeng/api';
 import { WsMsgsService } from '../../../services/ws-msgs.service';
 import * as api from '../../../api';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -28,7 +29,7 @@ export class NetworkManagerComponent implements OnInit {
   public discTxPower = 6;
   public discMaxNdAddr = 239;
 
-  msg: 'none' | 'waiting' | 'done' = 'none';
+  progSpinner: 'none' | 'discovery' | 'bonding' = 'none';
 
   // Graphics
   public stage: Konva.Stage;
@@ -92,10 +93,10 @@ export class NetworkManagerComponent implements OnInit {
     const ret = this.wsMsg.sendMessage(json);
 
     if (ret) {
-      this.msg = 'waiting';
+    //  this.msg = 'waiting';
 
     } else {
-      this.msg = 'none';
+      this.progSpinner = 'none';
 
       this.messageService.add({
         severity: 'error',
@@ -103,58 +104,90 @@ export class NetworkManagerComponent implements OnInit {
         detail: 'Message error'
       });
     }
+  }
 
+  OnSendReturn(ret: boolean) {
+    if (ret) {
+    //  this.msg = 'waiting';
+
+    } else {
+      this.progSpinner = 'none';
+
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Message service werror!',
+        detail: 'Message error'
+      });
+    }
   }
 
   OnDiscovery() {
-    const json: api.IqrfEmbedCoordinatorDiscoveryRequest100 = {
-      mType: 'iqrfEmbedCoordinator_Discovery',
-      data: {
-          req: {
-            nAdr: 0,
-            param: {
-              txPower: this.discTxPower,
-              maxAddr: this.discMaxNdAddr
-            }
-          },
-          returnVerbose: true,
-          msgId: 'aba4c8d0-8833-435d-8946-d40341776b4d'
-      }
-    };
+    this.progSpinner = 'discovery';
+    const ret = this.wsMsg.msg_iqrfEmbedCoordinatorDiscovery(this.discTxPower, this.discMaxNdAddr);
+    this.OnSendReturn(ret);
 
-    this.OnSendMessage(json);
   }
 
   OnDiscoveredDevices() {
-    const json: api.IqrfEmbedCoordinatorDiscoveredDevicesRequest100 = {
-      mType: 'iqrfEmbedCoordinator_DiscoveredDevices',
-      data: {
-          req: {
-            nAdr: 0,
-            param: {}
-          },
-          returnVerbose: true,
-          msgId: 'aba4c8d0-8833-435d-8946-d40341776b4d'
-      }
-    };
+    const ret = this.wsMsg.msg_iqrfEmbedCoordinator_DiscoveredDevices();
+    this.OnSendReturn(ret);
 
-    this.OnSendMessage(json);
   }
 
   OnBondedDevices() {
-    const json: api.IqrfEmbedCoordinatorBondedDevicesRequest100 = {
-      mType: 'iqrfEmbedCoordinator_BondedDevices',
-      data: {
-          req: {
-            nAdr: 0,
-            param: {}
-          },
-          returnVerbose: true,
-          msgId: 'aba4c8d0-8833-435d-8946-d40341776b4d'
-      }
-    };
+    const ret = this.wsMsg.msg_iqrfEmbedCoordinator_BondedDevices();
+    this.OnSendReturn(ret);
+  }
 
-    this.OnSendMessage(json);
+  OnClearAllBonds() {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Clear all bonds?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: 'var(--main-color)',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, upload it!'
+    }).then((result) => {
+      if (result.value) {
+        if (this.bondUnbondCoordOnly) {
+          const ret = this.wsMsg.msg_iqrfEmbedCoordinator_ClearAllBonds();
+          this.OnSendReturn(ret);
+        } else {
+          //const ret = this.wsMsg.msg_iqrfEmbedCoordinator_RemoveBond(this.bondedAddr);
+         // this.OnSendReturn(ret);
+        }
+      }
+    });
+  }
+
+  OnUnbondNode() {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Unbond node with address ' + this.bondAddress,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: 'var(--main-color)',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, upload it!'
+    }).then((result) => {
+      if (result.value) {
+
+          const ret = this.wsMsg.msg_iqrfEmbedCoordinator_RemoveBond(this.bondAddress);
+          this.OnSendReturn(ret);
+
+      }
+    });
+  }
+
+  OnBondNode() {
+    this.progSpinner = 'bonding';
+    let nAdr = 0;
+    if (this.bondAutoAddr) {
+      nAdr = this.bondAddress;
+    }
+    const ret = this.wsMsg.msg_iqrfEmbedCoordinator_BondNode(nAdr);
+    this.OnSendReturn(ret);
   }
 
   MessageBack(msg: any) {
@@ -162,6 +195,7 @@ export class NetworkManagerComponent implements OnInit {
     console.log(JSON.stringify(msg, null, 1));
 
     if (msg.mType === 'iqrfEmbedCoordinator_Discovery') {
+      this.progSpinner = 'none';
 
       const data = msg as api.IqrfEmbedCoordinatorDiscoveryResponse100;
 
@@ -174,6 +208,8 @@ export class NetworkManagerComponent implements OnInit {
       }
 
     } else if (msg.mType === 'iqrfEmbedCoordinator_DiscoveredDevices') {
+      this.progSpinner = 'none';
+
       const data = msg as api.IqrfEmbedCoordinatorDiscoveredDevicesResponse100;
 
       if (data.data.status === 0) {
@@ -187,7 +223,7 @@ export class NetworkManagerComponent implements OnInit {
           }
         }
 
-        this.msg = 'done';
+        this.progSpinner = 'none';
 
       } else {
         this.MessageError(data.data.status, data.data.statusStr);
@@ -200,11 +236,25 @@ export class NetworkManagerComponent implements OnInit {
         this.bondedAddr = [];
         this.bondedAddr = data.data.rsp.result.bondedDevices;
 
-        this.msg = 'done';
+        this.progSpinner = 'none';
+
+        this.RefreshNodes();
 
       } else {
         this.MessageError(data.data.status, data.data.statusStr);
       }
+
+    } else if (msg.mType === 'iqrfEmbedCoordinator_ClearAllBonds') {
+      const data = msg as api.IqrfEmbedCoordinatorClearAllBondsResponse100;
+      console.log(msg);
+
+      this.progSpinner = 'none';
+      this.RefreshNodes();
+
+    } else if (msg.mType === 'iqrfEmbedCoordinator_BondNode') {
+      console.log(msg);
+      this.progSpinner = 'none';
+      this.OnBondedDevices();
     }
   }
 
@@ -214,7 +264,7 @@ export class NetworkManagerComponent implements OnInit {
       summary: 'Message response error!',
       detail: '[' + status + ']:' + statusStr
     });
-    this.msg = 'done';
+    this.progSpinner = 'none';
   }
 
 
