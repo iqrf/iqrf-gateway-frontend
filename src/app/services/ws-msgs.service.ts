@@ -16,8 +16,10 @@ export class WsMsgsService {
 
   // Debug traces
   private traces = true;
-
   public status = false;
+
+  // Random MsgId part
+  public msgIdRand: number;
 
   // Where to dispatch message back...
   public msgBack: MsgHeader;
@@ -28,7 +30,13 @@ export class WsMsgsService {
   public emitorDpa$: EventEmitter<any> = new EventEmitter();
   public emitorNtwMgr$: EventEmitter<any> = new EventEmitter();
 
+  //Components ids
+  public idNtwMgr = 'netwMgr';
+  public idSendDpa = 'sendDpa';
+
   constructor(public ws: WsService) {
+    this.msgIdRand = Math.floor(Math.random() * 100) + 1;
+
     // Indicates online/offline change
     ws.emitorOnlineStatus$.subscribe( w => { this.EventWsOnlineStatus(w); });
 
@@ -98,49 +106,71 @@ export class WsMsgsService {
 
     try {
         if (json.mType) {
-          if (json.mType === 'iqrfEmbedCoordinator_Discovery') {
-            this.emitorNtwMgr$.emit(json);
+          if (json.data.msgId) {
+            if (json.data.msgId.indexOf(this.msgIdRand.toString())  === -1) {
+              // Not our message
+              return;
+            }
 
-          } else if (json.mType === 'iqrfEmbedCoordinator_DiscoveredDevices') {
-            this.emitorNtwMgr$.emit(json);
+            // emit to components
+            if (json.data.msgId.indexOf(this.idNtwMgr.toString()) !== -1) {
+              this.emitorNtwMgr$.emit(json);
 
-          } else if (json.mType === 'iqrfEmbedCoordinator_BondedDevices') {
-            this.emitorNtwMgr$.emit(json);
+            } else if (json.data.msgId.indexOf(this.idSendDpa.toString()) !== -1) {
+              this.emitorDpa$.emit(json);
 
-          } else if (json.mType === 'iqrfEmbedCoordinator_ClearAllBonds') {
-            this.emitorNtwMgr$.emit(json);
-
-          } else if (json.mType === 'iqrfEmbedCoordinator_BondNode') {
-            this.emitorNtwMgr$.emit(json);
-
-          } else if (json.mType === 'iqrfEmbedCoordinator_ClearRemotelyBondedMid') {
-            this.emitorNtwMgr$.emit(json);
-
-          }
-
-
-          this.SendToComponent(json);
+            }
 /*
-          if (this.traces) {
+/*
+            if (json.mType === 'iqrfEmbedCoordinator_Discovery') {
+              this.emitorNtwMgr$.emit(json);
 
-            console.log('---------WsMsgsService:parseIncomingMsg()---------')
-            console.log(json);
+            } else if (json.mType === 'iqrfEmbedCoordinator_DiscoveredDevices') {
+              this.emitorNtwMgr$.emit(json);
 
-          }
-*/
+            } else if (json.mType === 'iqrfEmbedCoordinator_BondedDevices') {
+                this.emitorNtwMgr$.emit(json);
 
-          if (json.mType === 'rdsGetProjectList') {
+            } else if (json.mType === 'iqrfEmbedCoordinator_ClearAllBonds') {
+              this.emitorNtwMgr$.emit(json);
+
+            } else if (json.mType === 'iqrfEmbedCoordinator_BondNode') {
+              this.emitorNtwMgr$.emit(json);
+
+            } else if (json.mType === 'iqrfEmbedCoordinator_ClearRemotelyBondedMid') {
+              this.emitorNtwMgr$.emit(json);
+
+            } else if (json.mType === 'iqrfEmbedFrc_SendSelective') {
+              this.emitorNtwMgr$.emit(json);
+
+            }  else if (json.mType === 'iqrfEmbedCoordinator_RemoveBond') {
+              this.emitorNtwMgr$.emit(json);
+
+            } 
+            */
+
+        //    this.SendToComponent(json);
+  /*
+            if (this.traces) {
+
+              console.log('---------WsMsgsService:parseIncomingMsg()---------')
+              console.log(json);
+
+            }
+  */
+/*
+            if (json.mType === 'rdsGetProjectList') {
 
 
-          } else if (json.mType === 'rdsGetProject') {
+            } else if (json.mType === 'rdsGetProject') {
 
 
-          } else {
-            // Unknown Message
-            // window.alert('msg: ' + JSON.stringify(json));
+            } else {
+
+            }
+            */
           }
         }
-
       } catch (e) {
               console.log('This doesn\'t look like a valid JSON: ', json);
               console.log('exception: ', e.toString());
@@ -182,11 +212,11 @@ export class WsMsgsService {
   }
 
   /****** MESSAGES *******/
-  public msg_iqrfEmbedCoordinator_ClearAllBonds(): boolean {
+  public msg_iqrfEmbedCoordinator_ClearAllBonds(id: string): boolean {
     const json: api.IqrfEmbedCoordinatorClearAllBondsRequest100 = {
       mType: 'iqrfEmbedCoordinator_ClearAllBonds',
       data: {
-          msgId: 'webApp -' + Math.floor(Math.random() * 100) + 1,
+          msgId: id + 'msg_iqrfEmbedCoordinator_ClearAllBonds:' + this.msgIdRand.toString(),
           req: {
             nAdr: 0,
             param: {}
@@ -198,11 +228,11 @@ export class WsMsgsService {
     return this.ws.sendMessage(JSON.stringify(json));
   }
 
-  public msg_iqrfEmbedCoordinator_ClearRemotelyBondedMid(): boolean {
+  public msg_iqrfEmbedCoordinator_ClearRemotelyBondedMid(id: string): boolean {
     const json: api.IqrfEmbedCoordinatorClearRemotelyBondedMidRequest100 = {
       mType: 'iqrfEmbedCoordinator_ClearRemotelyBondedMid',
       data: {
-          msgId: 'webApp -' + Math.floor(Math.random() * 100) + 1,
+          msgId: id + 'msg_iqrfEmbedCoordinator_ClearRemotelyBondedMid:' + this.msgIdRand.toString(),
           req: {
             nAdr: 0,
             param: {}
@@ -214,15 +244,15 @@ export class WsMsgsService {
     return this.ws.sendMessage(JSON.stringify(json));
   }
 
-  public msg_iqrfEmbedCoordinator_RemoveBond(bondAddrI: number): boolean {
+  public msg_iqrfEmbedCoordinator_RemoveBond(id: string, bondAddrI: number): boolean {
     const json: api.IqrfEmbedCoordinatorRemoveBondRequest100 = {
       mType: 'iqrfEmbedCoordinator_RemoveBond',
       data: {
-          msgId: 'webApp -' + Math.floor(Math.random() * 100) + 1,
+          msgId: id + 'msg_iqrfEmbedCoordinator_RemoveBond:' + this.msgIdRand.toString(),
           req: {
             nAdr: 0,
             param: {
-              bondAddr: 1
+              bondAddr: bondAddrI
             }
           },
           returnVerbose: true
@@ -232,11 +262,27 @@ export class WsMsgsService {
     return this.ws.sendMessage(JSON.stringify(json));
   }
 
-  public msg_iqrfEmbedCoordinator_BondNode(reqAddrIn: number): boolean {
+  public msg_iqmeshNetwork_RemoveBond(id: string, bondAddrI: number): boolean {
+    const json: api.IqmeshNetworkRemoveBondRequest100 = {
+      mType: 'iqmeshNetwork_RemoveBond',
+      data: {
+          msgId: id + 'msg_iqmeshNetwork_RemoveBond:' + this.msgIdRand.toString(),
+          repeat: 2,
+          req: {
+            deviceAddr: bondAddrI
+          },
+          returnVerbose: true
+      }
+    };
+    // Send message
+    return this.ws.sendMessage(JSON.stringify(json));
+  }  
+
+  public msg_iqrfEmbedCoordinator_BondNode(id: string, reqAddrIn: number): boolean {
     const json: api.IqrfEmbedCoordinatorBondNodeRequest100 = {
       mType: 'iqrfEmbedCoordinator_BondNode',
       data: {
-          msgId: 'webApp -' + Math.floor(Math.random() * 100) + 1,
+          msgId: id + 'msg_iqrfEmbedCoordinator_BondNode:' + this.msgIdRand.toString(),
           timeout: 11000,
           req: {
             nAdr: 0,
@@ -245,7 +291,7 @@ export class WsMsgsService {
               bondingMask: 0
             }
           },
-          returnVerbose: true,
+          returnVerbose: true
       }
     };
 
@@ -253,17 +299,17 @@ export class WsMsgsService {
     return this.ws.sendMessage(JSON.stringify(json));
   }
 
-  public msg_iqrfEmbedCoordinator_BondedDevices(): boolean {
+  public msg_iqrfEmbedCoordinator_BondedDevices(id: string): boolean {
     const json: api.IqrfEmbedCoordinatorBondedDevicesRequest100 = {
       mType: 'iqrfEmbedCoordinator_BondedDevices',
       data: {
-          msgId: 'webApp -' + Math.floor(Math.random() * 100) + 1,
+          msgId: id + 'msg_iqrfEmbedCoordinator_BondedDevices:' + this.msgIdRand.toString(),
           timeout: 11000,
           req: {
             nAdr: 0,
             param: {}
           },
-          returnVerbose: true,
+          returnVerbose: true
       }
     };
 
@@ -271,16 +317,16 @@ export class WsMsgsService {
     return this.ws.sendMessage(JSON.stringify(json));
   }
 
-  public msg_iqrfEmbedCoordinator_DiscoveredDevices() {
+  public msg_iqrfEmbedCoordinator_DiscoveredDevices(id: string) {
     const json: api.IqrfEmbedCoordinatorDiscoveredDevicesRequest100 = {
       mType: 'iqrfEmbedCoordinator_DiscoveredDevices',
       data: {
-          msgId: 'webApp -' + Math.floor(Math.random() * 100) + 1,
+          msgId: id + 'msg_iqrfEmbedCoordinator_DiscoveredDevices:' + this.msgIdRand.toString(),
           req: {
             nAdr: 0,
             param: {}
           },
-          returnVerbose: true,
+          returnVerbose: true
       }
     };
 
@@ -288,11 +334,11 @@ export class WsMsgsService {
     return this.ws.sendMessage(JSON.stringify(json));
   }
 
-  public msg_iqrfEmbedCoordinatorDiscovery(discTxPowerI: number, discMaxNdAddrI: number) {
+  public msg_iqrfEmbedCoordinatorDiscovery(id: string, discTxPowerI: number, discMaxNdAddrI: number) {
     const json: api.IqrfEmbedCoordinatorDiscoveryRequest100 = {
       mType: 'iqrfEmbedCoordinator_Discovery',
       data: {
-          msgId: 'webApp -' + Math.floor(Math.random() * 100) + 1,
+          msgId: id + 'msg_iqrfEmbedCoordinatorDiscovery:' + this.msgIdRand.toString(),
           req: {
             nAdr: 0,
             param: {
@@ -300,11 +346,65 @@ export class WsMsgsService {
               maxAddr: discMaxNdAddrI
             }
           },
-          returnVerbose: true,
+          returnVerbose: true
       }
     };
 
     // Send message
     return this.ws.sendMessage(JSON.stringify(json));
-  }  
+  }
+
+  public msg_iqrfEmbedFrc_SendSelective(id: string) {
+    const json: api.IqrfEmbedFrcSendSelectiveRequest100 = {
+      mType: 'iqrfEmbedFrc_SendSelective',
+      data: {
+          msgId: id + 'msg_iqrfEmbedFrc_SendSelective:' + this.msgIdRand.toString(),
+          req: {
+            nAdr: 0,
+            param: {
+              frcCommand: 2,
+              selectedNodes: [
+                1,
+                2
+              ],
+              userData: [
+                5,
+                1,
+                1,
+                255,
+                255
+              ]
+            }
+          },
+          returnVerbose: true
+      }
+    };
+
+    // Send message
+    return this.ws.sendMessage(JSON.stringify(json));
+  }
+
+  public msg_iqrfRaw(id: string, rDataIn: string) {
+    const json: api.IqrfRawRequest100 = {
+      mType: 'iqrfRaw',
+      data: {
+          msgId: id + 'msg_iqrfRaw:' + this.msgIdRand.toString(),
+          req: {
+            rData: rDataIn
+          },
+          returnVerbose: true
+      }
+    };
+
+    // Send message
+    return this.ws.sendMessage(JSON.stringify(json));
+  }
+
+  public msg_any(id: string, jsonIn: any) {
+    jsonIn.data.msgId = id + 'msg_any:' + this.msgIdRand.toString();
+
+    // Send message
+    return this.ws.sendMessage(JSON.stringify(jsonIn));
+  }
+
 }

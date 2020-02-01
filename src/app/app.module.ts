@@ -29,7 +29,8 @@ import {MenubarModule} from 'primeng/menubar';
 import {FileUploadModule} from 'primeng/fileupload';
 import {TableModule} from 'primeng/table';
 import {DynamicDialogModule} from 'primeng/dynamicdialog';
-
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {CodeHighlighterModule} from 'primeng/codehighlighter';
 
 
 import { SelectedComponentsComponent } from './components/config/selected-components/selected-components.component';
@@ -133,7 +134,9 @@ import { EthernetConnectionsDlgComponent } from './components/network-manager/et
     FileUploadModule,
     TableModule,
     DynamicDialogModule,
-    KonvaModule
+    KonvaModule,
+    ConfirmDialogModule,
+    CodeHighlighterModule
   ],
   providers: [],
   bootstrap: [AppComponent],

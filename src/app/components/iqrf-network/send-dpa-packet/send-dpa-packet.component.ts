@@ -1,12 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Directive, ElementRef, Component, OnInit } from '@angular/core';
 import {MenuItem} from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import { WsMsgsService } from '../../../services/ws-msgs.service';
+import * as api from '../../../api';
+import 'prismjs/components/prism-json.js';
 
 interface SubMenu {
   text: string;
   dpa: string;
 }
+
+declare var Prism: any;
+
 
 @Component({
   selector: 'app-send-dpa-packet',
@@ -18,6 +23,8 @@ export class SendDpaPacketComponent implements OnInit {
 
   public msgReq: string;
   public msgResp: string;
+  public msgRespCode: string;
+  public msgReqCode: string;
   msg: 'none' | 'waiting' | 'done' = 'none';
 
   public ownNadr = false;
@@ -84,7 +91,7 @@ export class SendDpaPacketComponent implements OnInit {
 
   constructor(public wsMsg: WsMsgsService, public messageService: MessageService) {
 
-    wsMsg.emitorDpa$.subscribe( w => { this.MessageBack(w); });
+    wsMsg.emitorDpa$.subscribe( w => { this.IncommingMessage(w); });
 
     this.items = [];
 
@@ -202,10 +209,56 @@ export class SendDpaPacketComponent implements OnInit {
 
   ngOnInit() {
     this.msg = 'none';
+  //  Prism.highlightElement(this.el.nativeElement);
   }
 
   OnTest(sm: SubMenu) {
     this.dpaPacket = sm.dpa;
+  }
+
+  IncommingMessage(msg: any) {
+    console.log('--IncommingMessage--');
+    console.log(JSON.stringify(msg, null, 1));
+
+    try {
+      if (msg.mType === 'iqrfRaw') {
+
+        const data = msg as api.IqrfRawResponse100;
+
+        this.msgResp = JSON.stringify(msg, null, 1);
+
+        this.msgRespCode = Prism.highlight(this.msgResp, Prism.languages.json);
+
+        this.msg = 'done';
+
+        if (data.data.status === 0) {
+          /*
+          this.OnBondedDevices();
+          this.OnDiscoveredDevices();
+          */
+
+        } else {
+        //  this.MessageError(data.data.status, data.data.statusStr);
+
+        }
+
+      } else {
+
+        this.messageService.add({
+          severity: 'warning',
+          summary: 'Unknown message!',
+          detail: 'Nodes gone...'
+        });
+      }
+
+    } catch (e) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Incomming message error!',
+        detail: msg.mType
+      });
+      return;
+    }
   }
 
   MessageBack(msg: any) {
@@ -222,7 +275,7 @@ export class SendDpaPacketComponent implements OnInit {
               rData: this.dpaPacket
           },
           returnVerbose: true,
-          msgId: 'aba4c8d0-8833-435d-8946-d40341776b4d'
+          msgId: '...'
       }
     };
 
@@ -260,9 +313,11 @@ export class SendDpaPacketComponent implements OnInit {
 
     // Save message
     this.msgReq = JSON.stringify(json, null, 1);
+    this.msgReqCode = Prism.highlight(this.msgReq, Prism.languages.json);
 
     this.msg = 'waiting';
-    const ret = this.wsMsg.sendMessageConfirm(json, this.wsMsg.emitorDpa$);
+    //const ret = this.wsMsg.sendMessageConfirm(json, this.wsMsg.emitorDpa$);
+    const ret = this.wsMsg.msg_any(this.wsMsg.idSendDpa, json);
 
     if (!ret) {
 

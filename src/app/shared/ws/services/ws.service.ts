@@ -142,6 +142,8 @@ export class WsService {
         this.connection.onerror = (evnt: any) => {
           self.onlineStatus = false;
           self.emitorOnlineStatus$.emit(false);
+          console.log('-----CONNECTION ERROR -----');
+          console.log(JSON.stringify(evnt));
         };
   
         this.connection.onclose = (evnt: any) => {
@@ -150,6 +152,9 @@ export class WsService {
           this.connection.close();
           this.connection = null;
           this.connectionTimer(2000);
+
+          console.log('-----CONNECTION CLOSED -----');
+          console.log(JSON.stringify(evnt));
         };
   
         this.connection.onmessage = (message: any) => {
@@ -168,6 +173,8 @@ export class WsService {
         this.connection.send(msg);
         return true;
 
+      } else {
+        console.log('-----CONNECTION IS DOWN -----');
       }
 
       return false;

@@ -52,8 +52,9 @@
             </p-progressSpinner>
           </span>
           <span *ngIf="msg !== 'waiting'">
-            <label for="orgid">Insert JSON message</label>
-            <textarea id="orgid" rows="8" cols="30" pInputTextarea autoResize="true" [(ngModel)]="msgReq"></textarea>
+    <!--        <label for="orgid">Insert JSON message</label>  -->
+            <!-- <textarea id="orgid" rows="8" cols="30" pInputTextarea autoResize="true" [(ngModel)]="msgReq"></textarea> -->
+            <pre><code [innerHtml]="msgReqCode"></code></pre>
           </span>
         </p-card>
       </div>
@@ -64,8 +65,11 @@
             </p-progressSpinner>
           </span>
           <span *ngIf="msg !== 'waiting'">
-            <label for="orgid">Insert JSON message</label>
-            <textarea id="orgid" rows="8" cols="30" pInputTextarea autoResize="true" [(ngModel)]="msgResp"></textarea>
+          <!--  <label for="orgid">JSON response</label>  -->
+            
+            <pre><code [innerHtml]="msgRespCode"></code></pre>
+          <!--  <textarea pCode id="orgid" rows="8" cols="30" pInputTextarea autoResize="true"></textarea>  -->
+          
           </span>
         </p-card>
       </div>

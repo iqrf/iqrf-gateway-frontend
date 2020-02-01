@@ -14,7 +14,8 @@
                 </div>
                 <div class="ui-g-12">
                   <label for="bondAddress">Address</label>
-                  <input id="bondAddress" type="number" pInputText [(ngModel)]="bondAddress" style="width:100%" [disabled]="bondAutoAddr">
+                  <input id="bondAddress" type="number" pInputText [(ngModel)]="bondAddress" style="width:100%"
+                    [disabled]="bondAutoAddr">
                 </div>
                 <div class="ui-g-12">
                   <p-checkbox [(ngModel)]="bondAutoAddr" binary="true" label="Auto address"></p-checkbox>
@@ -33,9 +34,12 @@
                     label="Unbonds the Node only on Coordinator side" [disabled]="bondAutoAddr"></p-checkbox>
                 </div>
                 <div class="ui-g-12">
-                <button pButton type="button" label="Bond Node" style="margin-right: .65em" (click)="OnBondNode()"></button>
-                  <button pButton type="button" label="Unbond Node" style="margin-right: .65em" (click)="OnUnbondNode()" [disabled]="bondAutoAddr"></button>
-                  <button pButton type="button" label="Clear All Bonds" style="margin-right: .65em" (click)="OnClearAllBonds()" [disabled]="bondAutoAddr"></button>
+                  <button pButton type="button" label="Bond Node" style="margin-right: .65em"
+                    (click)="OnBondNode()"></button>
+                  <button pButton type="button" label="Unbond Node" style="margin-right: .65em" (click)="OnUnbondNode()"
+                    [disabled]="bondAutoAddr"></button>
+                  <button pButton type="button" label="Clear All Bonds" style="margin-right: .65em"
+                    (click)="OnClearAllBonds()" [disabled]="bondAutoAddr"></button>
                 </div>
               </div>
             </p-card>
@@ -66,7 +70,11 @@
           <div class="p-grid">
             <div class="ui-g-12">
               <div #container></div>
+              <button type="button" pButton icon="pi pi-refresh" iconPos="left" (click)="OnRefresh()"
+              style="float:left; margin-left: 440px;"></button>
             </div>
+
+
             <div class="ui-g-12">
               <div class="p-grid">
                 <div class="ui-g-3">
@@ -81,17 +89,17 @@
                 </div>
                 <div class="ui-g-3">
                   <div *ngIf="progSpinner === 'discovery'">
-                    <p-progressSpinner style="vertical-align:middle" [style]="{width: '40px', height: '40px'}" strokeWidth="4" animationDuration="1s">
+                    <p-progressSpinner style="vertical-align:middle" [style]="{width: '40px', height: '40px'}"
+                      strokeWidth="4" animationDuration="1s">
                     </p-progressSpinner>
                     <span style="vertical-align:middle; font-size:larger; font-weight: bold;"> Discoverying... </span>
                   </div>
-                  <!--
-                  <div *ngIf="progSpinner === 'bonding'">
-                    <p-progressSpinner style="vertical-align:middle" [style]="{width: '40px', height: '40px'}" strokeWidth="4" animationDuration="1s">
+                  <div *ngIf="progSpinner === 'refreshing'">
+                    <p-progressSpinner style="vertical-align:middle" [style]="{width: '40px', height: '40px'}"
+                      strokeWidth="4" animationDuration="1s">
                     </p-progressSpinner>
-                    <span style="vertical-align:middle; font-size:larger; font-weight: bold;"> Bonding... </span>
-                  </div> 
-                -->                 
+                    <span style="vertical-align:middle; font-size:larger; font-weight: bold;"> Refreshing... </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -100,6 +108,7 @@
       </div>
     </div>
   </p-tabPanel>
+
   <!--
   <p-tabPanel header="Map View">
     <div class="p-grid">
@@ -114,6 +123,10 @@
 
 <div class="loading-indicator" *ngIf="progSpinner === 'bonding'">
   <p-progressSpinner></p-progressSpinner>
-  <span style="vertical-align:middle; font-weight: bold; color: #2517df; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif"> Bonding... </span>
+  <span
+    style="vertical-align:middle; font-weight: bold; color: #2517df; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">
+    Bonding... </span>
 </div>
-
+<div>
+  <p-confirmDialog [style]="{width: '600px', height: '100px'}"></p-confirmDialog>
+</div>

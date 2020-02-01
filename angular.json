@@ -27,9 +27,12 @@
               "node_modules/primeicons/primeicons.css",
               "src/assets/themes/nova-light/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
-              "node_modules/primeflex/primeflex.css"              
+              "node_modules/primeflex/primeflex.css",
+              "node_modules/prismjs/themes/prism.css"            
             ],
-            "scripts": [],
+            "scripts": [
+              "node_modules/prismjs/prism.js"
+            ],
             "es5BrowserSupport": true
           },
           "configurations": {
