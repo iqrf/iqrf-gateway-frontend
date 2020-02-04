@@ -30,11 +30,13 @@ export class WsMsgsService {
   public emitorDpa$: EventEmitter<any> = new EventEmitter();
   public emitorNtwMgr$: EventEmitter<any> = new EventEmitter();
   public emitorTrConf$: EventEmitter<any> = new EventEmitter();
+  public emitorStdMgr$: EventEmitter<any> = new EventEmitter();
 
   // Components ids
   public idNtwMgr = 'netwMgr';
   public idSendDpa = 'sendDpa';
   public idTrConfig = 'trsConfig';
+  public idStdMgr = 'idStdMgr';
 
   constructor(public ws: WsService) {
     this.msgIdRand = Math.floor(Math.random() * 100) + 1;
@@ -106,74 +108,33 @@ export class WsMsgsService {
 
   private parseIncomingMsg(json: any) {
 
+    // console.log('JSON: ', JSON.stringify(json, null, 1));
+
     try {
         if (json.mType) {
-          if (json.data.msgId) {
-            if (json.data.msgId.indexOf(this.msgIdRand.toString())  === -1) {
-              // Not our message
-              return;
-            }
+          if (json.mType === 'messageError') {
+            console.log('JSON MSG ERROR: ', JSON.stringify(json, null, 1));
+          } else {
+            if (json.data.msgId) {
+              if (json.data.msgId.indexOf(this.msgIdRand.toString())  === -1) {
+                // Not our message
+                return;
+              }
 
-            // emit to components
-            if (json.data.msgId.indexOf(this.idNtwMgr.toString()) !== -1) {
-              this.emitorNtwMgr$.emit(json);
-
-            } else if (json.data.msgId.indexOf(this.idSendDpa.toString()) !== -1) {
-              this.emitorDpa$.emit(json);
-
-            } else if (json.data.msgId.indexOf(this.idTrConfig.toString()) !== -1) {
-              this.emitorTrConf$.emit(json);
-
-            }
-/*
-/*
-            if (json.mType === 'iqrfEmbedCoordinator_Discovery') {
-              this.emitorNtwMgr$.emit(json);
-
-            } else if (json.mType === 'iqrfEmbedCoordinator_DiscoveredDevices') {
-              this.emitorNtwMgr$.emit(json);
-
-            } else if (json.mType === 'iqrfEmbedCoordinator_BondedDevices') {
+              if (json.data.msgId.indexOf(this.idNtwMgr.toString()) !== -1) { // NetworkManagerComponent
                 this.emitorNtwMgr$.emit(json);
 
-            } else if (json.mType === 'iqrfEmbedCoordinator_ClearAllBonds') {
-              this.emitorNtwMgr$.emit(json);
+              } else if (json.data.msgId.indexOf(this.idSendDpa.toString()) !== -1) { // SendDpaPacketComponent
+                this.emitorDpa$.emit(json);
 
-            } else if (json.mType === 'iqrfEmbedCoordinator_BondNode') {
-              this.emitorNtwMgr$.emit(json);
+              } else if (json.data.msgId.indexOf(this.idTrConfig.toString()) !== -1) { // TrConfigurationComponent
+                this.emitorTrConf$.emit(json);
 
-            } else if (json.mType === 'iqrfEmbedCoordinator_ClearRemotelyBondedMid') {
-              this.emitorNtwMgr$.emit(json);
+              } else if (json.data.msgId.indexOf(this.idStdMgr.toString()) !== -1) { // StandardManagerComponent
+                this.emitorStdMgr$.emit(json);
 
-            } else if (json.mType === 'iqrfEmbedFrc_SendSelective') {
-              this.emitorNtwMgr$.emit(json);
-
-            }  else if (json.mType === 'iqrfEmbedCoordinator_RemoveBond') {
-              this.emitorNtwMgr$.emit(json);
-
-            } 
-            */
-
-        //    this.SendToComponent(json);
-  /*
-            if (this.traces) {
-
-              console.log('---------WsMsgsService:parseIncomingMsg()---------')
-              console.log(json);
-
+              }
             }
-  */
-/*
-            if (json.mType === 'rdsGetProjectList') {
-
-
-            } else if (json.mType === 'rdsGetProject') {
-
-
-            } else {
-
-            }
-            */
           }
         }
       } catch (e) {
@@ -208,7 +169,6 @@ export class WsMsgsService {
                 this.msgBack.emit.emit(json);
                 return;
               }
-
             }
           }
         }
@@ -424,14 +384,19 @@ export class WsMsgsService {
       data: {
           msgId: id + 'msg_iqmeshNetwork_AutoNetwork:' + this.msgIdRand.toString(),
           req: {
-            waves: wavesI,
-            emptyWaves: emptyWavesI
+            discoveryTxPower: 1,
+            discoveryBeforeStart: false,
+            actionRetries: 1,
+            stopConditions: {
+                waves: wavesI,
+                emptyWaves: emptyWavesI
+            }
           },
           returnVerbose: true
       }
     };
 
-    console.log(JSON.stringify(json));
+    console.log(JSON.stringify(json, null, 1));
 
     // Send message
     return this.ws.sendMessage(JSON.stringify(json));
@@ -450,11 +415,47 @@ export class WsMsgsService {
       }
     };
 
-    console.log(JSON.stringify(json));
+    // console.log(JSON.stringify(json));
 
     // Send message
     return this.ws.sendMessage(JSON.stringify(json));
   }
-  
+
+  public msg_iqrfBinaryoutput_Enumerate(id: string, nAdrI: number) {
+    const json: api.IqrfBinaryoutputEnumerateRequest100 = {
+      mType: 'iqrfBinaryoutput_Enumerate',
+      data: {
+          msgId: id + 'msg_iqrfBinaryoutput_Enumerate:' + this.msgIdRand.toString(),
+          timeout: 2,
+          req: {
+            nAdr: nAdrI,
+            param: []
+          },
+          returnVerbose: true
+      }
+    };
+
+    // Send message
+    return this.ws.sendMessage(JSON.stringify(json));
+  }
+
+  public msg_iqrfBinaryoutput_SetOutput(id: string, nAdrI: number) {
+    const json: api.IqrfBinaryoutputSetOutputRequest100 = {
+      mType: 'iqrfBinaryoutput_SetOutput',
+      data: {
+          msgId: id + 'msg_iqrfBinaryoutput_SetOutput:' + this.msgIdRand.toString(),
+          timeout: 2,
+          req: {
+            nAdr: nAdrI,
+            param: []
+          },
+          returnVerbose: true
+      }
+    };
+
+    // Send message
+    return this.ws.sendMessage(JSON.stringify(json));
+  }
+
 
 }

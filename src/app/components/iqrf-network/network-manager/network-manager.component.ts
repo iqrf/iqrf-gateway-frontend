@@ -37,7 +37,7 @@ export class NetworkManagerComponent implements OnInit {
   public discTxPower = 6;
   public discMaxNdAddr = 239;
 
-  progSpinner: 'none' | 'discovery' | 'bonding' | 'refreshing' = 'none';
+  progSpinner: 'none' | 'discovery' | 'bonding' | 'refreshing' | 'autonetwork' = 'none';
 
   // Graphics
   public stage: Konva.Stage;
@@ -257,6 +257,15 @@ export class NetworkManagerComponent implements OnInit {
           console.log(JSON.stringify(data));
 
           if (data.data.status === 0) {
+            if ('rsp' in data.data) {
+              if ('waveStateCode' in data.data.rsp) {
+                if (data.data.rsp.waveStateCode >= 10) {
+                  this.progSpinner = 'none';
+                  this.OnRefresh();
+                }
+              }
+            }
+            /*
             this.messageService.add({
               severity: 'success',
               summary: 'Great!',
@@ -264,6 +273,9 @@ export class NetworkManagerComponent implements OnInit {
             });
 
             console.log('ANTW: ' + JSON.stringify(data));
+            */
+
+            //this.progSpinner = 'none';
 
           } else {
             this.messageService.add({
@@ -271,9 +283,11 @@ export class NetworkManagerComponent implements OnInit {
               summary: '[' + data.data.status + ']',
               detail: 'Detail: ' + data.data.statusStr
             });
+
+            this.progSpinner = 'none';
           }
 
-          this.progSpinner = 'none';
+         // this.progSpinner = 'none';
 
       } else {
 
@@ -619,8 +633,8 @@ export class NetworkManagerComponent implements OnInit {
 
 
   public OnAutonetwStart() {
-    this.progSpinner = 'refreshing';
-    this.wsMsg.msg_iqmeshNetwork_AutoNetwork(this.wsMsg.idNtwMgr, 2, 2);
+    this.progSpinner = 'autonetwork';
+    this.wsMsg.msg_iqmeshNetwork_AutoNetwork(this.wsMsg.idNtwMgr, this.waves, this.emptyWaves);
 
   }
 

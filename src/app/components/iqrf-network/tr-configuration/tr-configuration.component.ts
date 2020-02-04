@@ -217,15 +217,6 @@ export class TrConfigurationComponent implements OnInit {
             detail: data.data.statusStr
           });
         }
-
-        /*
-        if (data.data.status === 0) {
-
-        } else {
-
-        }
-        */
-
       } else if (msg.mType === 'iqmeshNetwork_WriteTrConf') {
 
         const data = msg as api.IqmeshNetworkWriteTrConfResponse100;
@@ -237,15 +228,6 @@ export class TrConfigurationComponent implements OnInit {
             detail: data.data.statusStr
           });
         }
-
-        /*
-        if (data.data.status === 0) {
-
-        } else {
-
-        }
-        */
-
       } else {
 
         this.messageService.add({
@@ -255,7 +237,6 @@ export class TrConfigurationComponent implements OnInit {
         });
 
       }
-
 
     } catch (e) {
       this.messageService.add({

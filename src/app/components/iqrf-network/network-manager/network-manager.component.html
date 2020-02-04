@@ -81,16 +81,18 @@
               <div class="p-grid">
                 <div class="ui-g-12">
                   <label for="waves">Waves</label>
-                  <input id="waves" type="number" pInputText [(ngModel)]="waves" style="width:100%">
+                  <input id="waves" type="number" pInputText [(ngModel)]="waves" style="width:100%" [max]="10">
                 </div>
                 <div class="ui-g-12">
                   <label for="emptyWaves">Empty Waves</label>
-                  <input id="emptyWaves" type="number" pInputText [(ngModel)]="emptyWaves" style="width:100%">
-                </div>   
+                  <input id="emptyWaves" type="number" pInputText [(ngModel)]="emptyWaves" style="width:100%" [max]="5">
+                </div>
                 <div class="ui-g-12">
                   <button pButton type="button" label="Start" style="margin-right: .65em"
                     (click)="OnAutonetwStart()"></button>
-                </div>                             
+                  <button pButton type="button" label="Clear All Bonds" style="margin-right: .65em"
+                    (click)="OnClearAllBonds()" [disabled]="bondAutoAddr"></button>
+                </div>
               </div>
             </p-card>
 
@@ -160,6 +162,13 @@
     style="vertical-align:middle; font-weight: bold; color: #2517df; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">
     Bonding... </span>
 </div>
+<div class="loading-indicator" *ngIf="progSpinner === 'autonetwork'">
+  <p-progressSpinner></p-progressSpinner>
+  <span
+    style="vertical-align:middle; font-weight: bold; color: rgb(7, 148, 7); font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">
+    Autonetwork, please wait... </span>
+</div>
+
 <div>
   <p-confirmDialog [style]="{width: '600px', height: '100px'}"></p-confirmDialog>
 </div>
