@@ -21,6 +21,8 @@ export class NetworkManagerComponent implements OnInit {
   @ViewChild('container', {static: true})
   elem: ElementRef<HTMLDivElement>;
 
+  public networkWay: SelectItem [];
+  public selNetworkWay = 'iqmesh';
   public bondMethod: SelectItem [];
   public selBondMethod = 'local';
   public bondAddress = 1;
@@ -29,9 +31,12 @@ export class NetworkManagerComponent implements OnInit {
   public bondUnbondCoordOnly = false;
   public bondSmartConnectCode: string;
 
+  public waves = 2;
+  public emptyWaves = 2;
+
   public discTxPower = 6;
   public discMaxNdAddr = 239;
-  
+
   progSpinner: 'none' | 'discovery' | 'bonding' | 'refreshing' = 'none';
 
   // Graphics
@@ -52,6 +57,11 @@ export class NetworkManagerComponent implements OnInit {
 
     // Incomming message
     wsMsg.emitorNtwMgr$.subscribe( w => { this.IncommingMessage(w); });
+
+    this.networkWay = [
+      {label: 'IQ Mesh', value: 'iqmesh'},
+      {label: 'Autonetwork', value: 'autonetwork'}
+    ];
 
     this.bondMethod = [
       {label: 'Local bonding', value: 'local'},
@@ -119,15 +129,9 @@ export class NetworkManagerComponent implements OnInit {
         const data = msg as api.IqrfEmbedCoordinatorDiscoveredDevicesResponse100;
 
         if (data.data.status === 0) {
-          //if ('rsp' in data.data) {
-            //if ('result' in data.data.rsp) {
-              //if ('discoveredDevices' in data.data.rsp.result) {
           this.discoveredAddr = [];
           this.discoveredAddr = msg.data.rsp.result.discoveredDevices;
           this.RefreshNodes();
-             // }
-            //}
-          //}
 
           this.progSpinner = 'none';
 
@@ -181,7 +185,7 @@ export class NetworkManagerComponent implements OnInit {
 
           this.OnRefresh();
 
-          //this.wsMsg.msg_iqrfEmbedCoordinator_BondedDevices();
+          // this.wsMsg.msg_iqrfEmbedCoordinator_BondedDevices();
 
         } else {
           this.MessageError(data.data.status, data.data.statusStr);
@@ -191,8 +195,8 @@ export class NetworkManagerComponent implements OnInit {
         this.progSpinner = 'none';
         this.RefreshNodes();
 
-      } else if (msg.mType === 'iqrfEmbedCoordinator_BondNode') {
-        const data = msg as api.IqrfEmbedCoordinatorBondNodeResponse100;
+      } else if (msg.mType === 'iqmeshNetwork_BondNodeLocal') {
+        const data = msg as api.IqmeshNetworkBondNodeLocalResponse100;
 
         if (data.data.status === 0) {
           this.messageService.add({
@@ -219,7 +223,8 @@ export class NetworkManagerComponent implements OnInit {
             detail: 'Node ' + data.data.rsp.result.devNr + ' removed!'
           });
 
-         // this.OnBondedDevices();
+          // this.OnBondedDevices();
+          this.RefreshNodes();
 
         } else {
           this.MessageError(data.data.status, data.data.rsp.errorStr);
@@ -239,22 +244,36 @@ export class NetworkManagerComponent implements OnInit {
             detail: 'Node ' + data.data.rsp.nodesNr + ' removed!'
           });
 
-        } else {
-          this.MessageError(data.data.status, data.data.rsp.errorStr);
-
+          if ('rsp' in data) {
+            if (data.rsp === 255) {
+              const ret = this.wsMsg.msg_iqrfEmbedCoordinator_ClearAllBonds(this.wsMsg.idNtwMgr);
+              this.CheckFailState(ret);
+            }
+          }
         }
+      } else if (msg.mType === 'iqmeshNetwork_AutoNetwork') {
+          const data = msg as api.IqmeshNetworkAutoNetworkResponse100;
 
-        if (this.removeAddr.length > 0) {
-          const last = this.removeAddr.pop();
-          this.wsMsg.msg_iqmeshNetwork_RemoveBond(this.wsMsg.idNtwMgr, last);
+          console.log(JSON.stringify(data));
 
-        } else {
-          this.OnDiscovery();
+          if (data.data.status === 0) {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Great!',
+              detail: '...'
+            });
 
-        }
+            console.log('ANTW: ' + JSON.stringify(data));
 
-        this.progSpinner = 'none';
-        this.OnBondedDevices();
+          } else {
+            this.messageService.add({
+              severity: 'error',
+              summary: '[' + data.data.status + ']',
+              detail: 'Detail: ' + data.data.statusStr
+            });
+          }
+
+          this.progSpinner = 'none';
 
       } else {
 
@@ -263,8 +282,10 @@ export class NetworkManagerComponent implements OnInit {
           summary: 'Unknown message!',
           detail: 'Nodes gone...'
         });
+
+        this.progSpinner = 'none';
       }
-      
+
 
     } catch (e) {
       this.messageService.add({
@@ -272,6 +293,7 @@ export class NetworkManagerComponent implements OnInit {
         summary: 'Incomming message error!',
         detail: msg.mType
       });
+      this.progSpinner = 'none';
       return;
     }
   }
@@ -337,6 +359,11 @@ export class NetworkManagerComponent implements OnInit {
 
         } else {
 
+          this.wsMsg.msg_iqmeshNetwork_RemoveBond(this.wsMsg.idNtwMgr, 255);
+          /*
+
+          this.removeAddr = [];
+
           for (const bnd of this.bondedAddr) {
             const ra = bnd;
             this.removeAddr.push(ra);
@@ -346,7 +373,7 @@ export class NetworkManagerComponent implements OnInit {
             const last = this.removeAddr.pop();
             this.wsMsg.msg_iqmeshNetwork_RemoveBond(this.wsMsg.idNtwMgr, last);
           }
-
+*/
 
 
           /*
@@ -375,15 +402,29 @@ export class NetworkManagerComponent implements OnInit {
     });
   }
 
-  
+
   OnUnbondNode() {
     this.confirmationService.confirm({
       message: 'Unbond node with address ' + this.bondAddress + '?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
+
+        if (this.bondUnbondCoordOnly) {
+          const ret = this.wsMsg.msg_iqrfEmbedCoordinator_RemoveBond(this.wsMsg.idNtwMgr, this.bondAddress);
+          this.CheckFailState(ret);
+
+        } else {
+
+          const ret = this.wsMsg.msg_iqmeshNetwork_RemoveBond(this.wsMsg.idNtwMgr, this.bondAddress);
+          this.CheckFailState(ret);
+
+        }
+
+/*
         const ret = this.wsMsg.msg_iqrfEmbedCoordinator_RemoveBond(this.wsMsg.idNtwMgr, this.bondAddress);
         this.CheckFailState(ret);
+        */
       },
       reject: () => {
 
@@ -397,7 +438,8 @@ export class NetworkManagerComponent implements OnInit {
     if (!this.bondAutoAddr) {
       nAdr = this.bondAddress;
     }
-    const ret = this.wsMsg.msg_iqrfEmbedCoordinator_BondNode(this.wsMsg.idNtwMgr, nAdr);
+    // const ret = this.wsMsg.msg_iqrfEmbedCoordinator_BondNode(this.wsMsg.idNtwMgr, nAdr);
+    const ret = this.wsMsg.msg_iqmeshNetwork_BondNodeLocal(this.wsMsg.idNtwMgr, nAdr);
     this.CheckFailState(ret);
   }
 
@@ -573,6 +615,13 @@ export class NetworkManagerComponent implements OnInit {
 
   async delay(ms: number) {
     await new Promise(resolve => setTimeout(()=>resolve(), ms)).then(()=>console.log("fired"));
+  }
+
+
+  public OnAutonetwStart() {
+    this.progSpinner = 'refreshing';
+    this.wsMsg.msg_iqmeshNetwork_AutoNetwork(this.wsMsg.idNtwMgr, 2, 2);
+
   }
 
 }

@@ -29,10 +29,12 @@ export class WsMsgsService {
   public emitorJson$: EventEmitter<any> = new EventEmitter();
   public emitorDpa$: EventEmitter<any> = new EventEmitter();
   public emitorNtwMgr$: EventEmitter<any> = new EventEmitter();
+  public emitorTrConf$: EventEmitter<any> = new EventEmitter();
 
-  //Components ids
+  // Components ids
   public idNtwMgr = 'netwMgr';
   public idSendDpa = 'sendDpa';
+  public idTrConfig = 'trsConfig';
 
   constructor(public ws: WsService) {
     this.msgIdRand = Math.floor(Math.random() * 100) + 1;
@@ -118,6 +120,9 @@ export class WsMsgsService {
 
             } else if (json.data.msgId.indexOf(this.idSendDpa.toString()) !== -1) {
               this.emitorDpa$.emit(json);
+
+            } else if (json.data.msgId.indexOf(this.idTrConfig.toString()) !== -1) {
+              this.emitorTrConf$.emit(json);
 
             }
 /*
@@ -262,6 +267,11 @@ export class WsMsgsService {
     return this.ws.sendMessage(JSON.stringify(json));
   }
 
+  /**
+   * 
+   * @param id : Address if node to be unbonded. Address 255 unbonds all nodes.
+   * @param bondAddrI 
+   */
   public msg_iqmeshNetwork_RemoveBond(id: string, bondAddrI: number): boolean {
     const json: api.IqmeshNetworkRemoveBondRequest100 = {
       mType: 'iqmeshNetwork_RemoveBond',
@@ -276,20 +286,21 @@ export class WsMsgsService {
     };
     // Send message
     return this.ws.sendMessage(JSON.stringify(json));
-  }  
+  }
 
-  public msg_iqrfEmbedCoordinator_BondNode(id: string, reqAddrIn: number): boolean {
-    const json: api.IqrfEmbedCoordinatorBondNodeRequest100 = {
-      mType: 'iqrfEmbedCoordinator_BondNode',
+
+  /**
+   * 
+   * @param id 
+   * @param deviceAddrI : Address where to bond node.
+   */
+  public msg_iqmeshNetwork_BondNodeLocal(id: string, deviceAddrI: number): boolean {
+    const json: api.IqmeshNetworkBondNodeLocalRequest100 = {
+      mType: 'iqmeshNetwork_BondNodeLocal',
       data: {
-          msgId: id + 'msg_iqrfEmbedCoordinator_BondNode:' + this.msgIdRand.toString(),
-          timeout: 11000,
+          msgId: id + 'msg_iqmeshNetwork_BondNodeLocal:' + this.msgIdRand.toString(),
           req: {
-            nAdr: 0,
-            param: {
-              reqAddr: reqAddrIn,
-              bondingMask: 0
-            }
+            deviceAddr: deviceAddrI
           },
           returnVerbose: true
       }
@@ -406,5 +417,44 @@ export class WsMsgsService {
     // Send message
     return this.ws.sendMessage(JSON.stringify(jsonIn));
   }
+
+  public msg_iqmeshNetwork_AutoNetwork(id: string, wavesI: number, emptyWavesI: number) {
+    const json: api.IqmeshNetworkAutoNetworkRequest100 = {
+      mType: 'iqmeshNetwork_AutoNetwork',
+      data: {
+          msgId: id + 'msg_iqmeshNetwork_AutoNetwork:' + this.msgIdRand.toString(),
+          req: {
+            waves: wavesI,
+            emptyWaves: emptyWavesI
+          },
+          returnVerbose: true
+      }
+    };
+
+    console.log(JSON.stringify(json));
+
+    // Send message
+    return this.ws.sendMessage(JSON.stringify(json));
+  }
+
+  public msg_iqmeshNetwork_ReadTrConf(id: string, deviceAddrI: number) {
+    const json: api.IqmeshNetworkReadTrConfRequest100 = {
+      mType: 'iqmeshNetwork_ReadTrConf',
+      data: {
+          msgId: id + 'msg_iqmeshNetwork_ReadTrConf:' + this.msgIdRand.toString(),
+          repeat: 2,
+          req: {
+            deviceAddr: deviceAddrI
+          },
+          returnVerbose: true
+      }
+    };
+
+    console.log(JSON.stringify(json));
+
+    // Send message
+    return this.ws.sendMessage(JSON.stringify(json));
+  }
+  
 
 }

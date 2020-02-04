@@ -1,195 +1,244 @@
 <h1>TR configuration</h1>
-<p-tabView>
-  <p-tabPanel header="RF">
-    <h3 class="first">Change network address</h3>
-    <div class="ui-g" style="width:100%;margin-bottom:10px">
-      <div class="ui-g-12">
-        <label for="frm-iqrfNetAddressForm-address">New address</label>
-        <input style="width:100%;" id="frm-iqrfNetAddressForm-address" type="number" size="30" min="0" max="239"
-          pInputText [(ngModel)]="address">
-      </div>
-      <div class="ui-g-12">
-        <button pButton type="button" label="Set" icon="pi pi-check" style="margin-right: .65em"></button>
-      </div>
+
+<p-card header="TR address" styleClass="ui-card-shadow" class="cardOne">
+  <div class="p-grid">
+    <div class="p-col-12">
+
+      <label for="frm-iqrfNetAddressForm-address">New address</label>
+      <input style="width:100%;" id="frm-iqrfNetAddressForm-address" type="number" size="30" min="0" max="239"
+        pInputText [(ngModel)]="address">
     </div>
 
-    <h3 class="first">RF</h3>
-    <div class="ui-g" style="width:100%;margin-bottom:10px">
-      <div class="ui-g-12">
-        <label for="frm-iqrfNetAddressForm-rfband">RF Band</label>
-        <div style="width: 100%;">
-          <p-dropdown id="frm-iqrfNetAddressForm-rfband" [options]="rfBand" [(ngModel)]="selRfBand" placeholder="868"
-            disabled></p-dropdown>
+    <div class="p-col-12">
+      <button pButton type="button" label="Read" icon="pi pi-search" style="margin-right: .65em"
+        (click)="OnRead()"></button>
+
+      <span *ngIf="progSpinner === 'reading'">
+        <p-progressSpinner style="vertical-align:middle" [style]="{width: '30px', height: '30px'}" strokeWidth="8"
+          animationDuration=".5s">
+        </p-progressSpinner>
+      </span>
+
+    </div>
+  </div>
+</p-card>
+
+<span *ngIf="status === -1">
+  <p-card header="TR configuration" styleClass="ui-card-shadow" class="cardOne">
+    No data
+  </p-card>
+</span>
+
+<span *ngIf="status === 1001">
+  <p-card header="TR configuration" styleClass="ui-card-shadow" class="cardOne">
+    No bonded
+  </p-card>
+</span>
+
+<span *ngIf="status === 0">
+  <p-card header="TR configuration" styleClass="ui-card-shadow" class="cardOne">
+    <div class="p-grid">
+
+      <div class="p-col-12 p-md-12 p-lg-6">
+        <div class="p-grid">
+          <div class="ui-g-12">
+            <p-card header="RF" styleClass="ui-card-shadow" class="cardOne">
+              <div class="p-grid">
+
+                <div class="ui-g-12">
+                  <label for="frm-iqrfNetAddressForm-rfband">RF Band</label>
+                  <div style="width: 100%;">
+                    <p-dropdown id="frm-iqrfNetAddressForm-rfband" [options]="rfBandOptions" [(ngModel)]="rfBand"
+                      placeholder="868" disabled></p-dropdown>
+                  </div>
+                </div>
+                <div class="ui-g-12">
+                  <label for="frm-iqrfNetAddressForm-rfchannela">RF channel A</label>
+                  <input style="width:100%;" id="frm-iqrfNetAddressForm-rfchannela" type="number" size="30" min="0"
+                    max="67" pInputText [(ngModel)]="rfChannelA">
+                </div>
+                <div class="ui-g-12">
+                  <label for="frm-iqrfNetAddressForm-rfchannelb">RF channel B</label>
+                  <input style="width:100%;" id="frm-iqrfNetAddressForm-rfchannelb" type="number" size="30" min="0"
+                    max="67" pInputText [(ngModel)]="rfChannelB">
+                </div>
+                <div class="ui-g-12">
+                  <p-checkbox binary="false" label="STD and LP network" [(ngModel)]="stdAndLpNetwork"></p-checkbox>
+                </div>
+                <div class="ui-g-12">
+                  <label for="frm-iqrfNetAddressForm-txpower">TX power</label>
+                  <input style="width:100%;" id="frm-iqrfNetAddressForm-txpower" type="number" size="30" min="0" max="7"
+                    pInputText [(ngModel)]="txPower">
+                </div>
+                <div class="ui-g-12">
+                  <label for="frm-iqrfNetAddressForm-rxfilter">RX filter</label>
+                  <input style="width:100%;" id="frm-iqrfNetAddressForm-rxfilter" type="number" size="30" min="0"
+                    max="64" pInputText [(ngModel)]="rxFilter">
+                </div>
+                <div class="ui-g-12">
+                  <label for="frm-iqrfNetAddressForm-lpRxTimeout">LP RX timeout</label>
+                  <input style="width:100%;" id="frm-iqrfNetAddressForm-lpRxTimeout" type="number" size="30" min="1"
+                    max="255" pInputText [(ngModel)]="lpRxTimeout">
+                </div>
+                <div class="ui-g-12"></div>
+
+              </div>
+            </p-card>
+          </div>
+          <div class="ui-g-12">
+            <p-card header="RFPGM" styleClass="ui-card-shadow" class="cardOne">
+              <div class="p-grid">
+
+                <div class="ui-g-12">
+                  <p-checkbox binary="false" label="Enable after reset" [(ngModel)]="rfPgmEnableAfterReset">
+                  </p-checkbox>
+                </div>
+                <div class="ui-g-12">
+                  <p-checkbox binary="true" label="Termination after ~1 minute" [(ngModel)]="rfPgmTerminateAfter1Min">
+                  </p-checkbox>
+                </div>
+                <div class="ui-g-12">
+                  <p-checkbox binary="true" label="termination by MCU pin" [(ngModel)]="rfPgmTerminateMcuPin">
+                  </p-checkbox>
+                </div>
+                <div class="ui-g-12">
+                  <p-checkbox binary="true" label="Dual channel" [(ngModel)]="rfPgmDualChannel"></p-checkbox>
+                </div>
+                <div class="ui-g-12">
+                  <p-checkbox binary="false" label="LP mode" [(ngModel)]="rfPgmLpMode"></p-checkbox>
+                </div>
+                <div class="ui-g-12">
+                  <p-checkbox binary="false" label="Incorrect upload" [(ngModel)]="rfPgmIncorrectUpload"></p-checkbox>
+                </div>
+                <div class="ui-g-12"></div>
+                <div class="ui-g-12"></div>
+                <div class="ui-g-12"></div>
+                <div class="ui-g-12"></div>
+                <div class="ui-g-12"></div>
+                <div class="ui-g-12">
+                  <button pButton type="button" label="Save" icon="pi pi-check" style="margin-right: .65em"
+                    (click)="OnSave()"></button>
+                </div>
+              </div>
+            </p-card>
+          </div>
         </div>
       </div>
-      <div class="ui-g-12">
-        <label for="frm-iqrfNetAddressForm-rfchannela">RF channel A</label>
-        <input style="width:100%;" id="frm-iqrfNetAddressForm-rfchannela" type="number" size="30" min="0" max="67"
-          pInputText [(ngModel)]="rfChannelA">
-      </div>
-      <div class="ui-g-12">
-        <label for="frm-iqrfNetAddressForm-rfchannelb">RF channel B</label>
-        <input style="width:100%;" id="frm-iqrfNetAddressForm-rfchannelb" type="number" size="30" min="0" max="67"
-          pInputText [(ngModel)]="rfChannelB">
-      </div>
-      <div class="ui-g-12">
-        <p-checkbox binary="false" label="STD and LP network" [(ngModel)]="stdLp"></p-checkbox>
-      </div>
-      <div class="ui-g-12">
-        <label for="frm-iqrfNetAddressForm-txpower">TX power</label>
-        <input style="width:100%;" id="frm-iqrfNetAddressForm-txpower" type="number" size="30" min="0" max="7"
-          pInputText [(ngModel)]="txPower">
-      </div>
-      <div class="ui-g-12">
-        <label for="frm-iqrfNetAddressForm-rxfilter">RX filter</label>
-        <input style="width:100%;" id="frm-iqrfNetAddressForm-rxfilter" type="number" size="30" min="0" max="64"
-          pInputText [(ngModel)]="rxFilter">
-      </div>
-      <div class="ui-g-12">
-        <label for="frm-iqrfNetAddressForm-lpRxTimeout">LP RX timeout</label>
-        <input style="width:100%;" id="frm-iqrfNetAddressForm-lpRxTimeout" type="number" size="30" min="1" max="255"
-          pInputText [(ngModel)]="lpRxTimeout">
-      </div>
-    </div>
+      <div class="p-col-12 p-md-12 p-lg-6">
+        <div class="p-grid">
+          <div class="ui-g-12">
+            <p-card header="DPA - Embedded peripherals" styleClass="ui-card-shadow" class="cardOne">
+              <div class="p-grid">
+                <div class="ui-g-12">
+                  <p-checkbox binary="false" label="EEPROM" [(ngModel)]="eeprom"></p-checkbox>
+                </div>
+                <div class="ui-g-12">
+                  <p-checkbox binary="false" label="EEEPROM" [(ngModel)]="eeeprom"></p-checkbox>
+                </div>
+                <div class="ui-g-12">
+                  <p-checkbox binary="false" label="RAM" [(ngModel)]="ram"></p-checkbox>
+                </div>
+                <div class="ui-g-12">
+                  <p-checkbox binary="false" label="LEDR" [(ngModel)]="ledr"></p-checkbox>
+                </div>
+                <div class="ui-g-12">
+                  <p-checkbox binary="false" label="LEDG" [(ngModel)]="ledg"></p-checkbox>
+                </div>
+                <div class="ui-g-12">
+                  <p-checkbox binary="false" label="SPI" [(ngModel)]="spi"></p-checkbox>
+                </div>
+                <div class="ui-g-12">
+                  <p-checkbox binary="false" label="IO" [(ngModel)]="io"></p-checkbox>
+                </div>
+                <div class="ui-g-12">
+                  <p-checkbox binary="false" label="Thermometer" [(ngModel)]="thermometer"></p-checkbox>
+                </div>
+                <div class="ui-g-12">
+                  <p-checkbox binary="false" label="UART" [(ngModel)]="uart"></p-checkbox>
+                </div>
+                <div class="ui-g-12">
+                  <p-checkbox binary="false" label="FRC" [(ngModel)]="frc"></p-checkbox>
+                </div>
+                <div class="ui-g-12">
+                  &nbsp;
+                </div>
+                <div class="ui-g-12"></div>
+                <div class="ui-g-12"></div>
+                <div class="ui-g-12"></div>
+                <div class="ui-g-12"></div>
 
-    <h3 class="first">RFPGM</h3>
-    <div class="ui-g" style="width:100%;margin-bottom:10px">
-      <div class="ui-g-12">
-        <p-checkbox binary="false" label="Enable after reset" [(ngModel)]="enAfterReset"></p-checkbox>
-      </div>
-      <div class="ui-g-12">
-        <p-checkbox binary="true" label="Termination after ~1 minute" [(ngModel)]="terminationAfter"></p-checkbox>
-      </div>
-      <div class="ui-g-12">
-        <p-checkbox binary="true" label="termination by MCU pin" [(ngModel)]="terminationByMcu"></p-checkbox>
-      </div>
-      <div class="ui-g-12">
-        <p-checkbox binary="true" label="Dual channel" [(ngModel)]="dualChannel"></p-checkbox>
-      </div>
-      <div class="ui-g-12">
-        <p-checkbox binary="false" label="LP mode" [(ngModel)]="LPmode"></p-checkbox>
-      </div>
-      <div class="ui-g-12">
-        <p-checkbox binary="false" label="Incorrect upload" [(ngModel)]="incorrectupload"></p-checkbox>
-      </div>
-      <div class="ui-g-12">
-        <button pButton type="button" label="Save" icon="pi pi-check" style="margin-right: .65em"></button>
-      </div>
-    </div>
-  </p-tabPanel>
-  <p-tabPanel header="DPA">
-    <h3 class="first">Change network address</h3>
-    <div class="ui-g" style="width:100%;margin-bottom:10px">
-      <div class="ui-g-12">
-        <label for="frm-iqrfNetAddressForm-address">New address</label>
-        <input style="width:100%;" id="frm-iqrfNetAddressForm-address" type="number" size="30" min="0" max="239"
-          pInputText [(ngModel)]="address">
-      </div>
-      <div class="ui-g-12">
-        <button pButton type="button" label="Set" icon="pi pi-check" style="margin-right: .65em"></button>
-      </div>
-    </div>
 
-    <h3 class="first">Embedded peripherals</h3>
-    <div class="ui-g" style="width:100%;margin-bottom:10px">
-      <div class="ui-g-12">
-        <p-checkbox binary="false" label="EEPROM" [(ngModel)]="eeprom"></p-checkbox>
-      </div>
-      <div class="ui-g-12">
-        <p-checkbox binary="false" label="EEEPROM" [(ngModel)]="eeeprom"></p-checkbox>
-      </div>
-      <div class="ui-g-12">
-        <p-checkbox binary="false" label="RAM" [(ngModel)]="ram"></p-checkbox>
-      </div>
-      <div class="ui-g-12">
-        <p-checkbox binary="false" label="LEDR" [(ngModel)]="ledr"></p-checkbox>
-      </div>
-      <div class="ui-g-12">
-        <p-checkbox binary="false" label="LEDG" [(ngModel)]="ledg"></p-checkbox>
-      </div>
-      <div class="ui-g-12">
-        <p-checkbox binary="false" label="SPI" [(ngModel)]="spi"></p-checkbox>
-      </div>
-      <div class="ui-g-12">
-        <p-checkbox binary="false" label="IO" [(ngModel)]="io"></p-checkbox>
-      </div>
-      <div class="ui-g-12">
-        <p-checkbox binary="false" label="Thermometer" [(ngModel)]="thermometer"></p-checkbox>
-      </div>
-      <div class="ui-g-12">
-        <p-checkbox binary="false" label="UART" [(ngModel)]="uart"></p-checkbox>
-      </div>
-      <div class="ui-g-12">
-        <p-checkbox binary="false" label="FRC" [(ngModel)]="frc"></p-checkbox>
-      </div>
-    </div>
+              </div>
+            </p-card>
+          </div>
+          <div class="ui-g-12">
+            <p-card header="DPA - Other" styleClass="ui-card-shadow" class="cardOne">
+              <div class="p-grid">
 
-    <h3 class="first">Other</h3>
-    <div class="ui-g" style="width:100%;margin-bottom:10px">
-      <div class="ui-g-12">
-        <p-checkbox binary="false" label="Custom DPA Handler" [(ngModel)]="custDpa"></p-checkbox>
-      </div>
-      <div class="ui-g-12">
-        <p-checkbox binary="false" label="IO Setup" [(ngModel)]="ioSetup"></p-checkbox>
-      </div>
-      <div class="ui-g-12">
-        <p-checkbox binary="false" label="Autoexec" [(ngModel)]="autoexec"></p-checkbox>
-      </div>
-      <div class="ui-g-12">
-        <p-checkbox binary="false" label="Routing off" [(ngModel)]="routingOff"></p-checkbox>
-      </div>
-      <div class="ui-g-12">
-        <p-checkbox binary="false" label="Enable peer to peer" [(ngModel)]="enPtp"></p-checkbox>
-      </div>
-      <div class="ui-g-12">
-        <p-checkbox binary="false" label="Enable DPA peer to peer" [(ngModel)]="enDpa"></p-checkbox>
-      </div>
-      <div class="ui-g-12">
-        <p-checkbox binary="false" label="Stay awake when not bonded" [(ngModel)]="stayAwake"></p-checkbox>
-      </div>
-      <div class="ui-g-12">
-        <label for="frm-iqrfNetAddressForm-baudrate">UART interface baud rate</label>
-        <div style="width: 100%;">
-          <p-dropdown id="frm-iqrfNetAddressForm-baudrate" [options]="baudRates" [(ngModel)]="selBaudRate"></p-dropdown>
+                <div class="ui-g-12">
+                  <p-checkbox binary="false" label="Custom DPA Handler" [(ngModel)]="customDpaHandler"></p-checkbox>
+                </div>
+                <div class="ui-g-12">
+                  <p-checkbox binary="false" label="IO Setup" [(ngModel)]="ioSetup"></p-checkbox>
+                </div>
+                <div class="ui-g-12">
+                  <p-checkbox binary="false" label="Autoexec" [(ngModel)]="dpaAutoexec"></p-checkbox>
+                </div>
+                <div class="ui-g-12">
+                  <p-checkbox binary="false" label="Routing off" [(ngModel)]="routingOff"></p-checkbox>
+                </div>
+                <div class="ui-g-12">
+                  <p-checkbox binary="false" label="Enable peer to peer" [(ngModel)]="peerToPeer"></p-checkbox>
+                </div>
+                <div class="ui-g-12">
+                  <p-checkbox binary="false" label="Enable DPA peer to peer" [(ngModel)]="dpaPeerToPeer"></p-checkbox>
+                </div>
+                <div class="ui-g-12">
+                  <p-checkbox binary="false" label="Stay awake when not bonded" [(ngModel)]="neverSleep"></p-checkbox>
+                </div>
+                <div class="ui-g-12">
+                  <label for="frm-iqrfNetAddressForm-baudrate">UART interface baud rate</label>
+                  <div style="width: 100%;">
+                    <p-dropdown id="frm-iqrfNetAddressForm-baudrate" [options]="uartBaudrateOptions"
+                      [(ngModel)]="uartBaudrate">
+                    </p-dropdown>
+                  </div>
+                </div>
+                <div class="ui-g-12"></div>
+              </div>
+            </p-card>
+          </div>
         </div>
       </div>
+
+      <div class="ui-g-12">
+        <p-card header="Security" styleClass="ui-card-shadow" class="cardOne">
+          <div class="p-grid">
+            <div class="ui-g-12">
+              <label for="frm-iqrfNetAddressForm-inputformat">Input format</label>
+              <div style="width: 100%;">
+                <p-dropdown id="frm-iqrfNetAddressForm-inputformat" [options]="inputformat"
+                  [(ngModel)]="selInputFormat">
+                </p-dropdown>
+              </div>
+            </div>
+            <div class="ui-g-12">
+              <label for="frm-iqrfNetAddressForm-password">Password</label>
+              <input style="width:100%;" id="frm-iqrfNetAddressForm-password" type="password" pPassword
+                [(ngModel)]="password">
+            </div>
+            <div class="ui-g-12">
+              <button pButton type="button" label="Set Access password" icon="pi pi-check"
+                style="margin-right: .65em"></button>
+              <button pButton type="button" label="Set User Key" icon="pi pi-check" style="margin-right: .65em"
+                class="ui-button-secondary"></button>
+            </div>
+          </div>
+        </p-card>
+      </div>
+
     </div>
+  </p-card>
+</span>
 
-  </p-tabPanel>
-  <p-tabPanel header="Security">
-    <h3 class="first">Change network address</h3>
-    <div class="ui-g" style="width:100%;margin-bottom:10px">
-      <div class="ui-g-12">
-        <label for="frm-iqrfNetAddressForm-address">New address</label>
-        <input style="width:100%;" id="frm-iqrfNetAddressForm-address" type="number" size="30" min="0" max="239"
-          pInputText [(ngModel)]="address">
-      </div>
-      <div class="ui-g-12">
-        <button pButton type="button" label="Set" icon="pi pi-check" style="margin-right: .65em"></button>
-      </div>
-    </div>
-
-    <h3 class="first">Security</h3>
-    <div class="ui-g" style="width:100%;margin-bottom:10px">
-      <div class="ui-g-12">
-        <label for="frm-iqrfNetAddressForm-inputformat">Input format</label>
-        <div style="width: 100%;">
-          <p-dropdown id="frm-iqrfNetAddressForm-inputformat" [options]="inputformat" [(ngModel)]="selInputFormat">
-          </p-dropdown>
-        </div>
-      </div>
-      <div class="ui-g-12">
-        <label for="frm-iqrfNetAddressForm-password">Password</label>
-        <input style="width:100%;" id="frm-iqrfNetAddressForm-password" type="password" 
-        pPassword  [(ngModel)]="password">
-      </div>      
-      <div class="ui-g-12">
-        <button pButton type="button" label="Set Access password" icon="pi pi-check"
-          style="margin-right: .65em"></button>
-        <button pButton type="button" label="Set User Key" icon="pi pi-check" style="margin-right: .65em" class="ui-button-secondary"></button>
-      </div>
-    </div>
-
-
-  </p-tabPanel>
-</p-tabView>
+<p-toast position="top-right"></p-toast>

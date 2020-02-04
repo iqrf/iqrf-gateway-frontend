@@ -3,7 +3,14 @@
   <p-tabPanel header="Control">
     <div class="p-grid">
       <div class="p-col-12 p-md-12 p-lg-6">
-        <div class="p-grid">
+        <label for="networkWay">Way</label>
+        <p-dropdown id="networkWay" [options]="networkWay" [(ngModel)]="selNetworkWay" [style]="{'width':'100%'}">
+        </p-dropdown>
+      </div>
+      <div class="p-col-12 p-md-12 p-lg-6">
+      </div>
+      <div class="p-col-12 p-md-12 p-lg-6">
+        <div class="p-grid" *ngIf="selNetworkWay === 'iqmesh'">
           <div class="ui-g-12">
             <p-card header="Bonding" styleClass="ui-card-shadow" class="cardOne">
               <div class="p-grid">
@@ -64,6 +71,32 @@
             </p-card>
           </div>
         </div>
+
+
+        <!-- ******** Autonetwork ******* -->
+
+        <div class="p-grid" *ngIf="selNetworkWay === 'autonetwork'">
+          <div class="ui-g-12">
+            <p-card header="Autonetwork" styleClass="ui-card-shadow" class="cardOne">
+              <div class="p-grid">
+                <div class="ui-g-12">
+                  <label for="waves">Waves</label>
+                  <input id="waves" type="number" pInputText [(ngModel)]="waves" style="width:100%">
+                </div>
+                <div class="ui-g-12">
+                  <label for="emptyWaves">Empty Waves</label>
+                  <input id="emptyWaves" type="number" pInputText [(ngModel)]="emptyWaves" style="width:100%">
+                </div>   
+                <div class="ui-g-12">
+                  <button pButton type="button" label="Start" style="margin-right: .65em"
+                    (click)="OnAutonetwStart()"></button>
+                </div>                             
+              </div>
+            </p-card>
+
+          </div>
+        </div>
+
       </div>
       <div class="p-col-12 p-md-12 p-lg-6">
         <p-card header="Devices info" styleClass="ui-card-shadow" class="cardOne">
@@ -71,7 +104,7 @@
             <div class="ui-g-12">
               <div #container></div>
               <button type="button" pButton icon="pi pi-refresh" iconPos="left" (click)="OnRefresh()"
-              style="float:left; margin-left: 440px;"></button>
+                style="float:left; margin-left: 440px;"></button>
             </div>
 
 
@@ -89,7 +122,7 @@
                 </div>
                 <div class="ui-g-3">
                   <div *ngIf="progSpinner === 'discovery'">
-                    <p-progressSpinner style="vertical-align:middle" [style]="{width: '40px', height: '40px'}"
+                    <p-progressSpinner style="vertical-align:middle" [style]="{width: '30px', height: '30px'}"
                       strokeWidth="4" animationDuration="1s">
                     </p-progressSpinner>
                     <span style="vertical-align:middle; font-size:larger; font-weight: bold;"> Discoverying... </span>
