@@ -53,3 +53,11 @@ h1 {
     font: bold 24px 'Open Sans', sans-serif;
 }
 
+.ui-tooltip .ui-tooltip-text {
+  background-color: rgb(22, 142, 223) !important;
+}
+
+.ui-tooltip-arrow {
+  color: rgb(22, 142, 223) !important;
+
+}

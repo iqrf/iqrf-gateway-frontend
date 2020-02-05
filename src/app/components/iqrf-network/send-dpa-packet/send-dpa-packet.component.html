@@ -5,12 +5,12 @@
       <p-card header="IQRF Binary output" styleClass="ui-card-shadow" class="cardOne">
         <div class="ui-g" style="width:100%;margin-bottom:10px">
           <div class="ui-g-12">
-            <label for="frm-dpaPacket-dpaPacket">DPA packet</label>
+            <label for="frm-dpaPacket-dpaPacket" pTooltip="Enter DPA packet e.g. 00.00.00.3f.ff.ff" tooltipPosition="top">DPA packet</label>
             <input style="width:100%;" id="frm-dpaPacket-dpaPacket" type="string" pInputText [(ngModel)]="dpaPacket"
               value="dpaPacket">
           </div>
           <div class="ui-g-6">
-            <p-checkbox binary="true" label="Set own NADR" [(ngModel)]="ownNadr"></p-checkbox>
+            <p-checkbox binary="true" label="Set own NADR" [(ngModel)]="ownNadr" pTooltip="Enable custom NADR" tooltipPosition="top"></p-checkbox>
           </div>
           <div class="ui-g-6">
             <p-checkbox binary="true" label="Set own DPA timeout" [(ngModel)]="ownDpaTimeout"></p-checkbox>

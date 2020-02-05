@@ -31,6 +31,7 @@ import {TableModule} from 'primeng/table';
 import {DynamicDialogModule} from 'primeng/dynamicdialog';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {CodeHighlighterModule} from 'primeng/codehighlighter';
+import {TooltipModule} from 'primeng/tooltip';
 
 
 import { SelectedComponentsComponent } from './components/config/selected-components/selected-components.component';
@@ -136,7 +137,8 @@ import { EthernetConnectionsDlgComponent } from './components/network-manager/et
     DynamicDialogModule,
     KonvaModule,
     ConfirmDialogModule,
-    CodeHighlighterModule
+    CodeHighlighterModule,
+    TooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent],
