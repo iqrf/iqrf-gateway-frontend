@@ -16,12 +16,12 @@
             <p-checkbox binary="true" label="Set own DPA timeout" [(ngModel)]="ownDpaTimeout"></p-checkbox>
           </div>
           <div class="p-col-12 p-md-6 p-lg-6">
-            <label for="frm-dpaPacket-custNadr">Custom NADR</label>
+            <label for="frm-dpaPacket-custNadr" pTooltip="Enter custom NADR" tooltipPosition="top">Custom NADR</label>
             <input style="width:100%;" id="frm-dpaPacket-custNadr" type="number" size="30" min="0" max="67"
               [disabled]="!ownNadr" pInputText [(ngModel)]="custNadr">
           </div>
           <div class="p-col-12 p-md-6 p-lg-6">
-            <label for="frm-dpaPacket-dpaTimeout">DPA timeout (ms)</label>
+            <label for="frm-dpaPacket-dpaTimeout" pTooltip="Enter DPA message timeout" tooltipPosition="top">DPA timeout (ms)</label>
             <input style="width:100%;" id="frm-dpaPacket-dpaTimeout" type="number" size="30" min="0" max="67"
               [disabled]="!ownDpaTimeout" pInputText [(ngModel)]="dpaTimeout">
           </div>

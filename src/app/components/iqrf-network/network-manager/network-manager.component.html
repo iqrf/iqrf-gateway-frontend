@@ -3,7 +3,7 @@
   <p-tabPanel header="Control">
     <div class="p-grid">
       <div class="p-col-12 p-md-12 p-lg-6">
-        <label for="networkWay">Way</label>
+        <label for="networkWay" pTooltip="Select method for bonding new nodes" tooltipPosition="top">Method</label>
         <p-dropdown id="networkWay" [options]="networkWay" [(ngModel)]="selNetworkWay" [style]="{'width':'100%'}">
         </p-dropdown>
       </div>
@@ -15,30 +15,30 @@
             <p-card header="Bonding" styleClass="ui-card-shadow" class="cardOne">
               <div class="p-grid">
                 <div class="ui-g-12">
-                  <label for="bondMethod">Bonding method</label>
+                  <label for="bondMethod" pTooltip="Select Local bonding or Smart Connect" tooltipPosition="top">Bonding method</label>
                   <p-dropdown id="bondMethod" [options]="bondMethod" [(ngModel)]="selBondMethod"
                     [style]="{'width':'100%'}"></p-dropdown>
                 </div>
                 <div class="ui-g-12">
-                  <label for="bondAddress">Address</label>
+                  <label for="bondAddress" pTooltip="Bond to this address" tooltipPosition="top">Address</label>
                   <input id="bondAddress" type="number" pInputText [(ngModel)]="bondAddress" style="width:100%"
                     [disabled]="bondAutoAddr">
                 </div>
                 <div class="ui-g-12">
-                  <p-checkbox [(ngModel)]="bondAutoAddr" binary="true" label="Auto address"></p-checkbox>
+                  <p-checkbox [(ngModel)]="bondAutoAddr" binary="true" label="Auto address" pTooltip="Gateway will select address" tooltipPosition="top"></p-checkbox>
                 </div>
                 <div class="ui-g-12">
-                  <label for="bondTestRetries">Bonding test retries</label>
+                  <label for="bondTestRetries" pTooltip="Retries of bonding attempts" tooltipPosition="top">Bonding test retries</label>
                   <input id="bondTestRetries" type="number" pInputText [(ngModel)]="bondTestRetries" style="width:100%">
                 </div>
                 <div class="ui-g-12" *ngIf="selBondMethod === 'smart'">
-                  <label for="bondSmartConnectCode">IQRF Smart Connect Code</label>
+                  <label for="bondSmartConnectCode" pTooltip="Enter code for bonding" tooltipPosition="top">IQRF Smart Connect Code</label>
                   <input id="bondSmartConnectCode" type="text" pInputText [(ngModel)]="bondSmartConnectCode"
                     style="width:100%">
                 </div>
                 <div class="ui-g-12">
                   <p-checkbox [(ngModel)]="bondUnbondCoordOnly" binary="true"
-                    label="Unbonds the Node only on Coordinator side" [disabled]="bondAutoAddr"></p-checkbox>
+                    label="Unbonds the Node only on Coordinator side" [disabled]="bondAutoAddr" pTooltip="Removes bonds from coordinator only" tooltipPosition="top"></p-checkbox>
                 </div>
                 <div class="ui-g-12">
                   <button pButton type="button" label="Bond Node" style="margin-right: .65em"
@@ -55,12 +55,12 @@
             <p-card header="Discovery" styleClass="ui-card-shadow" class="cardOne">
               <div class="p-grid">
                 <div class="ui-g-12">
-                  <label for="discTxPower">TX Power</label>
+                  <label for="discTxPower" pTooltip="Enter power of TX signal 1-7" tooltipPosition="top">TX Power</label>
                   <input id="discTxPower" type="number" pInputText [(ngModel)]="discTxPower" style="width:100%"
                     [min]="0" [max]="7">
                 </div>
                 <div class="ui-g-12">
-                  <label for="discMaxNdAddr">Max. Node Address</label>
+                  <label for="discMaxNdAddr" pTooltip="limit max node address" tooltipPosition="top">Max. Node Address</label>
                   <input id="discMaxNdAddr" type="number" pInputText [(ngModel)]="discMaxNdAddr" style="width:100%">
                 </div>
                 <div class="ui-g-12">
@@ -80,11 +80,11 @@
             <p-card header="Autonetwork" styleClass="ui-card-shadow" class="cardOne">
               <div class="p-grid">
                 <div class="ui-g-12">
-                  <label for="waves">Waves</label>
+                  <label for="waves" pTooltip="Finish after specified amount of waves" tooltipPosition="top">Waves</label>
                   <input id="waves" type="number" pInputText [(ngModel)]="waves" style="width:100%" [max]="10">
                 </div>
                 <div class="ui-g-12">
-                  <label for="emptyWaves">Empty Waves</label>
+                  <label for="emptyWaves" pTooltip="Finish after specified amoun of empty waves" tooltipPosition="top">Empty Waves</label>
                   <input id="emptyWaves" type="number" pInputText [(ngModel)]="emptyWaves" style="width:100%" [max]="5">
                 </div>
                 <div class="ui-g-12">

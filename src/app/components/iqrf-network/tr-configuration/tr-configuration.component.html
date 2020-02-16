@@ -4,7 +4,7 @@
   <div class="p-grid">
     <div class="p-col-12">
 
-      <label for="frm-iqrfNetAddressForm-address">New address</label>
+      <label for="frm-iqrfNetAddressForm-address" pTooltip="Enter address of transceiver you want to work with" tooltipPosition="top">Address</label>
       <input style="width:100%;" id="frm-iqrfNetAddressForm-address" type="number" size="30" min="0" max="239"
         pInputText [(ngModel)]="address">
     </div>
@@ -223,7 +223,7 @@
               </div>
             </div>
             <div class="ui-g-12">
-              <label for="frm-iqrfNetAddressForm-password">Password</label>
+              <label for="frm-iqrfNetAddressForm-password" pTooltip="Enter new password for bonding" tooltipPosition="top">Password</label>
               <input style="width:100%;" id="frm-iqrfNetAddressForm-password" type="password" pPassword
                 [(ngModel)]="password">
             </div>

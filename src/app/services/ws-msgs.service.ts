@@ -426,10 +426,9 @@ export class WsMsgsService {
       mType: 'iqrfBinaryoutput_Enumerate',
       data: {
           msgId: id + 'msg_iqrfBinaryoutput_Enumerate:' + this.msgIdRand.toString(),
-          timeout: 2,
           req: {
             nAdr: nAdrI,
-            param: []
+            param: {}
           },
           returnVerbose: true
       }
@@ -439,15 +438,16 @@ export class WsMsgsService {
     return this.ws.sendMessage(JSON.stringify(json));
   }
 
-  public msg_iqrfBinaryoutput_SetOutput(id: string, nAdrI: number) {
+  public msg_iqrfBinaryoutput_SetOutput(id: string, nAdrI: number, binOutsI: {index: number, state: boolean} []) {
     const json: api.IqrfBinaryoutputSetOutputRequest100 = {
       mType: 'iqrfBinaryoutput_SetOutput',
       data: {
           msgId: id + 'msg_iqrfBinaryoutput_SetOutput:' + this.msgIdRand.toString(),
-          timeout: 2,
           req: {
             nAdr: nAdrI,
-            param: []
+            param: {
+              binOuts: binOutsI
+            }
           },
           returnVerbose: true
       }
@@ -457,5 +457,134 @@ export class WsMsgsService {
     return this.ws.sendMessage(JSON.stringify(json));
   }
 
+  public msg_iqrfLight_Enumerate(id: string, nAdrI: number) {
+    const json: api.IqrfLightEnumerateRequest100 = {
+      mType: 'iqrfLight_Enumerate',
+      data: {
+          msgId: id + 'msg_iqrfLight_Enumerate:' + this.msgIdRand.toString(),
+          timeout: 2,
+          req: {
+            nAdr: nAdrI,
+            param: {}
+          },
+          returnVerbose: true
+      }
+    };
+
+    // Send message
+    return this.ws.sendMessage(JSON.stringify(json));
+  }
+
+  public msg_iqrfLight_SetPower(id: string, nAdrI: number, lightsI: {index: number, power: number} []) {
+    const json: api.IqrfLightSetPowerRequest100 = {
+      mType: 'iqrfLight_SetPower',
+      data: {
+          msgId: id + 'msg_iqrfLight_SetPower:' + this.msgIdRand.toString(),
+          req: {
+            nAdr: nAdrI,
+            param: {
+              lights: lightsI
+            }
+          },
+          returnVerbose: true
+      }
+    };
+
+    // Send message
+    return this.ws.sendMessage(JSON.stringify(json));
+  }
+
+  public msg_iqrfLight_IncrementPower(id: string, nAdrI: number, lightsI: {index: number, power: number} []) {
+    const json: api.IqrfLightIncrementPowerRequest100 = {
+      mType: 'iqrfLight_IncrementPower',
+      data: {
+          msgId: id + 'msg_iqrfLight_IncrementPower:' + this.msgIdRand.toString(),
+          req: {
+            nAdr: nAdrI,
+            param: {
+              lights: lightsI
+            }
+          },
+          returnVerbose: true
+      }
+    };
+
+    // Send message
+    return this.ws.sendMessage(JSON.stringify(json));
+  }
+
+  public msg_iqrfLight_DecrementPower(id: string, nAdrI: number, lightsI: {index: number, power: number} []) {
+    const json: api.IqrfLightDecrementPowerRequest100 = {
+      mType: 'iqrfLight_DecrementPower',
+      data: {
+          msgId: id + 'msg_iqrfLight_DecrementPower:' + this.msgIdRand.toString(),
+          req: {
+            nAdr: nAdrI,
+            param: {
+              lights: lightsI
+            }
+          },
+          returnVerbose: true
+      }
+    };
+
+    // Send message
+    return this.ws.sendMessage(JSON.stringify(json));
+  }
+
+  public msg_iqrfSensor_Enumerate(id: string, nAdrI: number) {
+    const json: api.IqrfSensorEnumerateRequest100 = {
+      mType: 'iqrfSensor_Enumerate',
+      data: {
+          msgId: id + 'msg_iqrfSensor_Enumerate:' + this.msgIdRand.toString(),
+          req: {
+            nAdr: nAdrI,
+            param: {}
+          },
+          returnVerbose: true
+      }
+    };
+
+    // Send message
+    return this.ws.sendMessage(JSON.stringify(json));
+  }
+
+  public msg_iqrfSensor_ReadSensorsWithTypes(id: string, nAdrI: number, sensorIndexesI: number []) {
+    const json: api.IqrfSensorReadSensorsWithTypesRequest100 = {
+      mType: 'iqrfSensor_ReadSensorsWithTypes',
+      data: {
+          msgId: id + 'msg_iqrfSensor_ReadSensorsWithTypes:' + this.msgIdRand.toString(),
+          req: {
+            nAdr: nAdrI,
+            param: {
+              sensorIndexes: sensorIndexesI
+            }
+          },
+          returnVerbose: true
+      }
+    };
+
+    // Send message
+    return this.ws.sendMessage(JSON.stringify(json));
+  }
+
+  public msg_iqrfDali_SendCommands(id: string, nAdrI: number, commandsI: number []) {
+    const json: api.IqrfDaliSendCommandsRequest100 = {
+      mType: 'iqrfDali_SendCommands',
+      data: {
+          msgId: id + 'msg_iqrfDali_SendCommands:' + this.msgIdRand.toString(),
+          req: {
+            nAdr: nAdrI,
+            param: {
+              commands: commandsI
+            }
+          },
+          returnVerbose: true
+      }
+    };
+
+    // Send message
+    return this.ws.sendMessage(JSON.stringify(json));
+  }  
 
 }
