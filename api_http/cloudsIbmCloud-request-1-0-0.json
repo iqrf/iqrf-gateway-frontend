@@ -1,0 +1,34 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "self": {
+        "vendor": "com.iqrftech.self-desc",
+        "name": "cloudsIbmCloud-request",
+        "format": "jsonschema",
+        "version": "1-0-0"
+    },
+    "type": "object",
+    "properties": {
+        "organizationId": {
+            "type": "string",
+            "default": "unknown"
+        },
+        "deviceType": {
+            "type": "string",
+            "default": "unknown"
+        },
+        "token": {
+            "type": "string",
+            "default": "unknown"
+        },
+        "eventId": {
+            "type": "string",
+            "default": "unknown"
+        }
+    },
+    "required": [
+        "organizationId",
+        "deviceType",
+        "token",
+        "eventId"
+    ]
+}

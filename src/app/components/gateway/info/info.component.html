@@ -1,3 +1,127 @@
-<p>
-  info works!
-</p>
+<h1>Information</h1>
+<p-card subheader="" styleClass="ui-card-shadow">
+  <div *ngIf="!(apiMsg.gwInfo === undefined)">
+    <table>
+      <thead>
+        <tr>
+          <th width="40%"></th>
+          <th width="60%"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <p><strong>Board</strong></p>
+          </td>
+          <td>{{apiMsg.gwInfo.board}}</td>
+        </tr>
+        <tr>
+          <td>
+            <p><strong>IQRF Gateway ID</strong></p>
+          </td>
+          <td>{{apiMsg.gwInfo.gwId}}</td>
+        </tr>
+        <tr>
+          <td>
+            <p><strong>PIXLA token</strong></p>
+          </td>
+          <td>{{apiMsg.gwInfo.pixla}}</td>
+        </tr>
+        <tr>
+          <td>
+            <p><strong>IQRF Gateway Controller</strong></p>
+          </td>
+          <td>{{apiMsg.gwInfo.versions.controller}}</td>
+        </tr>
+        <tr>
+          <td>
+            <p><strong>IQRF Gateway Daemon</strong></p>
+          </td>
+          <td>{{apiMsg.gwInfo.versions.daemon}}</td>
+        </tr>
+        <tr>
+          <td>
+            <p><strong>IQRF Gateway Webapp</strong></p>
+          </td>
+          <td>{{apiMsg.gwInfo.versions.webapp}}</td>
+        </tr>
+        <tr>
+          <td>
+            <p><strong>Hostname</strong></p>
+          </td>
+          <td>{{apiMsg.gwInfo.hostname}}</td>
+        </tr>
+        <tr>
+          <td>
+            <p><strong>IP addresses</strong></p>
+          </td>
+          <td>
+            <span *ngFor="let adr of GetIpAddress()">
+              {{adr}}
+              <br>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><strong>MAC addresses</strong></p>
+          </td>
+          <td>
+            <span *ngFor="let adr of apiMsg.gwInfo.interfaces">
+              {{adr.macAddress}}
+              <br>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><strong>Disk usages</strong></p>
+          </td>
+          <td>
+            <span *ngFor="let disc of apiMsg.gwInfo.diskUsages">
+              {{disc.fsName}} <strong>({{disc.fsType}})</strong> Used {{disc.used}} / {{disc.size}}
+              <br>
+              <p-progressBar [value]="GetPerc(disc.used, disc.size)"></p-progressBar>
+              <br>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><strong>Memory usage</strong></p>
+          </td>
+          <td>
+            Used: {{apiMsg.gwInfo.memoryUsage.used}} / {{apiMsg.gwInfo.memoryUsage.size}}
+            <br>
+            <p-progressBar [value]="GetPerc(apiMsg.gwInfo.memoryUsage.used, apiMsg.gwInfo.memoryUsage.size)"></p-progressBar>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><strong>Swap usage</strong></p>
+          </td>
+          <td>
+            Used: {{apiMsg.gwInfo.swapUsage.used}} / {{apiMsg.gwInfo.swapUsage.size}}
+            <br>
+            <p-progressBar [value]="GetPerc(apiMsg.gwInfo.swapUsage.used, apiMsg.gwInfo.swapUsage.size)"></p-progressBar>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><strong>TR info</strong></p>
+          </td>
+          <td>--</td>
+        </tr>
+        <tr>
+          <td>
+            <p><strong>Gateway mode</strong></p>
+          </td>
+          <td>---</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="apiMsg.gwInfo === undefined">
+    <p>No data :(</p>
+  </div>
+</p-card>

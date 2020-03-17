@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -32,6 +33,7 @@ import {DynamicDialogModule} from 'primeng/dynamicdialog';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {CodeHighlighterModule} from 'primeng/codehighlighter';
 import {TooltipModule} from 'primeng/tooltip';
+import {ProgressBarModule} from 'primeng/progressbar';
 
 
 import { SelectedComponentsComponent } from './components/config/selected-components/selected-components.component';
@@ -69,6 +71,7 @@ import { CardModule } from 'primeng/card';
 import { HexioComponent } from './components/clouds/hexio/hexio.component';
 import { EthernetConnectionsComponent } from './components/network-manager/ethernet-connections/ethernet-connections.component';
 import { EthernetConnectionsDlgComponent } from './components/network-manager/ethernet-connections-dlg/ethernet-connections-dlg.component';
+import { FieldPipe } from './field.pipe';
 
 
 
@@ -96,7 +99,7 @@ import { EthernetConnectionsDlgComponent } from './components/network-manager/et
     StandardManagerComponent,
     AzureComponent,
     AwsComponent,
-    IbmComponent,    
+    IbmComponent,
     InteliglueComponent,
     UserManagerComponent,
     InfoComponent,
@@ -107,7 +110,8 @@ import { EthernetConnectionsDlgComponent } from './components/network-manager/et
     PixlaComponent,
     HexioComponent,
     EthernetConnectionsComponent,
-    EthernetConnectionsDlgComponent
+    EthernetConnectionsDlgComponent,
+    FieldPipe
   ],
   imports: [
     BrowserModule,
@@ -138,7 +142,9 @@ import { EthernetConnectionsDlgComponent } from './components/network-manager/et
     KonvaModule,
     ConfirmDialogModule,
     CodeHighlighterModule,
-    TooltipModule
+    TooltipModule,
+    HttpClientModule,
+    ProgressBarModule
   ],
   providers: [],
   bootstrap: [AppComponent],

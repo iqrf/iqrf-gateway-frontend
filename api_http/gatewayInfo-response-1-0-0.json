@@ -1,0 +1,210 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "self": {
+        "vendor": "com.iqrftech.self-desc",
+        "name": "gatewayInfo-response",
+        "format": "jsonschema",
+        "version": "1-0-0"
+    },
+    "type": "object",
+    "properties": {
+        "board": {
+            "type": "string",
+            "default": "unknown"
+        },
+        "gwId": {
+            "type": "string",
+            "default": "unknown"
+        },
+        "pixla": {
+            "type": "string",
+            "default": "unknown"
+        },
+        "versions": {
+            "type": "object",
+            "properties": {
+                "controller": {
+                    "type": "string",
+                    "default": "unknown"
+                },
+                "daemon": {
+                    "type": "string",
+                    "default": "unknown"
+                },
+                "webapp": {
+                    "type": "string",
+                    "default": "unknown"
+                }
+            },
+            "required": [
+                "controller",
+                "daemon",
+                "webapp"
+            ]
+        },
+        "hostname": {
+            "type": "string",
+            "default": "unknown"
+        },
+        "interfaces": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "default": "unknown"
+                    },
+                    "macAddress": {
+                        "type": "string",
+                        "default": "unknown"
+                    },
+                    "ipAddresses": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "default": "unknown"
+                        }
+                    }
+                },
+                "required": [
+                    "name",
+                    "macAddress",
+                    "ipAddresses"
+                ]
+            }
+        },
+        "diskUsages": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "fsName": {
+                        "type": "string",
+                        "default": "unknown"
+                    },
+                    "fsType": {
+                        "type": "string",
+                        "default": "unknown"
+                    },
+                    "size": {
+                        "type": "string",
+                        "default": "unknown"
+                    },
+                    "used": {
+                        "type": "string",
+                        "default": "unknown"
+                    },
+                    "available": {
+                        "type": "string",
+                        "default": "unknown"
+                    },
+                    "usage": {
+                        "type": "string",
+                        "default": "unknown"
+                    },
+                    "mount": {
+                        "type": "string",
+                        "default": "unknown"
+                    }
+                },
+                "required": [
+                    "fsName",
+                    "fsType",
+                    "size",
+                    "used",
+                    "available",
+                    "usage",
+                    "mount"
+                ]
+            }
+        },
+        "memoryUsage": {
+            "type": "object",
+            "properties": {
+                "size": {
+                    "type": "string",
+                    "default": "unknown"
+                },
+                "used": {
+                    "type": "string",
+                    "default": "unknown"
+                },
+                "free": {
+                    "type": "string",
+                    "default": "unknown"
+                },
+                "shared": {
+                    "type": "string",
+                    "default": "unknown"
+                },
+                "buffers": {
+                    "type": "string",
+                    "default": "unknown"
+                },
+                "cache": {
+                    "type": "string",
+                    "default": "unknown"
+                },
+                "available": {
+                    "type": "string",
+                    "default": "unknown"
+                },
+                "usage": {
+                    "type": "string",
+                    "default": "unknown"
+                }
+            },
+            "required": [
+                "size",
+                "used",
+                "free",
+                "shared",
+                "buffers",
+                "cache",
+                "available",
+                "usage"
+            ]
+        },
+        "swapUsage": {
+            "type": "object",
+            "properties": {
+                "size": {
+                    "type": "string",
+                    "default": "unknown"
+                },
+                "used": {
+                    "type": "string",
+                    "default": "unknown"
+                },
+                "free": {
+                    "type": "string",
+                    "default": "unknown"
+                },
+                "usage": {
+                    "type": "string",
+                    "default": "unknown"
+                }
+            },
+            "required": [
+                "size",
+                "used",
+                "free",
+                "usage"
+            ]
+        },
+        "coordinator": {}
+    },
+    "required": [
+        "board",
+        "gwId",
+        "pixla",
+        "versions",
+        "hostname",
+        "interfaces",
+        "diskUsages",
+        "memoryUsage",
+        "swapUsage",
+        "coordinator"
+    ]
+}

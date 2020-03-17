@@ -1,0 +1,44 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "self": {
+        "vendor": "com.iqrftech.self-desc",
+        "name": "cloudsHexio-request",
+        "format": "jsonschema",
+        "version": "1-0-0"
+    },
+    "type": "object",
+    "properties": {
+        "broker": {
+            "type": "string",
+            "default": "unknown"
+        },
+        "clientId": {
+            "type": "string",
+            "default": "unknown"
+        },
+        "topicRequests": {
+            "type": "string",
+            "default": "unknown"
+        },
+        "topicResponses": {
+            "type": "string",
+            "default": "unknown"
+        },
+        "username": {
+            "type": "string",
+            "default": "unknown"
+        },
+        "password": {
+            "type": "string",
+            "default": "unknown"
+        }
+    },
+    "required": [
+        "broker",
+        "clientId",
+        "topicRequests",
+        "topicResponses",
+        "username",
+        "password"
+    ]
+}

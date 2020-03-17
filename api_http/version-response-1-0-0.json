@@ -1,0 +1,29 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "self": {
+        "vendor": "com.iqrftech.self-desc",
+        "name": "signIn-response",
+        "format": "jsonschema",
+        "version": "1-0-0"
+    },
+    "type": "object",
+    "properties": {
+        "version": {
+            "type": "string",
+            "default": "unknown"
+        },
+        "commit": {
+            "type": "string",
+            "default": "unknown"
+        },
+        "pipeline": {
+            "type": "string",
+            "default": "unknown"
+        }
+    },
+    "required": [
+        "version",
+        "commit",
+        "pipeline"
+    ]
+}

@@ -1,0 +1,19 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "self": {
+        "vendor": "com.iqrftech.self-desc",
+        "name": "cloudsAzure-request",
+        "format": "jsonschema",
+        "version": "1-0-0"
+    },
+    "type": "object",
+    "properties": {
+        "connectionString": {
+            "type": "string",
+            "default": "unknown"
+        }
+    },
+    "required": [
+        "connectionString"
+    ]
+}

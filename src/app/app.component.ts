@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {trigger,state,style,transition,animate,AnimationEvent} from '@angular/animations';
 import { MenuItem } from 'primeng/api';
-import { WsMsgsService } from './services/ws-msgs.service'
+import { WsMsgsService } from './services/ws-msgs.service';
+import { HttpMsgsService } from './services/http-msgs.service';
 
 @Component({
   selector: 'app-root',
@@ -34,8 +35,10 @@ export class AppComponent implements OnInit {
   visibleSidebar1;
   items: MenuItem[];
 
-  constructor(public wsMsgs: WsMsgsService) {
+  constructor(public wsMsgs: WsMsgsService, public httpMsgs: HttpMsgsService) {
+
   }    
+
 
   ngOnInit() {
     this.items = [
