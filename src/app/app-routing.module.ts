@@ -11,6 +11,7 @@ import { IqrfCdcInterfaceComponent } from './components/config/iqrf-cdc-interfac
 import { IqrfUartInterfaceComponent } from './components/config/iqrf-uart-interface/iqrf-uart-interface.component';
 import { IqrfDpaInterfaceComponent } from './components/config/iqrf-dpa-interface/iqrf-dpa-interface.component';
 import { IqrfRepositoryComponent } from './components/config/iqrf-repository/iqrf-repository.component';
+import { IqrfInfoComponent } from './components/config/iqrf-info/iqrf-info.component';
 import { MqttInterfaceComponent } from './components/config/mqtt-interface/mqtt-interface.component';
 import { WebsocketInterfaceComponent } from './components/config/websocket-interface/websocket-interface.component';
 import { MqInterfaceComponent } from './components/config/mq-interface/mq-interface.component';
@@ -47,6 +48,7 @@ const routes: Routes = [
   { path: 'config-iqrf-uart-interface', component: IqrfUartInterfaceComponent },
   { path: 'config-iqrf-dpa-interface', component: IqrfDpaInterfaceComponent },
   { path: 'config-iqrf-repository', component: IqrfRepositoryComponent },
+  { path: 'config-iqrf-info', component: IqrfInfoComponent },
   { path: 'config-mqtt-interface', component: MqttInterfaceComponent },
   { path: 'config-websocket-interface', component: WebsocketInterfaceComponent },
   { path: 'config-mq-interface', component: MqInterfaceComponent },

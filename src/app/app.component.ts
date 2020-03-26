@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
             icon: 'pi pi-pw pi-desktop',
             items: [
                 {label: 'Information', routerLink: ['/gateway-info']},
-                {label: 'Logger file',  routerLink: ['/gateway-logger-file']},        
+                {label: 'Logger file',  routerLink: ['/gateway-logger-file']},
                 {label: 'Change mode', routerLink: ['/gateway-change-mode']},
                 {label: 'Service control', routerLink: ['/gateway-service-control']},
                 {label: 'Power control', routerLink: ['/gateway-power-control']}
@@ -62,7 +62,8 @@ export class AppComponent implements OnInit {
                 {label: 'IQRF CDC interface', routerLink: ['/config-iqrf-cdc-interface']},
                 {label: 'IQRF UART interface', routerLink: ['/config-iqrf-uart-interface']},
                 {label: 'IQRF DPA interface', routerLink: ['/config-iqrf-dpa-interface']},
-                {label: 'IQRF repository', routerLink: ['/config-iqrf-repository']},
+                {label: 'IQRF Repository', routerLink: ['/config-iqrf-repository']},
+                {label: 'IQRF Info', routerLink: ['/config-iqrf-info']},
                 {label: 'MQTT interface', routerLink: ['/config-mqtt-interface']},
                 {label: 'WebSocket interface', routerLink: ['/config-websocket-interface']},
                 {label: 'MQ interface', routerLink: ['/config-mq-interface']},

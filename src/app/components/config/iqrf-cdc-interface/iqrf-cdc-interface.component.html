@@ -1,14 +1,20 @@
 <h1>IQRF CDC interface</h1>
+<div *ngIf="apiMsg.configCdc === undefined">
+  <p> No data loaded...</p>
+
+</div>
+<div *ngIf="!(apiMsg.configCdc === undefined) &&  (apiMsg.configCdc.instances.length > 0)">
+
 <p-card subheader="" styleClass="ui-card-shadow">
   <div class="p-grid p-dir-col">
 
     <div class="p-col">
       <label for="nm">Name of instance</label>
-      <input id="nm" type="text">
+      <input id="nm" type="text" pInputText [(ngModel)]="apiMsg.configCdc.configuration.name">
     </div>
     <div class="p-col">
       <label for="spi">IQRF CDC interface</label>
-      <input id="spi" type="text" pInputText>
+      <input id="spi" type="text" pInputText [(ngModel)]="apiMsg.configCdc.instances[0].IqrfInterface">
     </div>
     
   </div>
@@ -30,3 +36,4 @@
   </div>
 
 </p-card>
+</div>

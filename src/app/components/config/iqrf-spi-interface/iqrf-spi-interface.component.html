@@ -1,34 +1,42 @@
 <h1>IQRF SPI interface</h1>
 <p-card subheader="" styleClass="ui-card-shadow">
-  <div class="p-grid p-dir-col">
 
-    <div class="p-col">
-      <label for="nm">Name of instance</label>
-      <input id="nm" type="text">
-    </div>
-    <div class="p-col">
-      <label for="spi">IQRF SPI interface</label>
-      <input id="spi" type="text" pInputText>
-    </div>
-    <div class="p-col">
-      <label for="gpio">Power enable GPIO pin</label>
-      <input id="gpio" type="number" pInputText>
-    </div>
-    <div class="p-col">
-      <label for="spibus">SPI bus enable GPIO pin</label>
-      <input id="spibus" type="number" pInputText>
-    </div>
-    <div class="p-col">
-      <label for="prog">Programming mode switch GPIO pin</label>
-      <input id="prog" type="number" pInputText>
-    </div>
-    <div class="p-col">
-      <p-checkbox binary="false" label="Enable SPI reset" [(ngModel)]="enableSpiReset"></p-checkbox>
-    </div>
+  <div *ngIf="apiMsg.configSpi === undefined">
+    <p> No data loaded...</p>
+
   </div>
-  <p-footer>
-    <button pButton type="button" label="Save" style="margin-right: .25em"></button>
-  </p-footer>
+  <div *ngIf="!(apiMsg.configSpi === undefined) && (apiMsg.configSpi.instances.length > 0)">
+
+    <div class="p-grid p-dir-col">
+
+      <div class="p-col">
+        <label for="nm">Name of instance</label>
+        <input id="nm" type="text" pInputText [(ngModel)]="apiMsg.configSpi.configuration.name" >
+      </div>
+      <div class="p-col">
+        <label for="spi">IQRF SPI interface</label>
+        <input id="spi" type="text" pInputText [(ngModel)]="apiMsg.configSpi.instances[0].IqrfInterface"> 
+      </div>
+      <div class="p-col">
+        <label for="gpio">Power enable GPIO pin</label>
+        <input id="gpio" type="number" pInputText [(ngModel)]="apiMsg.configSpi.instances[0].powerEnableGpioPin">
+      </div>
+      <div class="p-col">
+        <label for="spibus">SPI bus enable GPIO pin</label>
+        <input id="spibus" type="number" pInputText [(ngModel)]="apiMsg.configSpi.instances[0].busEnableGpioPin">
+      </div>
+      <div class="p-col">
+        <label for="prog">Programming mode switch GPIO pin</label>
+        <input id="prog" type="number" pInputText [(ngModel)]="apiMsg.configSpi.instances[0].pgmSwitchGpioPin">
+      </div>
+      <div class="p-col">
+        <p-checkbox binary="false" label="Enable SPI reset" [(ngModel)]="apiMsg.configSpi.instances[0].spiReset"></p-checkbox>
+      </div>
+    </div>
+    <p-footer>
+      <button pButton type="button" label="Save" style="margin-right: .25em"></button>
+    </p-footer>
+  </div>    
 </p-card>
 <p-card header="Available SPI mappings" subheader="" styleClass="ui-card-shadow">
   <div class="p-grid p-dir-col">
@@ -45,9 +53,9 @@
       <p>Interfaces</p>
       <button pButton id="boards" type="button" label="/dev/spidev" class="buttonOne ui-button-secondary"></button>
 
-      
-    </div>
-    
-  </div>
 
+    </div>
+
+  </div>
+ 
 </p-card>

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpMsgsService } from '../../../services/http-msgs.service';
+import * as apiHttp from '../../../api_http';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-iqrf-dpa-interface',
@@ -7,9 +10,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IqrfDpaInterfaceComponent implements OnInit {
 
-  constructor() { }
+  constructor(public apiMsg: HttpMsgsService) { }
 
   ngOnInit() {
+    this.apiMsg.configComponent('iqrf::IqrfDpa');
   }
 
 }

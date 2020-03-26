@@ -1,63 +1,71 @@
 <h1>IQRF UART interface</h1>
-<p-card subheader="" styleClass="ui-card-shadow">
-  <div class="p-grid p-dir-col">
+<div *ngIf="apiMsg.configUart === undefined">
+  <p> No data loaded...</p>
 
-    <div class="p-col">
-      <label for="nm">Name of instance</label>
-      <input id="nm" type="text">
-    </div>
-    <div class="p-col">
-      <label for="spi">IQRF UART interface</label>
-      <input id="spi" type="text" pInputText>
-    </div>
-    <div class="p-col">
+</div>
+<div *ngIf="!(apiMsg.configUart === undefined) &&  (apiMsg.configUart.instances.length > 0)">
+
+  <p-card subheader="" styleClass="ui-card-shadow">
+    <div class="p-grid p-dir-col">
+
+      <div class="p-col">
+        <label for="nm">Name of instance</label>
+        <input id="nm" type="text" pInputText [(ngModel)]="apiMsg.configUart.configuration.name">
+      </div>
+      <div class="p-col">
+        <label for="spi">IQRF UART interface</label>
+        <input id="spi" type="text" pInputText [(ngModel)]="apiMsg.configUart.instances[0].IqrfInterface">
+      </div>
+      <div class="p-col">
 
         <label for="baudrate">UART baud rate</label>
         <div style="width: 100%;">
-          <p-dropdown id="baudrate" [options]="baudRates" [(ngModel)]="selBaudRate"></p-dropdown>
+          <p-dropdown id="baudrate" [options]="baudRates" [(ngModel)]="apiMsg.configUart.instances[0].baudRate">
+          </p-dropdown>
         </div>
-        
-    </div>
-    <div class="p-col">
-      <label for="spibus">Power enable GPIO pin</label>
-      <input id="spibus" type="number" pInputText>
-    </div>
-    <div class="p-col">
-      <label for="prog">UART bus enable GPIO pin</label>
-      <input id="prog" type="number" pInputText>
-    </div>
- 
-  </div>
-  <p-footer>
-    <button pButton type="button" label="Save" style="margin-right: .25em"></button>
-  </p-footer>
-</p-card>
-<p-card header="Available UART mappings" subheader="" styleClass="ui-card-shadow">
-  <div class="p-grid p-dir-col">
 
-    <div class="p-col">
-      <p>Boards</p>
-      <button pButton id="boards" type="button" label="Raspberry Pi 1" class="buttonOne ui-button-secondary"></button>
-      <button pButton id="boards" type="button" label="Raspberry Pi" class="buttonOne ui-button-secondary"></button>
-      <button pButton id="boards" type="button" label="Orange Pi" class="buttonOne ui-button-secondary"></button>
-      <button pButton id="boards" type="button" label="UniPi" class="buttonOne ui-button-secondary"></button>
-      <button pButton id="boards" type="button" label="UP" class="buttonOne ui-button-secondary"></button>
-      <button pButton id="boards" type="button" label="UP Squared" class="buttonOne ui-button-secondary"></button>
-    </div>
-    <div class="p-col">
-      <p>Interfaces</p>
-      <button pButton id="boards" type="button" label="/dev/ttyS0" class="buttonOne ui-button-secondary"></button>
-      <button pButton id="boards" type="button" label="/dev/ttyS1" class="buttonOne ui-button-secondary"></button>
-      <button pButton id="boards" type="button" label="/dev/ttyS2" class="buttonOne ui-button-secondary"></button>
-      <button pButton id="boards" type="button" label="/dev/ttyS3" class="buttonOne ui-button-secondary"></button>
-      <button pButton id="boards" type="button" label="/dev/ttyS4" class="buttonOne ui-button-secondary"></button>
-      <button pButton id="boards" type="button" label="/dev/ttyS5" class="buttonOne ui-button-secondary"></button>
-      <button pButton id="boards" type="button" label="/dev/ttyS6" class="buttonOne ui-button-secondary"></button>
-      <button pButton id="boards" type="button" label="/dev/ttyS7" class="buttonOne ui-button-secondary"></button>
+      </div>
+      <div class="p-col">
+        <label for="spibus">Power enable GPIO pin</label>
+        <input id="spibus" type="number" pInputText [(ngModel)]="apiMsg.configUart.instances[0].powerEnableGpioPin">
+      </div>
+      <div class="p-col">
+        <label for="prog">UART bus enable GPIO pin</label>
+        <input id="prog" type="number" pInputText [(ngModel)]="apiMsg.configUart.instances[0].busEnableGpioPin">
+      </div>
 
-      
     </div>
-    
-  </div>
+    <p-footer>
+      <button pButton type="button" label="Save" style="margin-right: .25em"></button>
+    </p-footer>
+  </p-card>
+  <p-card header="Available UART mappings" subheader="" styleClass="ui-card-shadow">
+    <div class="p-grid p-dir-col">
 
-</p-card>
+      <div class="p-col">
+        <p>Boards</p>
+        <button pButton id="boards" type="button" label="Raspberry Pi 1" class="buttonOne ui-button-secondary"></button>
+        <button pButton id="boards" type="button" label="Raspberry Pi" class="buttonOne ui-button-secondary"></button>
+        <button pButton id="boards" type="button" label="Orange Pi" class="buttonOne ui-button-secondary"></button>
+        <button pButton id="boards" type="button" label="UniPi" class="buttonOne ui-button-secondary"></button>
+        <button pButton id="boards" type="button" label="UP" class="buttonOne ui-button-secondary"></button>
+        <button pButton id="boards" type="button" label="UP Squared" class="buttonOne ui-button-secondary"></button>
+      </div>
+      <div class="p-col">
+        <p>Interfaces</p>
+        <button pButton id="boards" type="button" label="/dev/ttyS0" class="buttonOne ui-button-secondary"></button>
+        <button pButton id="boards" type="button" label="/dev/ttyS1" class="buttonOne ui-button-secondary"></button>
+        <button pButton id="boards" type="button" label="/dev/ttyS2" class="buttonOne ui-button-secondary"></button>
+        <button pButton id="boards" type="button" label="/dev/ttyS3" class="buttonOne ui-button-secondary"></button>
+        <button pButton id="boards" type="button" label="/dev/ttyS4" class="buttonOne ui-button-secondary"></button>
+        <button pButton id="boards" type="button" label="/dev/ttyS5" class="buttonOne ui-button-secondary"></button>
+        <button pButton id="boards" type="button" label="/dev/ttyS6" class="buttonOne ui-button-secondary"></button>
+        <button pButton id="boards" type="button" label="/dev/ttyS7" class="buttonOne ui-button-secondary"></button>
+
+
+      </div>
+
+    </div>
+
+  </p-card>
+</div>

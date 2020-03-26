@@ -1,0 +1,256 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$id": "http://example.com/example.json",
+    "self": {
+        "vendor": "com.logimic",
+        "name": "defs",
+        "format": "jsonschema",
+        "version": "1-0-0"
+    },
+    "definitions": {
+        "deviceType": {
+            "type": "string",
+            "description": "General device types...",
+            "default": "undefined",
+            "enum": [
+                "undefined",
+                "light",
+                "relay"
+            ]
+        },
+        "configuration": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "default": ""
+                },
+                "libraryPath": {
+                    "type": "string",
+                    "default": ""
+                },
+                "libraryName": {
+                    "type": "string",
+                    "default": ""
+                },
+                "enabled": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "startlevel": {
+                    "type": "integer",
+                    "default": 0
+                }
+            },
+            "required": [
+                "name",
+                "libraryPath",
+                "libraryName",
+                "enabled",
+                "startlevel"
+            ]
+        },
+        "igrfSpiInstance": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "component": {
+                    "type": "string",
+                    "default": ""
+                },
+                "instance": {
+                    "type": "string",
+                    "default": ""
+                },
+                "IqrfInterface": {
+                    "type": "string",
+                    "default": ""
+                },
+                "powerEnableGpioPin": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "busEnableGpioPin": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "pgmSwitchGpioPin": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "spiReset": {
+                    "type": "boolean",
+                    "default": false
+                }
+            },
+            "required": [
+                "id",
+                "component",
+                "instance",
+                "IqrfInterface",
+                "powerEnableGpioPin",
+                "busEnableGpioPin",
+                "pgmSwitchGpioPin",
+                "spiReset"
+            ]
+        },
+        "igrfSchedulerInstance": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "component": {
+                    "type": "string",
+                    "default": ""
+                },
+                "instance": {
+                    "type": "string",
+                    "default": ""
+                }
+            },
+            "required": [
+                "id",
+                "component",
+                "instance"
+            ]
+        },
+        "igrfCdcInstance": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "component": {
+                    "type": "string",
+                    "default": ""
+                },
+                "instance": {
+                    "type": "string",
+                    "default": ""
+                },
+                "IqrfInterface": {
+                    "type": "string",
+                    "default": ""
+                }
+            },
+            "required": [
+                "id",
+                "component",
+                "instance",
+                "IqrfInterface"
+            ]
+        },
+        "igrfUartInstance": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "component": {
+                    "type": "string",
+                    "default": ""
+                },
+                "instance": {
+                    "type": "string",
+                    "default": ""
+                },
+                "IqrfInterface": {
+                    "type": "string",
+                    "default": ""
+                },
+                "baudRate": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "powerEnableGpioPin": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "busEnableGpioPin": {
+                    "type": "integer",
+                    "default": 0
+                }
+            },
+            "required": [
+                "id",
+                "component",
+                "instance",
+                "IqrfInterface",
+                "baudRate",
+                "powerEnableGpioPin",
+                "busEnableGpioPin"
+            ]
+        },
+        "igrfDpaInstance": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "component": {
+                    "type": "string",
+                    "default": ""
+                },
+                "instance": {
+                    "type": "string",
+                    "default": ""
+                },
+                "DpaHandlerTimeout": {
+                    "type": "integer",
+                    "default": 0
+                }
+            },
+            "required": [
+                "id",
+                "component",
+                "instance",
+                "DpaHandlerTimeout"
+            ]
+        },
+        "igrfInfoInstance": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "component": {
+                    "type": "string",
+                    "default": ""
+                },
+                "instance": {
+                    "type": "string",
+                    "default": ""
+                },
+                "enumAtStartUp": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "enumPeriod": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "enumUniformDpaVer": {
+                    "type": "boolean",
+                    "default": false
+                }
+            },
+            "required": [
+                "id",
+                "component",
+                "instance",
+                "enumAtStartUp",
+                "enumPeriod",
+                "enumUniformDpaVer"
+            ]
+        }
+    }
+}

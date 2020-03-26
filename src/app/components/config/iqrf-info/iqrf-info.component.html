@@ -1,0 +1,33 @@
+<h1>IQRF Info</h1>
+
+<div *ngIf="apiMsg.configInfo === undefined">
+  <p> No data loaded...</p>
+
+</div>
+<div *ngIf="!(apiMsg.configInfo === undefined) &&  (apiMsg.configInfo.instances.length > 0)">
+
+  <p-card subheader="" styleClass="ui-card-shadow">
+    <div class="p-grid p-dir-col">
+
+      <div class="p-col">
+        <label for="nm">Name of instance</label>
+        <input id="nm" type="text" pInputText [(ngModel)]="apiMsg.configInfo.configuration.name">
+      </div>
+      <div class="p-col">
+        <p-checkbox binary="false" label="Initialize network full enumeration just after startup"
+          [(ngModel)]="apiMsg.configInfo.instances[0].enumAtStartUp"></p-checkbox>
+      </div>
+      <div class="p-col">
+        <label for="prog">Period in minutes of regular check enumeration</label>
+        <input id="prog" type="number" pInputText [(ngModel)]="apiMsg.configInfo.instances[0].enumPeriod">
+      </div>
+      <div class="p-col">
+        <p-checkbox binary="false" label="Obtain only HWPID and HWPID version from nodes"
+          [(ngModel)]="apiMsg.configInfo.instances[0].enumUniformDpaVer"></p-checkbox>
+      </div>
+    </div>
+    <p-footer>
+      <button pButton type="button" label="Save" style="margin-right: .25em"></button>
+    </p-footer>
+  </p-card>
+</div>

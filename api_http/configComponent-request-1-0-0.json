@@ -1,0 +1,19 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "self": {
+        "vendor": "com.iqrftech.self-desc",
+        "name": "configComponent-request",
+        "format": "jsonschema",
+        "version": "1-0-0"
+    },
+    "type": "object",
+    "properties": {
+        "component": {
+            "type": "string",
+            "default": ""
+        }
+    },
+    "required": [
+        "component"
+    ]
+}

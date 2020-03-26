@@ -2,7 +2,7 @@
     "$schema": "http://json-schema.org/draft-04/schema#",
     "self": {
         "vendor": "com.iqrftech.self-desc",
-        "name": "signIn-response",
+        "name": "version-response",
         "format": "jsonschema",
         "version": "1-0-0"
     },

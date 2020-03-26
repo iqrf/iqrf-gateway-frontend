@@ -1,0 +1,40 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "self": {
+        "vendor": "com.iqrftech.self-desc",
+        "name": "configComponent-response",
+        "format": "jsonschema",
+        "version": "1-0-0"
+    },
+    "type": "object",
+    "properties": {
+        "configuration": {
+            "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/configuration"
+        },
+        "instances": {
+            "anyOf": [
+                {
+                    "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/igrfSpiInstance"
+                },
+                {
+                    "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/igrfSchedulerInstance"
+                },
+                {
+                    "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/igrfCdcInstance"
+                },
+                {
+                    "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/igrfUartInstance"
+                },
+                {
+                    "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/igrfDpaInstance"
+                },
+                {
+                    "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/igrfInfoInstance"
+                }
+            ]
+        }
+    },
+    "required": [
+        "token"
+    ]
+}
