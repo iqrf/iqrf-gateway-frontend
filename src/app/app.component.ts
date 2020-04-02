@@ -68,6 +68,7 @@ export class AppComponent implements OnInit {
                 {label: 'WebSocket interface', routerLink: ['/config-websocket-interface']},
                 {label: 'MQ interface', routerLink: ['/config-mq-interface']},
                 {label: 'UDP interface', routerLink: ['/config-udp-interface']},
+                {label: 'JSON Metadata API', routerLink: ['/json-metadata-api']},
                 {label: 'Scheduler', routerLink: ['/config-scheduler']},
                 {label: 'Tracer file', routerLink: ['/config-tracer-file']},
                 {label: 'Configuration migration', routerLink: ['/config-configuration-migration']}

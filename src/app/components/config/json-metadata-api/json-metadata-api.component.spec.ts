@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TcPisekComponent } from './tc-pisek.component';
+import { JsonMetadataApiComponent } from './json-metadata-api.component';
 
-describe('TcPisekComponent', () => {
-  let component: TcPisekComponent;
-  let fixture: ComponentFixture<TcPisekComponent>;
+describe('JsonMetadataApiComponent', () => {
+  let component: JsonMetadataApiComponent;
+  let fixture: ComponentFixture<JsonMetadataApiComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TcPisekComponent ]
+      declarations: [ JsonMetadataApiComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TcPisekComponent);
+    fixture = TestBed.createComponent(JsonMetadataApiComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

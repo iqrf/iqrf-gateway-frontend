@@ -1,3 +1,46 @@
-<p>
-  tracer-file works!
-</p>
+<h1>Tracer file</h1>
+<div *ngIf="apiMsg.configTraceFile === undefined">
+  <p> No data loaded...</p>
+
+</div>
+<div *ngIf="!(apiMsg.configTraceFile === undefined)">
+  <p-card subheader="" styleClass="ui-card-shadow">
+
+    <p-table [columns]="cols" [value]=" this.apiMsg.configTraceFile.instances">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="{'width': col.width}">
+            {{col.header}}
+            <span *ngIf="col.field !=='actions'">
+              <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order">
+              </p-sortIcon>
+            </span>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+          <td *ngFor="let col of columns" [ngStyle]="{'text-align': col.align}">
+            <span *ngIf="col.field === 'actions'">
+              <button pButton type="button" icon="pi pi-pencil" (click)="OnEdit($event, rowData)"
+                style="margin-top:0; margin-right:10px;" class="ui-button-raised ui-button-primary"></button>
+                <button pButton type="button" icon="pi pi-trash" (click)="OnRemove($event, rowData)"
+                style="margin-top:0;" class="ui-button-raised ui-button-danger"></button>        
+            </span>
+            <span *ngIf="col.field !== 'actions'">    
+              {{rowData[col.field]}}
+            </span>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="p-col-12" style="text-align: left;">
+          <button type="button" pButton icon="pi pi-plus-circle" label="Add" iconPos="left" (click)="OnAdd()"
+            style="margin-right: 0.5em;" class="ui-button-raised ui-button-secondary"></button>
+        </div>
+      </ng-template>
+    </p-table>
+  
+  </p-card>
+</div>

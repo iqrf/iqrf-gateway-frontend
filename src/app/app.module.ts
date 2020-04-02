@@ -73,6 +73,7 @@ import { EthernetConnectionsComponent } from './components/network-manager/ether
 import { EthernetConnectionsDlgComponent } from './components/network-manager/ethernet-connections-dlg/ethernet-connections-dlg.component';
 import { FieldPipe } from './field.pipe';
 import { IqrfInfoComponent } from './components/config/iqrf-info/iqrf-info.component';
+import { JsonMetadataApiComponent } from './components/config/json-metadata-api/json-metadata-api.component';
 
 
 
@@ -113,7 +114,8 @@ import { IqrfInfoComponent } from './components/config/iqrf-info/iqrf-info.compo
     EthernetConnectionsComponent,
     EthernetConnectionsDlgComponent,
     FieldPipe,
-    IqrfInfoComponent
+    IqrfInfoComponent,
+    JsonMetadataApiComponent
   ],
   imports: [
     BrowserModule,

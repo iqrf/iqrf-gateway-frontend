@@ -19,6 +19,12 @@ export class HttpMsgsService {
   public configUart: apiHttp.ConfigComponentResponse100;
   public configDpa: apiHttp.ConfigComponentResponse100;
   public configInfo: apiHttp.ConfigComponentResponse100;
+  public configMqtt: apiHttp.ConfigComponentResponse100;
+  public configWs: apiHttp.ConfigComponentResponse100;
+  public configUdp: apiHttp.ConfigComponentResponse100;
+  public configTraceFile: apiHttp.ConfigComponentResponse100;
+  public configJsonMetaData: apiHttp.ConfigComponentResponse100;
+  public configMqMsg: apiHttp.ConfigComponentResponse100;
 
   public emitorMsgApi$: EventEmitter<any> = new EventEmitter();
 
@@ -74,7 +80,31 @@ export class HttpMsgsService {
       this.configInfo = data;
       console.log('Info: ' + JSON.stringify(this.configInfo, null, 1));
 
-    }
+    } else if (type === '/config/iqrf::MqttMessaging') {
+      this.configMqtt = data;
+      console.log('Info: ' + JSON.stringify(this.configMqtt, null, 1));
+
+    } else if (type === '/config/iqrf::WebsocketMessaging') {
+      this.configWs = data;
+      console.log('Info: ' + JSON.stringify(this.configWs, null, 1));
+
+    } else if (type === '/config/iqrf::UdpMessaging') {
+      this.configUdp = data;
+      console.log('Info: ' + JSON.stringify(this.configUdp, null, 1));
+
+    } else if (type === '/config/shape::TraceFileService') {
+      this.configTraceFile = data;
+      console.log('Info: ' + JSON.stringify(this.configTraceFile, null, 1));
+
+    } else if (type === '/config/iqrf::JsonMngMetaDataApi') {
+        this.configJsonMetaData = data;
+        console.log('Info: ' + JSON.stringify(this.configJsonMetaData, null, 1));
+
+    } else if (type === '/config/iqrf::MqMessaging') {
+      this.configMqMsg = data;
+      console.log('Info: ' + JSON.stringify(this.configMqMsg, null, 1));
+
+  }
 
    }
 

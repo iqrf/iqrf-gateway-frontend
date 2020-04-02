@@ -148,6 +148,86 @@ export interface ConfigComponentResponse100 {
         enumPeriod: number;
         enumUniformDpaVer: boolean;
         [k: string]: any;
+      }
+    | {
+        id: number;
+        component: string;
+        instance: string;
+        BrokerAddr: string;
+        ClientId: string;
+        Persistence: number;
+        Qos: number;
+        TopicRequest: string;
+        TopicResponse: string;
+        User: string;
+        Password: string;
+        EnabledSSL: boolean;
+        KeepAliveInterval: number;
+        ConnectTimeout: number;
+        MinReconnect: number;
+        MaxReconnect: number;
+        TrustStore: string;
+        KeyStore: string;
+        PrivateKey: string;
+        PrivateKeyPassword: string;
+        EnabledCipherSuites: string;
+        EnableServerCertAuth: boolean;
+        acceptAsyncMsg: boolean;
+        [k: string]: any;
+      }
+    | {
+        id: number;
+        component: string;
+        instance: string;
+        acceptAsyncMsg: boolean;
+        RequiredInterfaces: {
+          name: string;
+          target: {
+            instance: string;
+            [k: string]: any;
+          };
+          [k: string]: any;
+        }[];
+        [k: string]: any;
+      }
+    | {
+        id: number;
+        component: string;
+        instance: string;
+        RemotePort: number;
+        LocalPort: number;
+        [k: string]: any;
+      }
+    | {
+        id: number;
+        component: string;
+        instance: string;
+        path: string;
+        filename: string;
+        maxSizeMB: number;
+        timestampFiles: boolean;
+        VerbosityLevels: {
+          channel: number;
+          level: string;
+          [k: string]: any;
+        }[];
+        [k: string]: any;
+      }
+    | {
+        id: number;
+        component: string;
+        instance: string;
+        metaDataToMessages: boolean;
+        [k: string]: any;
+      }
+    | {
+        id: number;
+        component: string;
+        instance: string;
+        LocalMqName: string;
+        RemoteMqName: string;
+        acceptAsyncMsg: boolean;
+        [k: string]: any;
       };
   [k: string]: any;
 }

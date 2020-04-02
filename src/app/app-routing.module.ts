@@ -11,6 +11,7 @@ import { IqrfCdcInterfaceComponent } from './components/config/iqrf-cdc-interfac
 import { IqrfUartInterfaceComponent } from './components/config/iqrf-uart-interface/iqrf-uart-interface.component';
 import { IqrfDpaInterfaceComponent } from './components/config/iqrf-dpa-interface/iqrf-dpa-interface.component';
 import { IqrfRepositoryComponent } from './components/config/iqrf-repository/iqrf-repository.component';
+import { JsonMetadataApiComponent } from './components/config/json-metadata-api/json-metadata-api.component';
 import { IqrfInfoComponent } from './components/config/iqrf-info/iqrf-info.component';
 import { MqttInterfaceComponent } from './components/config/mqtt-interface/mqtt-interface.component';
 import { WebsocketInterfaceComponent } from './components/config/websocket-interface/websocket-interface.component';
@@ -69,7 +70,8 @@ const routes: Routes = [
   { path: 'clouds-pixla', component: PixlaComponent },
   { path: 'clouds-hexio', component: HexioComponent },
   { path: 'clouds-inteliglue', component: InteliglueComponent },
-  { path: 'user-manager', component: UserManagerComponent }
+  { path: 'user-manager', component: UserManagerComponent },
+  { path: 'json-metadata-api', component: JsonMetadataApiComponent }
 ];
 
 @NgModule({

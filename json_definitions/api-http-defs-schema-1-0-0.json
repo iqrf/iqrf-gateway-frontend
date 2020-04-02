@@ -251,6 +251,343 @@
                 "enumPeriod",
                 "enumUniformDpaVer"
             ]
+        },
+        "igrfMqttInstance": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "component": {
+                    "type": "string",
+                    "default": ""
+                },
+                "instance": {
+                    "type": "string",
+                    "default": ""
+                },
+                "BrokerAddr": {
+                    "type": "string",
+                    "default": ""
+                },
+                "ClientId": {
+                    "type": "string",
+                    "default": ""
+                },
+                "Persistence": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "Qos": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "TopicRequest": {
+                    "type": "string",
+                    "default": ""
+                },
+                "TopicResponse": {
+                    "type": "string",
+                    "default": ""
+                },
+                "User": {
+                    "type": "string",
+                    "default": ""
+                },
+                "Password": {
+                    "type": "string",
+                    "default": ""
+                },
+                "EnabledSSL": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "KeepAliveInterval": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "ConnectTimeout": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "MinReconnect": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "MaxReconnect": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "TrustStore": {
+                    "type": "string",
+                    "default": ""
+                },
+                "KeyStore": {
+                    "type": "string",
+                    "default": ""
+                },
+                "PrivateKey": {
+                    "type": "string",
+                    "default": ""
+                },
+                "PrivateKeyPassword": {
+                    "type": "string",
+                    "default": ""
+                },
+                "EnabledCipherSuites": {
+                    "type": "string",
+                    "default": ""
+                },
+                "EnableServerCertAuth": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "acceptAsyncMsg": {
+                    "type": "boolean",
+                    "default": false
+                }
+            },
+            "required": [
+                "id",
+                "component",
+                "instance",
+                "BrokerAddr",
+                "ClientId",
+                "Persistence",
+                "Qos",
+                "TopicRequest",
+                "TopicResponse",
+                "User",
+                "Password",
+                "EnabledSSL",
+                "KeepAliveInterval",
+                "ConnectTimeout",
+                "MinReconnect",
+                "MaxReconnect",
+                "TrustStore",
+                "KeyStore",
+                "PrivateKey",
+                "PrivateKeyPassword",
+                "EnabledCipherSuites",
+                "EnableServerCertAuth",
+                "acceptAsyncMsg"
+            ]
+        },
+        "igrfWebsocketInstance": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "component": {
+                    "type": "string",
+                    "default": ""
+                },
+                "instance": {
+                    "type": "string",
+                    "default": ""
+                },
+                "acceptAsyncMsg": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "RequiredInterfaces": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "default": ""
+                            },
+                            "target": {
+                                "type": "object",
+                                "properties": {
+                                    "instance": {
+                                        "type": "string",
+                                        "default": ""
+                                    }
+                                },
+                                "required": [
+                                    "instance"
+                                ]
+                            }
+                        },
+                        "required": [
+                            "name",
+                            "target"
+                        ]
+                    }
+                }
+            },
+            "required": [
+                "id",
+                "component",
+                "instance",
+                "acceptAsyncMsg",
+                "RequiredInterfaces"
+            ]
+        },
+        "igrfUdpInstance": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "component": {
+                    "type": "string",
+                    "default": ""
+                },
+                "instance": {
+                    "type": "string",
+                    "default": ""
+                },
+                "RemotePort": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "LocalPort": {
+                    "type": "integer",
+                    "default": 0
+                }
+            },
+            "required": [
+                "id",
+                "component",
+                "instance",
+                "RemotePort",
+                "LocalPort"
+            ]
+        },
+        "shapeTraceFileSrvcInstance": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "component": {
+                    "type": "string",
+                    "default": ""
+                },
+                "instance": {
+                    "type": "string",
+                    "default": ""
+                },
+                "path": {
+                    "type": "string",
+                    "default": ""
+                },
+                "filename": {
+                    "type": "string",
+                    "default": ""
+                },
+                "maxSizeMB": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "timestampFiles": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "VerbosityLevels": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "channel": {
+                                "type": "integer",
+                                "default": 0
+                            },
+                            "level": {
+                                "type": "string",
+                                "default": ""
+                            }
+                        },
+                        "required": [
+                            "channel",
+                            "level"
+                        ]
+                    }
+                }
+            },
+            "required": [
+                "id",
+                "component",
+                "instance",
+                "path",
+                "filename",
+                "maxSizeMB",
+                "timestampFiles",
+                "VerbosityLevels"
+            ]
+        },
+        "igrfJsonMetaDataInstance": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "component": {
+                    "type": "string",
+                    "default": ""
+                },
+                "instance": {
+                    "type": "string",
+                    "default": ""
+                },
+                "metaDataToMessages": {
+                    "type": "boolean",
+                    "default": false
+                }
+            },
+            "required": [
+                "id",
+                "component",
+                "instance",
+                "metaDataToMessages"
+            ]
+        },
+        "igrfMqMsgInstance": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "component": {
+                    "type": "string",
+                    "default": ""
+                },
+                "instance": {
+                    "type": "string",
+                    "default": ""
+                },
+                "LocalMqName": {
+                    "type": "string",
+                    "default": ""
+                },
+                "RemoteMqName": {
+                    "type": "string",
+                    "default": ""
+                },
+                "acceptAsyncMsg": {
+                    "type": "boolean",
+                    "default": false
+                }
+            },
+            "required": [
+                "id",
+                "component",
+                "instance",
+                "LocalMqName",
+                "RemoteMqName",
+                "acceptAsyncMsg"
+            ]
         }
     }
 }
