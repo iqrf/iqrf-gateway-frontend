@@ -1,40 +1,40 @@
 <h1>IQRF SPI interface</h1>
 <p-card subheader="" styleClass="ui-card-shadow">
 
-  <div *ngIf="apiMsg.configSpi === undefined">
+  <div *ngIf="cfg === null">
     <p> No data loaded...</p>
 
   </div>
-  <div *ngIf="!(apiMsg.configSpi === undefined) && (apiMsg.configSpi.instances.length > 0)">
+  <div *ngIf="!(cfg === null) && (cfg.instances.length > 0)">
 
     <div class="p-grid p-dir-col">
 
       <div class="p-col">
         <label for="nm">Name of instance</label>
-        <input id="nm" type="text" pInputText [(ngModel)]="apiMsg.configSpi.configuration.name" >
+        <input id="nm" type="text" pInputText [(ngModel)]="cfg.instances[0].instance" >
       </div>
       <div class="p-col">
         <label for="spi">IQRF SPI interface</label>
-        <input id="spi" type="text" pInputText [(ngModel)]="apiMsg.configSpi.instances[0].IqrfInterface"> 
+        <input id="spi" type="text" pInputText [(ngModel)]="cfg.instances[0].IqrfInterface"> 
       </div>
       <div class="p-col">
         <label for="gpio">Power enable GPIO pin</label>
-        <input id="gpio" type="number" pInputText [(ngModel)]="apiMsg.configSpi.instances[0].powerEnableGpioPin">
+        <input id="gpio" type="number" pInputText [(ngModel)]="cfg.instances[0].powerEnableGpioPin">
       </div>
       <div class="p-col">
         <label for="spibus">SPI bus enable GPIO pin</label>
-        <input id="spibus" type="number" pInputText [(ngModel)]="apiMsg.configSpi.instances[0].busEnableGpioPin">
+        <input id="spibus" type="number" pInputText [(ngModel)]="cfg.instances[0].busEnableGpioPin">
       </div>
       <div class="p-col">
         <label for="prog">Programming mode switch GPIO pin</label>
-        <input id="prog" type="number" pInputText [(ngModel)]="apiMsg.configSpi.instances[0].pgmSwitchGpioPin">
+        <input id="prog" type="number" pInputText [(ngModel)]="cfg.instances[0].pgmSwitchGpioPin">
       </div>
       <div class="p-col">
-        <p-checkbox binary="false" label="Enable SPI reset" [(ngModel)]="apiMsg.configSpi.instances[0].spiReset"></p-checkbox>
+        <p-checkbox binary="false" label="Enable SPI reset" [(ngModel)]="cfg.instances[0].spiReset"></p-checkbox>
       </div>
     </div>
     <p-footer>
-      <button pButton type="button" label="Save" style="margin-right: .25em"></button>
+      <button pButton type="button" label="Save" style="margin-right: .25em" (click)="OnSave()"></button>
     </p-footer>
   </div>    
 </p-card>
@@ -59,3 +59,5 @@
   </div>
  
 </p-card>
+
+<p-toast></p-toast>

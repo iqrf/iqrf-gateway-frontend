@@ -53,6 +53,7 @@
         }
     },
     "required": [
-        "token"
+        "configuration",
+        "instances"
     ]
 }

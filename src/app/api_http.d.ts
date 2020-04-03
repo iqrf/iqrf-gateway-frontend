@@ -90,7 +90,7 @@ export interface ConfigComponentRequest100 {
  */
 
 export interface ConfigComponentResponse100 {
-  configuration?: {
+  configuration: {
     name: string;
     libraryPath: string;
     libraryName: string;
@@ -98,7 +98,7 @@ export interface ConfigComponentResponse100 {
     startlevel: number;
     [k: string]: any;
   };
-  instances?:
+  instances:
     | {
         id: number;
         component: string;

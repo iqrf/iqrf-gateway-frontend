@@ -1,25 +1,27 @@
 <h1>JSON Metadata API</h1>
 
-<div *ngIf="apiMsg.configJsonMetaData === undefined">
+<div *ngIf="cfg === null">
   <p> No data loaded...</p>
 
 </div>
-<div *ngIf="!(apiMsg.configJsonMetaData === undefined) &&  (apiMsg.configJsonMetaData.instances.length > 0)">
+<div *ngIf="!(cfg === null) &&  (cfg.instances.length > 0)">
 
   <p-card subheader="" styleClass="ui-card-shadow">
     <div class="p-grid p-dir-col">
 
       <div class="p-col">
         <label for="nm">Name of instance</label>
-        <input id="nm" type="text" pInputText [(ngModel)]="apiMsg.configJsonMetaData.configuration.name" style="width: 100%;">
+        <input id="nm" type="text" pInputText [(ngModel)]="cfg.instances[0].instance" style="width: 100%;">
       </div>
       <div class="p-col">
         <p-checkbox binary="false" label="Add metadata into the messages"
-          [(ngModel)]="apiMsg.configJsonMetaData.instances[0].metaDataToMessages"></p-checkbox>
+          [(ngModel)]="cfg.instances[0].metaDataToMessages"></p-checkbox>
       </div>
     </div>
     <p-footer>
-      <button pButton type="button" label="Save" style="margin-right: .25em"></button>
+      <button pButton type="button" label="Save" style="margin-right: .25em" (click)="OnSave()"></button>
     </p-footer>
   </p-card>
 </div>
+
+<p-toast></p-toast>

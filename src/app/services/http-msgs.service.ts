@@ -27,6 +27,8 @@ export class HttpMsgsService {
   public configMqMsg: apiHttp.ConfigComponentResponse100;
 
   public emitorMsgApi$: EventEmitter<any> = new EventEmitter();
+  public emitorApiUpdated$: EventEmitter<any> = new EventEmitter();
+  public emitorApiSaved$: EventEmitter<boolean> = new EventEmitter();
 
   public signIn: apiHttp.SignInResponse100 = {
     token: ''
@@ -62,47 +64,58 @@ export class HttpMsgsService {
 
     } else if (type === '/config/iqrf::IqrfSpi') {
       this.configSpi = data;
+      this.emitorApiUpdated$.emit(this.configSpi);
       // console.log('SPI: ' + JSON.stringify(this.configSpi, null, 1));
 
     } else if (type === '/config/iqrf::IqrfCdc') {
       this.configCdc = data;
+      this.emitorApiUpdated$.emit(this.configCdc);
       // console.log('SPI: ' + JSON.stringify(this.configSpi, null, 1));
 
     } else if (type === '/config/iqrf::IqrfUart') {
       this.configUart = data;
+      this.emitorApiUpdated$.emit(this.configUart);
       // console.log('UART: ' + JSON.stringify(this.configSpi, null, 1));
 
     } else if (type === '/config/iqrf::IqrfDpa') {
       this.configDpa = data;
       console.log('Dpa: ' + JSON.stringify(this.configDpa, null, 1));
+      this.emitorApiUpdated$.emit(this.configDpa);
 
     } else if (type === '/config/iqrf::IqrfInfo') {
       this.configInfo = data;
       console.log('Info: ' + JSON.stringify(this.configInfo, null, 1));
+      this.emitorApiUpdated$.emit(this.configInfo);
 
     } else if (type === '/config/iqrf::MqttMessaging') {
       this.configMqtt = data;
       console.log('Info: ' + JSON.stringify(this.configMqtt, null, 1));
+      this.emitorApiUpdated$.emit(this.configMqtt);
 
     } else if (type === '/config/iqrf::WebsocketMessaging') {
       this.configWs = data;
       console.log('Info: ' + JSON.stringify(this.configWs, null, 1));
+      this.emitorApiUpdated$.emit(this.configWs);
 
     } else if (type === '/config/iqrf::UdpMessaging') {
       this.configUdp = data;
       console.log('Info: ' + JSON.stringify(this.configUdp, null, 1));
+      this.emitorApiUpdated$.emit(this.configUdp);
 
     } else if (type === '/config/shape::TraceFileService') {
       this.configTraceFile = data;
       console.log('Info: ' + JSON.stringify(this.configTraceFile, null, 1));
+      this.emitorApiUpdated$.emit(this.configTraceFile);
 
     } else if (type === '/config/iqrf::JsonMngMetaDataApi') {
-        this.configJsonMetaData = data;
-        console.log('Info: ' + JSON.stringify(this.configJsonMetaData, null, 1));
+      this.configJsonMetaData = data;
+      console.log('JsonMngMetaDataApi Info: ' + JSON.stringify(this.configJsonMetaData, null, 1));
+      this.emitorApiUpdated$.emit(this.configJsonMetaData);
 
     } else if (type === '/config/iqrf::MqMessaging') {
       this.configMqMsg = data;
       console.log('Info: ' + JSON.stringify(this.configMqMsg, null, 1));
+      this.emitorApiUpdated$.emit(this.configMqMsg);
 
   }
 
@@ -178,5 +191,31 @@ export class HttpMsgsService {
         }
     });
   }
+
+  PutConfigComponentInstance(component: string, instance: string, body: any) {
+    const self = this;
+
+    const headersI = { Accept: 'application/json', Authorization: 'Bearer ' + this.signIn.token};
+
+    console.log('path: ' + JSON.stringify(this.apiPath + '/config/' + component + '/' + instance));
+    console.log('body: ' + JSON.stringify(body, null, 1));
+
+    const instance2 = instance.replace(/\//g, '%2F');
+
+    // console.log('instance2: ' + instance2);
+
+    this.http.put<any>(this.apiPath + '/config/' + component + '/' + instance2, body, { headers: headersI }).subscribe({
+        next: data => {
+          console.log('PutConfigComponentInstance OK ' + JSON.stringify(data, null, 1));
+          this.emitorApiSaved$.emit(data);
+
+        },
+        error: error => {
+          console.log('PutConfigComponentInstance Error: ' + JSON.stringify(error, null, 1));
+          this.emitorApiSaved$.emit(error);
+        }
+    });
+  }
+
 }
 
