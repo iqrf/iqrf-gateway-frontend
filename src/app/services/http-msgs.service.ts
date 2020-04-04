@@ -25,10 +25,14 @@ export class HttpMsgsService {
   public configTraceFile: apiHttp.ConfigComponentResponse100;
   public configJsonMetaData: apiHttp.ConfigComponentResponse100;
   public configMqMsg: apiHttp.ConfigComponentResponse100;
+  public configMonitorServ: apiHttp.ConfigComponentResponse100;
+  public configWsCpp: apiHttp.ConfigComponentResponse100;
 
   public emitorMsgApi$: EventEmitter<any> = new EventEmitter();
   public emitorApiUpdated$: EventEmitter<any> = new EventEmitter();
   public emitorApiSaved$: EventEmitter<boolean> = new EventEmitter();
+  public emitorPowerOff$: EventEmitter<any> = new EventEmitter();
+  public emitorReboot$: EventEmitter<any> = new EventEmitter();
 
   public signIn: apiHttp.SignInResponse100 = {
     token: ''
@@ -42,7 +46,7 @@ export class HttpMsgsService {
       password: 'iqrf'
     };
 
-    this.SignIn(signIn);
+    this.PostSignIn(signIn);
    }
 
    public msgResponse(type: string, data: any) {
@@ -51,7 +55,7 @@ export class HttpMsgsService {
       console.log(JSON.stringify(data, null, 1));
       this.signIn = data;
 
-      this.gatewayInfo();
+      this.GetGatewayInfo();
 
     } else if (type === 'version') {
       const json: apiHttp.VersionResponse100 = data;
@@ -117,11 +121,21 @@ export class HttpMsgsService {
       console.log('Info: ' + JSON.stringify(this.configMqMsg, null, 1));
       this.emitorApiUpdated$.emit(this.configMqMsg);
 
-  }
+    } else if (type === '/config/iqrf::MonitorService') {
+      this.configMonitorServ = data;
+      console.log('Info: ' + JSON.stringify(this.configMonitorServ, null, 1));
+      this.emitorApiUpdated$.emit(this.configMonitorServ);
+
+    } else if (type === '/config/shape::WebsocketCppService') {
+      this.configWsCpp = data;
+      console.log('Info: ' + JSON.stringify(this.configWsCpp, null, 1));
+      this.emitorApiUpdated$.emit(this.configWsCpp);
+
+    }
 
    }
 
-   SignIn(signIn: apiHttp.SignInRequest100) {
+   PostSignIn(signIn: apiHttp.SignInRequest100) {
     const self = this;
 
     this.http.post<any>(this.apiPath + '/user/signIn', signIn).subscribe({
@@ -136,7 +150,7 @@ export class HttpMsgsService {
     });
   }
 
-  Version() {
+  GetVersion() {
     const self = this;
 
     const headersI = { Accept: 'application/json', Authorization: 'Bearer ' + this.signIn.token};
@@ -153,7 +167,7 @@ export class HttpMsgsService {
     });
   }
 
-  gatewayInfo() {
+  GetGatewayInfo() {
     const self = this;
 
     const headersI = { Accept: 'application/json', Authorization: 'Bearer ' + this.signIn.token};
@@ -173,7 +187,7 @@ export class HttpMsgsService {
     });
   }
 
-  configComponent(component: string) {
+  GetConfigComponent(component: string) {
     const self = this;
 
     const headersI = { Accept: 'application/json', Authorization: 'Bearer ' + this.signIn.token};
@@ -197,8 +211,8 @@ export class HttpMsgsService {
 
     const headersI = { Accept: 'application/json', Authorization: 'Bearer ' + this.signIn.token};
 
-    console.log('path: ' + JSON.stringify(this.apiPath + '/config/' + component + '/' + instance));
-    console.log('body: ' + JSON.stringify(body, null, 1));
+    // console.log('path: ' + JSON.stringify(this.apiPath + '/config/' + component + '/' + instance));
+    // console.log('body: ' + JSON.stringify(body, null, 1));
 
     const instance2 = instance.replace(/\//g, '%2F');
 
@@ -213,6 +227,40 @@ export class HttpMsgsService {
         error: error => {
           console.log('PutConfigComponentInstance Error: ' + JSON.stringify(error, null, 1));
           this.emitorApiSaved$.emit(error);
+        }
+    });
+  }
+
+  PostGatewayPowerOff() {
+    const self = this;
+
+    const headersI = { Accept: 'application/json', Authorization: 'Bearer ' + this.signIn.token};
+
+    this.http.post<any>(this.apiPath + '/gateway/poweroff', null, { headers: headersI }).subscribe({
+        next: data => {
+          self.emitorPowerOff$.emit(data);
+          console.log(JSON.stringify(data, null, 1));
+        },
+        error: error => {
+          self.emitorPowerOff$.emit(error);
+          console.log(JSON.stringify(error, null, 1));
+        }
+    });
+  }
+
+  PostGatewayReboot() {
+    const self = this;
+
+    const headersI = { Accept: 'application/json', Authorization: 'Bearer ' + this.signIn.token};
+
+    this.http.post<any>(this.apiPath + '/gateway/reboot', null, { headers: headersI }).subscribe({
+        next: data => {
+          self.emitorReboot$.emit(data);
+          console.log(JSON.stringify(data, null, 1));
+        },
+        error: error => {
+          self.emitorReboot$.emit(error);
+          console.log(JSON.stringify(error, null, 1));
         }
     });
   }

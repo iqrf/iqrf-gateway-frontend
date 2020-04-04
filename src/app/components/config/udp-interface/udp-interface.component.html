@@ -1,12 +1,12 @@
-<h1>Websocket interface</h1>
-<div *ngIf="apiMsg.configUdp === undefined">
+<h1>UDP interface</h1>
+<div *ngIf="cfg === null">
   <p> No data loaded...</p>
 
 </div>
-<div *ngIf="!(apiMsg.configUdp === undefined)">
+<div *ngIf="!(cfg === null)">
   <p-card subheader="" styleClass="ui-card-shadow">
 
-    <p-table [columns]="cols" [value]=" this.apiMsg.configUdp.instances">
+    <p-table [columns]="cols" [value]="cfg.instances">
       <ng-template pTemplate="header" let-columns>
         <tr>
           <th *ngFor="let col of columns" [pSortableColumn]="col.field">
@@ -44,3 +44,32 @@
   
   </p-card>
 </div>
+
+
+<p-dialog header="{{titleDlg}}" [(visible)]="displayDlg" [style]="{width: '60vw'}" [baseZIndex]="10000"
+  [modal]="true">
+  <span *ngIf="instance !== null">
+    <div class="p-grid">
+      <div class="p-col-12">
+        <label for="instance">Name of instance</label>
+        <input id="instance" type="text" pInputText [(ngModel)]="instance.instance" style="width: 100%;">
+      </div>
+      <div class="p-col-12">
+        <label for="RemotePort">Remote port</label>
+        <input id="RemotePort" type="number" pInputText [(ngModel)]="instance.RemotePort" style="width: 100%;">
+      </div>
+      <div class="p-col-12">
+        <label for="LocalPort">Local port</label>
+        <input id="LocalPort" type="number" pInputText [(ngModel)]="instance.LocalPort" style="width: 100%;">
+      </div>                                                                                
+    </div>
+  </span>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="displayDlg=false; OnDialogOK()" label="OK"></button>
+    <button type="button" pButton icon="pi pi-times" (click)="displayDlg=false" label="Cancel"
+      class="ui-button-secondary"></button>
+  </p-footer>
+</p-dialog>
+
+
+<p-toast></p-toast>

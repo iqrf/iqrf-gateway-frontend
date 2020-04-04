@@ -22,7 +22,7 @@ export class IqrfDpaInterfaceComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.apiMsg.configComponent('iqrf::IqrfDpa');
+    this.apiMsg.GetConfigComponent('iqrf::IqrfDpa');
   }
 
 

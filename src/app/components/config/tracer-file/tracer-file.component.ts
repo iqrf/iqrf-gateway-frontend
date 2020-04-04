@@ -16,7 +16,7 @@ export class TracerFileComponent implements OnInit {
   constructor(public apiMsg: HttpMsgsService) { }
 
   ngOnInit() {
-    this.apiMsg.configComponent('shape::TraceFileService');
+    this.apiMsg.GetConfigComponent('shape::TraceFileService');
 
     this.cols = [
       { field: 'instance', header: 'Name of instance', width: '30%', align: 'left' },

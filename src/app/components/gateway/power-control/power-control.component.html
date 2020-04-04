@@ -1,3 +1,10 @@
-<p>
-  power-control works!
-</p>
+<h1>Power control</h1>
+  <p-card subheader="" styleClass="ui-card-shadow">
+    <div class="p-grid">
+      <div class="p-col-12">
+        <button pButton type="button" label="Power off" icon="pi pi-power-off" style="margin-right: .50em" (click)="OnPowerOff()" class="ui-button-raised ui-button-danger"></button>
+        <button pButton type="button" label="Reboot" icon="pi pi-replay"  style="margin-right: .50em" (click)="OnReboot()" class="ui-button-raised ui-button-success"></button>
+      </div>        
+    </div>
+  </p-card>
+<p-toast></p-toast>

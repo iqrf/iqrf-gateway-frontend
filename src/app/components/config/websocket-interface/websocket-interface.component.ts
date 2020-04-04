@@ -16,7 +16,7 @@ export class WebsocketInterfaceComponent implements OnInit {
   constructor(public apiMsg: HttpMsgsService) { }
 
   ngOnInit() {
-    this.apiMsg.configComponent('iqrf::WebsocketMessaging');
+    this.apiMsg.GetConfigComponent('iqrf::WebsocketMessaging');
 
     this.cols = [
       { field: 'instance', header: 'Name of instance' },

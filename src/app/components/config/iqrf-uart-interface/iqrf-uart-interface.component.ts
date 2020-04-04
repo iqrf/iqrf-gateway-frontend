@@ -38,7 +38,7 @@ export class IqrfUartInterfaceComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.apiMsg.configComponent('iqrf::IqrfUart');
+    this.apiMsg.GetConfigComponent('iqrf::IqrfUart');
   }
 
   Update(w: apiHttp.ConfigComponentResponse100) {

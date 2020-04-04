@@ -22,7 +22,7 @@ export class IqrfCdcInterfaceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.apiMsg.configComponent('iqrf::IqrfCdc');
+    this.apiMsg.GetConfigComponent('iqrf::IqrfCdc');
   }
 
   Update(w: apiHttp.ConfigComponentResponse100) {

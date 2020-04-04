@@ -16,7 +16,7 @@ export class MqInterfaceComponent implements OnInit {
   constructor(public apiMsg: HttpMsgsService) { }
 
   ngOnInit() {
-    this.apiMsg.configComponent('iqrf::MqMessaging');
+    this.apiMsg.GetConfigComponent('iqrf::MqMessaging');
 
     this.cols = [
       { field: 'instance', header: 'Name of instance' },

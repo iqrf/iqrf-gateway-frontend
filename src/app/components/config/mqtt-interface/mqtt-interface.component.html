@@ -1,12 +1,12 @@
 <h1>MQTT messaging</h1>
-<div *ngIf="apiMsg.configMqtt === undefined">
+<div *ngIf="cfg === null">
   <p> No data loaded...</p>
 
 </div>
-<div *ngIf="!(apiMsg.configMqtt === undefined)">
+<div *ngIf="!(cfg === null)">
   <p-card subheader="" styleClass="ui-card-shadow">
 
-    <p-table [columns]="cols" [value]=" this.apiMsg.configMqtt.instances">
+    <p-table [columns]="cols" [value]=" cfg.instances">
       <ng-template pTemplate="header" let-columns>
         <tr>
           <th *ngFor="let col of columns" [pSortableColumn]="col.field">
@@ -25,10 +25,10 @@
             <span *ngIf="col.field === 'actions'">
               <button pButton type="button" icon="pi pi-pencil" (click)="OnEdit($event, rowData)"
                 style="margin-top:0; margin-right:10px;" class="ui-button-raised ui-button-primary"></button>
-                <button pButton type="button" icon="pi pi-trash" (click)="OnRemove($event, rowData)"
-                style="margin-top:0; margin-right:10px;" class="ui-button-raised ui-button-danger"></button>          
+              <button pButton type="button" icon="pi pi-trash" (click)="OnRemove($event, rowData)"
+                style="margin-top:0; margin-right:10px;" class="ui-button-raised ui-button-danger"></button>
             </span>
-            <span *ngIf="col.field !== 'actions'">    
+            <span *ngIf="col.field !== 'actions'">
               {{rowData[col.field]}}
             </span>
           </td>
@@ -41,6 +41,103 @@
         </div>
       </ng-template>
     </p-table>
-  
+
   </p-card>
 </div>
+
+<p-dialog header="{{titleDlg}}" [(visible)]="displayDlg" [style]="{width: '60vw'}" [baseZIndex]="10000"
+  [modal]="true">
+  <span *ngIf="instance !== null">
+    <div class="p-grid">
+      <div class="p-col-12">
+        <label for="instance">Name of instance</label>
+        <input id="instance" type="text" pInputText [(ngModel)]="instance.instance" style="width: 100%;">
+      </div>
+      <div class="p-col-12">
+        <label for="BrokerAddr">Broker address</label>
+        <input id="BrokerAddr" type="text" pInputText [(ngModel)]="instance.BrokerAddr" style="width: 100%;">
+      </div>
+      <div class="p-col-12">
+        <label for="ClientId">Client ID</label>
+        <input id="ClientId" type="text" pInputText [(ngModel)]="instance.ClientId" style="width: 100%;">
+      </div>
+      <div class="p-col-12">
+        <label for="Persistence">Persistence</label>
+        <input id="Persistence" type="number" pInputText [(ngModel)]="instance.Persistence" style="width: 100%;">
+      </div>
+      <div class="p-col-12">
+        <label for="Qos">QoS</label>
+        <input id="Qos" type="number" pInputText [(ngModel)]="instance.Qos" style="width: 100%;">
+      </div>
+      <div class="p-col-12">
+        <label for="TopicRequest">Topic for requests</label>
+        <input id="TopicRequest" type="text" pInputText [(ngModel)]="instance.TopicRequest" style="width: 100%;">
+      </div>
+      <div class="p-col-12">
+        <label for="TopicResponse">Topic for responses</label>
+        <input id="TopicResponse" type="text" pInputText [(ngModel)]="instance.TopicResponse" style="width: 100%;">
+      </div>
+      <div class="p-col-12">
+        <label for="User">User</label>
+        <input id="User" type="text" pInputText [(ngModel)]="instance.User" style="width: 100%;">
+      </div>   
+      <div class="p-col-12">
+        <label for="Password">Password</label>
+        <input id="Password" type="text" pInputText [(ngModel)]="instance.Password" style="width: 100%;">
+      </div>     
+      <div class="p-col-12">
+        <p-checkbox binary="true" label="Enabled TLS" [(ngModel)]="instance.EnabledSSL" [style]="{'width': '100%;'}"></p-checkbox>
+      </div>   
+      <div class="p-col-12">
+        <label for="KeepAliveInterval">Keep alive interval</label>
+        <input id="KeepAliveInterval" type="number" pInputText [(ngModel)]="instance.KeepAliveInterval" style="width: 100%;">
+      </div>  
+      <div class="p-col-12">
+        <label for="ConnectTimeout">Connection timeout</label>
+        <input id="ConnectTimeout" type="number" pInputText [(ngModel)]="instance.ConnectTimeout" style="width: 100%;">
+      </div>
+      <div class="p-col-12">
+        <label for="MinReconnect">Minimal count of reconnects</label>
+        <input id="MinReconnect" type="number" pInputText [(ngModel)]="instance.MinReconnect" style="width: 100%;">
+      </div>     
+      <div class="p-col-12">
+        <label for="MaxReconnect">Maximal count of reconnects</label>
+        <input id="MaxReconnect" type="number" pInputText [(ngModel)]="instance.MaxReconnect" style="width: 100%;">
+      </div>   
+      <div class="p-col-12">
+        <label for="TrustStore">CA certificate</label>
+        <input id="TrustStore" type="text" pInputText [(ngModel)]="instance.TrustStore" style="width: 100%;">
+      </div>  
+      <div class="p-col-12">
+        <label for="KeyStore">Certificate</label>
+        <input id="KeyStore" type="text" pInputText [(ngModel)]="instance.KeyStore" style="width: 100%;">
+      </div>    
+      <div class="p-col-12">
+        <label for="PrivateKey">Private key</label>
+        <input id="PrivateKey" type="text" pInputText [(ngModel)]="instance.PrivateKey" style="width: 100%;">
+      </div>   
+      <div class="p-col-12">
+        <label for="PrivateKeyPassword">Private key password</label>
+        <input id="PrivateKeyPassword" type="text" pInputText [(ngModel)]="instance.PrivateKeyPassword" style="width: 100%;">
+      </div>   
+      <div class="p-col-12">
+        <label for="EnabledCipherSuites">Enabled cipher suites</label>
+        <input id="EnabledCipherSuites" type="text" pInputText [(ngModel)]="instance.EnabledCipherSuites" style="width: 100%;">
+      </div>   
+      <div class="p-col-12">
+        <p-checkbox binary="true" label="Enable server certificate authentication" [(ngModel)]="instance.EnableServerCertAuth" [style]="{'width': '100%;'}"></p-checkbox>
+      </div>  
+      <div class="p-col-12">
+        <p-checkbox binary="true" label="Accept asynchronous messages" [(ngModel)]="instance.acceptAsyncMsg" [style]="{'width': '100%;'}"></p-checkbox>
+      </div>                                                                             
+    </div>
+  </span>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="displayDlg=false; OnDialogOK()" label="OK"></button>
+    <button type="button" pButton icon="pi pi-times" (click)="displayDlg=false" label="Cancel"
+      class="ui-button-secondary"></button>
+  </p-footer>
+</p-dialog>
+
+
+<p-toast></p-toast>

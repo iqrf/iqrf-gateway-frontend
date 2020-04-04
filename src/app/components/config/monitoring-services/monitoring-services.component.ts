@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import {SelectItem} from 'primeng/api';
 import { HttpMsgsService } from '../../../services/http-msgs.service';
 import {MessageService} from 'primeng/api';
 import * as apiHttp from '../../../api_http';
 import * as _ from 'lodash';
 
+
 @Component({
-  selector: 'app-mqtt-interface',
-  templateUrl: './mqtt-interface.component.html',
-  styleUrls: ['./mqtt-interface.component.css'],
+  selector: 'app-monitoring-services',
+  templateUrl: './monitoring-services.component.html',
+  styleUrls: ['./monitoring-services.component.css'],
   providers: [MessageService]
 })
-export class MqttInterfaceComponent implements OnInit {
+export class MonitoringServicesComponent implements OnInit {
 
   configName = '';
   instanceName = '';
@@ -32,16 +32,12 @@ export class MqttInterfaceComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.apiMsg.GetConfigComponent('iqrf::MqttMessaging');
+    this.apiMsg.GetConfigComponent('iqrf::MonitorService');
 
     this.cols = [
-      { field: 'instance', header: 'Name of instance' },
-      { field: 'BrokerAddr', header: 'Broker address' },
-      { field: 'ClientId', header: 'Client ID' },
-      { field: 'TopicRequest', header: 'Topic of request' },
-      { field: 'TopicResponse', header: 'Topic of response' },
-      { field: 'EnabledSSL', header: 'Enabled TLS' },
-      { field: 'acceptAsyncMsg', header: 'Asynchronous messages' },
+      { field: 'reportPeriod', header: 'Reporting period in seconds' },
+      { field: 'BrokerAddr', header: 'WebSocket server port	' },
+      { field: 'ClientId', header: 'Accept only connection from localhost' },
       { field: 'actions', header: '' }
     ];
   }

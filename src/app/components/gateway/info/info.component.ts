@@ -15,7 +15,7 @@ export class InfoComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.apiMsg.gatewayInfo();
+    this.apiMsg.GetGatewayInfo();
   }
 
   GetIpAddress(): string [] {

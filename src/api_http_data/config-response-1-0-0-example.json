@@ -1,0 +1,39 @@
+{
+  "applicationName": "",
+  "resourceDir": "",
+  "dataDir": "",
+  "cacheDir": "",
+  "userDir": "",
+  "configurationDir": "",
+  "deploymentDir": "",
+  "components": [
+    {
+      "name": "",
+      "libraryPath": "",
+      "libraryName": "",
+      "enabled": false,
+      "startlevel": 0
+    },
+    {
+      "name": "",
+      "libraryPath": "",
+      "libraryName": "",
+      "enabled": false,
+      "startlevel": 0
+    },
+    {
+      "name": "",
+      "libraryPath": "",
+      "libraryName": "",
+      "enabled": false,
+      "startlevel": 0
+    },
+    {
+      "name": "",
+      "libraryPath": "",
+      "libraryName": "",
+      "enabled": false,
+      "startlevel": 0
+    }
+  ]
+}

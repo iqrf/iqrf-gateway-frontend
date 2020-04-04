@@ -19,6 +19,7 @@ import { MqInterfaceComponent } from './components/config/mq-interface/mq-interf
 import { UdpInterfaceComponent } from './components/config/udp-interface/udp-interface.component';
 import { SchedulerComponent } from './components/config/scheduler/scheduler.component';
 import { TracerFileComponent } from './components/config/tracer-file/tracer-file.component';
+import { MonitoringServicesComponent } from './components/config/monitoring-services/monitoring-services.component';
 import { ConfigurationMigrationComponent } from './components/config/configuration-migration/configuration-migration.component';
 import { SendDpaPacketComponent } from './components/iqrf-network/send-dpa-packet/send-dpa-packet.component';
 import { SendJsonRequestComponent } from './components/iqrf-network/send-json-request/send-json-request.component';
@@ -33,7 +34,7 @@ import { HexioComponent } from './components/clouds/hexio/hexio.component';
 import { InteliglueComponent } from './components/clouds/inteliglue/inteliglue.component';
 import { PixlaComponent } from './components/clouds/pixla/pixla.component';
 import { UserManagerComponent } from './components/user-manager/user-manager.component';
-import { EthernetConnectionsComponent } from './components/network-manager/ethernet-connections/ethernet-connections.component'
+import { EthernetConnectionsComponent } from './components/network-manager/ethernet-connections/ethernet-connections.component';
 
 
 
@@ -71,7 +72,8 @@ const routes: Routes = [
   { path: 'clouds-hexio', component: HexioComponent },
   { path: 'clouds-inteliglue', component: InteliglueComponent },
   { path: 'user-manager', component: UserManagerComponent },
-  { path: 'json-metadata-api', component: JsonMetadataApiComponent }
+  { path: 'json-metadata-api', component: JsonMetadataApiComponent },
+  { path: 'monitoring-service', component: MonitoringServicesComponent }
 ];
 
 @NgModule({

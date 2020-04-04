@@ -22,7 +22,7 @@ export class IqrfSpiInterfaceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.apiMsg.configComponent('iqrf::IqrfSpi');
+    this.apiMsg.GetConfigComponent('iqrf::IqrfSpi');
   }
 
   Update(w: apiHttp.ConfigComponentResponse100) {

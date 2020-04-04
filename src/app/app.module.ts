@@ -31,6 +31,7 @@ import {FileUploadModule} from 'primeng/fileupload';
 import {TableModule} from 'primeng/table';
 import {DynamicDialogModule} from 'primeng/dynamicdialog';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {DialogModule} from 'primeng/dialog';
 import {CodeHighlighterModule} from 'primeng/codehighlighter';
 import {TooltipModule} from 'primeng/tooltip';
 import {ProgressBarModule} from 'primeng/progressbar';
@@ -74,6 +75,7 @@ import { EthernetConnectionsDlgComponent } from './components/network-manager/et
 import { FieldPipe } from './field.pipe';
 import { IqrfInfoComponent } from './components/config/iqrf-info/iqrf-info.component';
 import { JsonMetadataApiComponent } from './components/config/json-metadata-api/json-metadata-api.component';
+import { MonitoringServicesComponent } from './components/config/monitoring-services/monitoring-services.component';
 
 
 
@@ -115,7 +117,8 @@ import { JsonMetadataApiComponent } from './components/config/json-metadata-api/
     EthernetConnectionsDlgComponent,
     FieldPipe,
     IqrfInfoComponent,
-    JsonMetadataApiComponent
+    JsonMetadataApiComponent,
+    MonitoringServicesComponent
   ],
   imports: [
     BrowserModule,
@@ -148,7 +151,8 @@ import { JsonMetadataApiComponent } from './components/config/json-metadata-api/
     CodeHighlighterModule,
     TooltipModule,
     HttpClientModule,
-    ProgressBarModule
+    ProgressBarModule,
+    DialogModule
   ],
   providers: [],
   bootstrap: [AppComponent],

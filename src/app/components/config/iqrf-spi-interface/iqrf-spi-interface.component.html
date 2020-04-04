@@ -8,7 +8,6 @@
   <div *ngIf="!(cfg === null) && (cfg.instances.length > 0)">
 
     <div class="p-grid p-dir-col">
-
       <div class="p-col">
         <label for="nm">Name of instance</label>
         <input id="nm" type="text" pInputText [(ngModel)]="cfg.instances[0].instance" >

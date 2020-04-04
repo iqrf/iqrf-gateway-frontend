@@ -1,0 +1,102 @@
+{
+  "board": "unknown",
+  "gwId": "unknown",
+  "pixla": "unknown",
+  "versions": {
+    "controller": "unknown",
+    "daemon": "unknown",
+    "webapp": "unknown"
+  },
+  "hostname": "unknown",
+  "interfaces": [
+    {
+      "name": "unknown",
+      "macAddress": "unknown",
+      "ipAddresses": [
+        "unknown",
+        "unknown"
+      ]
+    },
+    {
+      "name": "unknown",
+      "macAddress": "unknown",
+      "ipAddresses": [
+        "unknown",
+        "unknown",
+        "unknown",
+        "unknown"
+      ]
+    },
+    {
+      "name": "unknown",
+      "macAddress": "unknown",
+      "ipAddresses": [
+        "unknown",
+        "unknown"
+      ]
+    },
+    {
+      "name": "unknown",
+      "macAddress": "unknown",
+      "ipAddresses": [
+        "unknown",
+        "unknown"
+      ]
+    }
+  ],
+  "diskUsages": [
+    {
+      "fsName": "unknown",
+      "fsType": "unknown",
+      "size": "unknown",
+      "used": "unknown",
+      "available": "unknown",
+      "usage": "unknown",
+      "mount": "unknown"
+    },
+    {
+      "fsName": "unknown",
+      "fsType": "unknown",
+      "size": "unknown",
+      "used": "unknown",
+      "available": "unknown",
+      "usage": "unknown",
+      "mount": "unknown"
+    },
+    {
+      "fsName": "unknown",
+      "fsType": "unknown",
+      "size": "unknown",
+      "used": "unknown",
+      "available": "unknown",
+      "usage": "unknown",
+      "mount": "unknown"
+    },
+    {
+      "fsName": "unknown",
+      "fsType": "unknown",
+      "size": "unknown",
+      "used": "unknown",
+      "available": "unknown",
+      "usage": "unknown",
+      "mount": "unknown"
+    }
+  ],
+  "memoryUsage": {
+    "size": "unknown",
+    "used": "unknown",
+    "free": "unknown",
+    "shared": "unknown",
+    "buffers": "unknown",
+    "cache": "unknown",
+    "available": "unknown",
+    "usage": "unknown"
+  },
+  "swapUsage": {
+    "size": "unknown",
+    "used": "unknown",
+    "free": "unknown",
+    "usage": "unknown"
+  },
+  "coordinator": {}
+}

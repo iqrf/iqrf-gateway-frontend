@@ -23,7 +23,7 @@ export class JsonMetadataApiComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.apiMsg.configComponent('iqrf::JsonMngMetaDataApi');
+    this.apiMsg.GetConfigComponent('iqrf::JsonMngMetaDataApi');
   }
 
   Update(w: apiHttp.ConfigComponentResponse100) {

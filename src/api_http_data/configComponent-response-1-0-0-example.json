@@ -1,0 +1,15 @@
+{
+  "configuration": {
+    "name": "",
+    "libraryPath": "",
+    "libraryName": "",
+    "enabled": false,
+    "startlevel": 0
+  },
+  "instances": {
+    "id": 0,
+    "component": "",
+    "instance": "",
+    "IqrfInterface": ""
+  }
+}
