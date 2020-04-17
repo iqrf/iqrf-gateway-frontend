@@ -1,1 +1,78 @@
-<p>monitoring-services works!</p>
+<h1>Monitoring service</h1>
+<div *ngIf="apiMsg.configMonitorServ === undefined">
+  <p> No data loaded...</p>
+
+</div>
+<div *ngIf="!(apiMsg.configMonitorServ === undefined)">
+  <p-card subheader="" styleClass="ui-card-shadow">
+
+    <p-table [columns]="cols" [value]=" this.apiMsg.configMonitorServ.instances">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+            {{col.header}}
+            <span *ngIf="col.field !=='actions'">
+              <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order">
+              </p-sortIcon>
+            </span>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+          <td *ngFor="let col of columns">
+            <span *ngIf="col.field === 'actions'">
+              <button pButton type="button" icon="pi pi-pencil" (click)="OnEdit($event, rowData)"
+                style="margin-top:0; margin-right:10px;" class="ui-button-raised ui-button-primary"></button>
+                <button pButton type="button" icon="pi pi-trash" (click)="OnRemove($event, rowData)"
+                style="margin-top:0; margin-right:10px;" class="ui-button-raised ui-button-danger"></button>          
+            </span>
+            <span *ngIf="col.field === 'wsport'">
+              {{GetWsPort(rowData)}}
+            </span>
+            <span *ngIf="col.field === 'acceptLocalhost'">
+              {{GetAcceptLocHost(rowData)}}
+            </span>            
+            <span *ngIf="col.field !== 'actions' && col.field !== 'wsport' && col.field !== 'acceptLocalhost'">    
+              {{rowData[col.field]}}
+            </span>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="p-col-12" style="text-align: left;">
+          <button type="button" pButton icon="pi pi-plus-circle" label="Add" iconPos="left" (click)="OnAdd()"
+            style="margin-right: 0.5em;" class="ui-button-raised ui-button-secondary"></button>
+        </div>
+      </ng-template>
+    </p-table>
+  
+  </p-card>
+</div>
+
+<p-dialog header="{{titleDlg}}" [(visible)]="displayDlg" [style]="{width: '60vw'}" [baseZIndex]="10000"
+  [modal]="true">
+  <span *ngIf="instance !== null">
+    <div class="p-grid">
+      <div class="p-col-12">
+        <label for="reportPeriod">Reporting period in seconds</label>
+        <input id="reportPeriod" type="number" pInputText [(ngModel)]="instance.reportPeriod" style="width: 100%;">
+      </div>
+      <div class="p-col-12">
+        <label for="WebsocketPort">WebSocket server port</label>
+        <input id="WebsocketPort" type="number" pInputText [(ngModel)]="instanceCpp.WebsocketPort" style="width: 100%;">
+      </div>    
+      <div class="p-col-12">
+        <p-checkbox binary="true" label="Accept only connection from localhost" [(ngModel)]="instanceCpp.acceptOnlyLocalhost" [style]="{'width': '100%;'}"></p-checkbox>
+      </div>                                                                                   
+    </div>
+  </span>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="displayDlg=false; OnDialogOK()" label="OK"></button>
+    <button type="button" pButton icon="pi pi-times" (click)="displayDlg=false" label="Cancel"
+      class="ui-button-secondary"></button>
+  </p-footer>
+</p-dialog>
+
+<p-toast></p-toast>

@@ -28,7 +28,7 @@ export class HttpMsgsService {
   public configMonitorServ: apiHttp.ConfigComponentResponse100;
   public configWsCpp: apiHttp.ConfigComponentResponse100;
   public configJsCache: apiHttp.ConfigComponentResponse100;
-  
+
   public emitorMsgApi$: EventEmitter<any> = new EventEmitter();
   public emitorApiUpdated$: EventEmitter<any> = new EventEmitter();
   public emitorApiSaved$: EventEmitter<boolean> = new EventEmitter();
