@@ -7,6 +7,10 @@
     --bottom-color: #1b1b1b;
     --grey-color: #e4e4e4;
     --dark-color: #57585b;
+
+    /* Confirm dialog */
+    --confirm-button: rgb(219, 21, 47);
+    --cancel-button: rgb(167, 216, 152);    
   
     /* Color of header panel */    
     --header-color: var(--grey-color);
@@ -59,4 +63,17 @@ h1 {
 .ui-tooltip-arrow {
   color: rgb(22, 142, 223) !important;
 
+}
+
+
+.confirm-dlg-header {    
+  font: var(--font-normal);
+}
+
+.confirm-dlg-title {    
+  font: var(--font-normal);
+}
+
+.confirm-dlg-content {    
+  font: var(--font-small);
 }

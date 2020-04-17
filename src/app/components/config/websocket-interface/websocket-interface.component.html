@@ -28,7 +28,13 @@
                 <button pButton type="button" icon="pi pi-trash" (click)="OnRemove($event, rowData)"
                 style="margin-top:0; margin-right:10px;" class="ui-button-raised ui-button-danger"></button>          
             </span>
-            <span *ngIf="col.field !== 'actions'">    
+            <span *ngIf="col.field === 'wsport'">
+              {{GetWsPort(rowData)}}
+            </span>
+            <span *ngIf="col.field === 'acceptLocalhost'">
+              {{GetAcceptLocHost(rowData)}}
+            </span>            
+            <span *ngIf="col.field !== 'actions' && col.field !== 'wsport' && col.field !== 'acceptLocalhost'">    
               {{rowData[col.field]}}
             </span>
           </td>
@@ -44,3 +50,33 @@
   
   </p-card>
 </div>
+
+<p-dialog header="{{titleDlg}}" [(visible)]="displayDlg" [style]="{width: '60vw'}" [baseZIndex]="10000"
+  [modal]="true">
+  <span *ngIf="instance !== null">
+    <div class="p-grid">
+      <div class="p-col-12">
+        <label for="instance">Name of instance</label>
+        <input id="instance" type="text" pInputText [(ngModel)]="instance.instance" style="width: 100%;">
+      </div>
+      <div class="p-col-12">
+        <label for="LocalMqName">Local MQ name</label>
+        <input id="LocalMqName" type="text" pInputText [(ngModel)]="instance.LocalMqName" style="width: 100%;">
+      </div>
+      <div class="p-col-12">
+        <label for="RemoteMqName">Remote MQ name</label>
+        <input id="RemoteMqName" type="text" pInputText [(ngModel)]="instance.RemoteMqName" style="width: 100%;">
+      </div>       
+      <div class="p-col-12">
+        <p-checkbox binary="true" label="Accept asynchronous messages" [(ngModel)]="instance.acceptAsyncMsg" [style]="{'width': '100%;'}"></p-checkbox>
+      </div>                                                                             
+    </div>
+  </span>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="displayDlg=false; OnDialogOK()" label="OK"></button>
+    <button type="button" pButton icon="pi pi-times" (click)="displayDlg=false" label="Cancel"
+      class="ui-button-secondary"></button>
+  </p-footer>
+</p-dialog>
+
+<p-toast></p-toast>

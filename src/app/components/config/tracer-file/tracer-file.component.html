@@ -25,10 +25,10 @@
             <span *ngIf="col.field === 'actions'">
               <button pButton type="button" icon="pi pi-pencil" (click)="OnEdit($event, rowData)"
                 style="margin-top:0; margin-right:10px;" class="ui-button-raised ui-button-primary"></button>
-                <button pButton type="button" icon="pi pi-trash" (click)="OnRemove($event, rowData)"
-                style="margin-top:0;" class="ui-button-raised ui-button-danger"></button>        
+              <button pButton type="button" icon="pi pi-trash" (click)="OnRemove($event, rowData)" style="margin-top:0;"
+                class="ui-button-raised ui-button-danger"></button>
             </span>
-            <span *ngIf="col.field !== 'actions'">    
+            <span *ngIf="col.field !== 'actions'">
               {{rowData[col.field]}}
             </span>
           </td>
@@ -41,6 +41,66 @@
         </div>
       </ng-template>
     </p-table>
-  
+
   </p-card>
 </div>
+
+<p-dialog header="{{titleDlg}}" [(visible)]="displayDlg" [style]="{width: '60vw'}" [baseZIndex]="10000" [modal]="true">
+  <span *ngIf="instance !== null">
+    <div class="p-grid">
+      <div class="p-col-12">
+        <label for="instance">Name of instance</label>
+        <input id="instance" type="text" pInputText [(ngModel)]="instance.instance" style="width: 100%;">
+      </div>
+      <div class="p-col-12">
+        <label for="path">Path to directory with logs</label>
+        <input id="path" type="text" pInputText [(ngModel)]="instance.path" style="width: 100%;">
+      </div>
+      <div class="p-col-12">
+        <label for="filename">File name</label>
+        <input id="filename" type="text" pInputText [(ngModel)]="instance.filename" style="width: 100%;">
+      </div>
+      <div class="p-col-12">
+        <label for="maxSizeMB">Maximal size in MB</label>
+        <input id="maxSizeMB" type="number" pInputText [(ngModel)]="instance.maxSizeMB" style="width: 100%;">
+      </div>
+      <div class="p-col-12">
+        <p-checkbox binary="true" label="Enable timestamp files" [(ngModel)]="instance.timestampFiles"
+          [style]="{'width': '100%;'}"></p-checkbox>
+      </div>
+      <div class="p-col-12">
+        <div class="p-grid">
+          <div class="p-col-12" *ngFor="let item of instance.VerbosityLevels; let i = index">
+            <div class="p-grid">
+              <div class="p-col-4">
+                <label for="channel">Verbosity channel</label>
+                <input id="channel" type="number" pInputText [(ngModel)]="item.channel" style="width: 100%;">
+              </div>
+              <div class="p-col-4">
+                <label for="level">Verbosity level</label>
+                <input id="level" type="text" pInputText [(ngModel)]="item.level" style="width: 100%;">
+              </div>
+              <div class="p-col-4">
+                <p>&nbsp;</p>
+                <button pButton type="button" icon="pi pi-minus" (click)="OnRemoveVerbLevel(i)"
+                  class="ui-button-raised ui-button-secondary"></button>
+              </div>
+            </div>
+          </div>
+          <div class="p-col-12" *ngIf="instance.VerbosityLevels.length < 4">
+            <button pButton type="button" icon="pi pi-plus" label="Add level" (click)="OnAddVerbLevel()"
+            class="ui-button-raised ui-button-secondary"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </span>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="displayDlg=false; OnDialogOK()" label="OK"></button>
+    <button type="button" pButton icon="pi pi-times" (click)="displayDlg=false" label="Cancel"
+      class="ui-button-secondary"></button>
+  </p-footer>
+</p-dialog>
+
+
+<p-toast></p-toast>

@@ -42,15 +42,15 @@
 
     <div class="p-col">
       <p>Boards</p>
-      <button pButton id="boards" type="button" label="Raspberry Pi" class="buttonOne ui-button-secondary"></button>
-      <button pButton id="boards" type="button" label="Orange Pi" class="buttonOne ui-button-secondary"></button>
-      <button pButton id="boards" type="button" label="UniPi Axon" class="buttonOne ui-button-secondary"></button>
-      <button pButton id="boards" type="button" label="UP" class="buttonOne ui-button-secondary"></button>
-      <button pButton id="boards" type="button" label="UP Squared" class="buttonOne ui-button-secondary"></button>
+      <button pButton id="boards" type="button" label="Raspberry Pi" class="buttonOne ui-button-secondary" (click)="OnRaspiCfg()"></button>
+      <button pButton id="boards" type="button" label="Orange Pi" class="buttonOne ui-button-secondary" (click)="OnOrangeCfg()"></button>
+      <button pButton id="boards" type="button" label="UniPi Axon" class="buttonOne ui-button-secondary" (click)="OnUnipiCfg()"></button>
+      <button pButton id="boards" type="button" label="UP" class="buttonOne ui-button-secondary" (click)="OnUpCfg()"></button>
+      <button pButton id="boards" type="button" label="UP Squared" class="buttonOne ui-button-secondary" (click)="OnUp2Cfg()"></button>
     </div>
     <div class="p-col">
       <p>Interfaces</p>
-      <button pButton id="boards" type="button" label="/dev/spidev" class="buttonOne ui-button-secondary"></button>
+      <button pButton id="boards" type="button" label="/dev/spidev1.0" class="buttonOne ui-button-secondary" (click)="OnInterfacesCfg()"></button>
 
 
     </div>

@@ -12,44 +12,53 @@
             "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/configuration"
         },
         "instances": {
-            "anyOf": [
-                {
-                    "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/igrfSpiInstance"
-                },
-                {
-                    "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/igrfSchedulerInstance"
-                },
-                {
-                    "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/igrfCdcInstance"
-                },
-                {
-                    "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/igrfUartInstance"
-                },
-                {
-                    "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/igrfDpaInstance"
-                },
-                {
-                    "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/igrfInfoInstance"
-                },
-                {
-                    "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/igrfMqttInstance"
-                },
-                {
-                    "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/igrfWebsocketInstance"
-                },
-                {
-                    "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/igrfUdpInstance"
-                },
-                {
-                    "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/shapeTraceFileSrvcInstance"
-                },
-                {
-                    "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/igrfJsonMetaDataInstance"
-                },
-                {
-                    "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/igrfMqMsgInstance"
-                }
-            ]
+            "type": "array",
+            "items": {
+                "anyOf": [
+                    {
+                        "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/igrfSpiInstance"
+                    },
+                    {
+                        "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/igrfSchedulerInstance"
+                    },
+                    {
+                        "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/igrfCdcInstance"
+                    },
+                    {
+                        "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/igrfUartInstance"
+                    },
+                    {
+                        "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/igrfDpaInstance"
+                    },
+                    {
+                        "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/igrfInfoInstance"
+                    },
+                    {
+                        "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/igrfMqttInstance"
+                    },
+                    {
+                        "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/igrfWebsocketInstance"
+                    },
+                    {
+                        "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/igrfUdpInstance"
+                    },
+                    {
+                        "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/shapeTraceFileSrvcInstance"
+                    },
+                    {
+                        "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/igrfJsonMetaDataInstance"
+                    },
+                    {
+                        "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/igrfMqMsgInstance"
+                    },
+                    {
+                        "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/igrfJsCache"
+                    },
+                    {
+                        "$ref": "D:/IqrfWebApp/iqrf-gateway-webapp-frontend/json_definitions/api-http-defs-schema-1-0-0.json#/definitions/ShapeWebsocketCppService"
+                    }
+                ]
+            }
         }
     },
     "required": [

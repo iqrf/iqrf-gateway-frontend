@@ -588,6 +588,70 @@
                 "RemoteMqName",
                 "acceptAsyncMsg"
             ]
+        },
+        "igrfJsCache": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "component": {
+                    "type": "string",
+                    "default": ""
+                },
+                "instance": {
+                    "type": "string",
+                    "default": ""
+                },
+                "urlRepo": {
+                    "type": "string",
+                    "default": ""
+                },
+                "checkPeriodInMinutes": {
+                    "type": "integer",
+                    "default": 0
+                }
+            },
+            "required": [
+                "id",
+                "component",
+                "instance",
+                "urlRepo",
+                "checkPeriodInMinutes"
+            ]
+        },
+        "ShapeWebsocketCppService": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "default": 0
+                },
+                "component": {
+                    "type": "string",
+                    "default": ""
+                },
+                "instance": {
+                    "type": "string",
+                    "default": ""
+                },
+                "WebsocketPort": {
+                    "type": "string",
+                    "default": ""
+                },
+                "acceptOnlyLocalhost": {
+                    "type": "integer",
+                    "default": 0
+                }
+            },
+            "required": [
+                "id",
+                "component",
+                "instance",
+                "WebsocketPort",
+                "acceptOnlyLocalhost"
+            ]
         }
     }
 }

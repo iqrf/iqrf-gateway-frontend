@@ -4,6 +4,7 @@ import { HttpMsgsService } from '../../../services/http-msgs.service';
 import {MessageService} from 'primeng/api';
 import * as apiHttp from '../../../api_http';
 import * as _ from 'lodash';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-udp-interface',
@@ -13,12 +14,11 @@ import * as _ from 'lodash';
 })
 export class UdpInterfaceComponent implements OnInit {
 
+  cols: any[];
+
   configName = '';
   instanceName = '';
-  public cfg: apiHttp.ConfigComponentResponse100 = null;
   public instance: any = null;
-
-  cols: any[];
 
   // Dialog
   displayDlg = false;
@@ -43,17 +43,7 @@ export class UdpInterfaceComponent implements OnInit {
 
 
   Update(w: apiHttp.ConfigComponentResponse100) {
-    this.cfg = _.cloneDeep(w);
-    this.configName = this.cfg.configuration.name;
-
-    if (this.cfg.instances.length > 0) {
-      this.instanceName = this.cfg.instances[0].instance;
-    }
-  }
-
-  OnSave() {
-    this.apiMsg.PutConfigComponentInstance(this.configName, this.instanceName, this.cfg.instances[0]);
-
+    this.configName = w.configuration.name;
   }
 
   Saved(w: any) {
@@ -69,6 +59,7 @@ export class UdpInterfaceComponent implements OnInit {
 
   OnEdit(event: any, data: any) {
     this.instance = data;
+    this.instanceName = this.instance.instance;
 
     this.titleDlg = 'Edit instance';
     this.operDialog = 'edit';
@@ -77,48 +68,49 @@ export class UdpInterfaceComponent implements OnInit {
   }
 
   OnRemove(event: any, data: any) {
+    Swal.fire({
+      title: 'Remove?',
+      text: 'Do you want to remove instance \'' + data.instance + '\'?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, remove instance',
+      confirmButtonColor: 'var(--confirm-button)',
+      cancelButtonColor: 'var(--cancel-button)',
+      customClass: {
+        header: 'confirm-dlg-header',
+        title: 'confirm-dlg-title',
+        content: 'confirm-dlg-content'
+      }
 
+    }).then((result) => {
+      if (result.value) {
+        this.apiMsg.DeleteConfigComponentInstance(this.configName, data.instance);
+      }
+    });
   }
 
   OnAdd() {
-    /*
+
     this.instance = {
       id: 0,
-      component: '',
-      instance: '',
-      BrokerAddr: '',
-      ClientId: '',
-      Persistence: '',
-      Qos: 0,
-      TopicRequest: '',
-      TopicResponse: '',
-      User: '',
-      Password: '',
-      EnabledSSL: false,
-      KeepAliveInterval: 0,
-      ConnectTimeout: 0,
-      MinReconnect: 0,
-      MaxReconnect: 0,
-      TrustStore: '',
-      KeyStore: '',
-      PrivateKey: '',
-      PrivateKeyPassword: '',
-      EnabledCipherSuites: '',
-      EnableServerCertAuth: false,
+      component: 'iqrf::UdpMessaging',
+      instance: 'UdpMessaging',
+      RemotePort: 0,
+      LocalPort: 0,
       acceptAsyncMsg: false
     };
 
     this.titleDlg = 'Add instance';
     this.operDialog = 'add';
     this.displayDlg = true;
-    */
+
   }
 
   OnDialogOK() {
     if (this.operDialog === 'edit') {
-      this.OnSave();
+      this.apiMsg.PutConfigComponentInstance(this.configName, this.instanceName, this.instance);
     } else {
-
+      this.apiMsg.PostConfigComponent(this.configName, this.instance);
     }
 
   }

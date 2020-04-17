@@ -4,6 +4,7 @@ import { HttpMsgsService } from '../../../services/http-msgs.service';
 import {MessageService} from 'primeng/api';
 import * as apiHttp from '../../../api_http';
 import * as _ from 'lodash';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-mqtt-interface',
@@ -49,21 +50,13 @@ export class MqttInterfaceComponent implements OnInit {
   Update(w: apiHttp.ConfigComponentResponse100) {
     this.cfg = _.cloneDeep(w);
     this.configName = this.cfg.configuration.name;
-
-    if (this.cfg.instances.length > 0) {
-      this.instanceName = this.cfg.instances[0].instance;
-    }
-  }
-
-  OnSave() {
-    this.apiMsg.PutConfigComponentInstance(this.configName, this.instanceName, this.cfg.instances[0]);
-
   }
 
   Saved(w: any) {
     console.log('feedback....');
     if (w === null) {
       this.msg.add({severity: 'success', summary: 'Success', detail: 'Configuration has been saved.'});
+      this.apiMsg.GetConfigComponent('iqrf::MqttMessaging');
 
     } else {
       this.msg.add({severity: 'error', summary: 'Error', detail: 'Configuration saving failed.'});
@@ -72,6 +65,8 @@ export class MqttInterfaceComponent implements OnInit {
 
   OnEdit(event: any, data: any) {
     this.instance = data;
+    this.instanceName = this.instance.instance;
+
 
     this.titleDlg = 'Edit instance';
     this.operDialog = 'edit';
@@ -80,28 +75,48 @@ export class MqttInterfaceComponent implements OnInit {
   }
 
   OnRemove(event: any, data: any) {
+    Swal.fire({
+      title: 'Remove?',
+      text: 'Do you want to remove instance \'' + data.instance + '\'?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, remove instance',
+      confirmButtonColor: 'var(--confirm-button)',
+      cancelButtonColor: 'var(--cancel-button)',
+      customClass: {
+        header: 'confirm-dlg-header',
+        title: 'confirm-dlg-title',
+        content: 'confirm-dlg-content'
+      }
 
+    }).then((result) => {
+      if (result.value) {
+        this.apiMsg.DeleteConfigComponentInstance(this.configName, data.instance);
+      }
+    });
+
+    
   }
 
   OnAdd() {
-    /*
+
     this.instance = {
       id: 0,
-      component: '',
+      component: 'iqrf::MqttMessaging',
       instance: '',
       BrokerAddr: '',
       ClientId: '',
-      Persistence: '',
-      Qos: 0,
+      Persistence: 1,
+      Qos: 1,
       TopicRequest: '',
       TopicResponse: '',
       User: '',
       Password: '',
       EnabledSSL: false,
-      KeepAliveInterval: 0,
-      ConnectTimeout: 0,
-      MinReconnect: 0,
-      MaxReconnect: 0,
+      KeepAliveInterval: 20,
+      ConnectTimeout: 5,
+      MinReconnect: 1,
+      MaxReconnect: 64,
       TrustStore: '',
       KeyStore: '',
       PrivateKey: '',
@@ -114,14 +129,15 @@ export class MqttInterfaceComponent implements OnInit {
     this.titleDlg = 'Add instance';
     this.operDialog = 'add';
     this.displayDlg = true;
-    */
+
   }
 
   OnDialogOK() {
     if (this.operDialog === 'edit') {
-      this.OnSave();
+      //this.OnSave();
+      this.apiMsg.PutConfigComponentInstance(this.configName, this.instanceName, this.instance);
     } else {
-
+      this.apiMsg.PostConfigComponent(this.configName, this.instance);
     }
 
   }

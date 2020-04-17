@@ -65,4 +65,72 @@ export class IqrfUartInterfaceComponent implements OnInit {
     }
   }
 
+  OnRaspi1Cfg() {
+    this.cfg.instances[0].IqrfInterface = '/dev/ttyAMA0';
+    this.cfg.instances[0].powerEnableGpioPin = 23;
+    this.cfg.instances[0].busEnableGpioPin = 7;
+  }
+
+  OnRaspiCfg() {
+    this.cfg.instances[0].IqrfInterface = '/dev/ttyS0';
+    this.cfg.instances[0].powerEnableGpioPin = 23;
+    this.cfg.instances[0].busEnableGpioPin = 7;
+  }
+
+  OnOrangeCfg() {
+    this.cfg.instances[0].IqrfInterface = '/dev/ttyS0';
+    this.cfg.instances[0].powerEnableGpioPin = 19;
+    this.cfg.instances[0].busEnableGpioPin = 10;
+  }
+
+  OnUnipiCfg() {
+    this.cfg.instances[0].IqrfInterface = '/dev/ttyS0';
+    this.cfg.instances[0].powerEnableGpioPin = 18;
+    this.cfg.instances[0].busEnableGpioPin = -1;
+  }
+
+  OnUpCfg() {
+    this.cfg.instances[0].IqrfInterface = '/dev/ttyS1';
+    this.cfg.instances[0].powerEnableGpioPin = 23;
+    this.cfg.instances[0].busEnableGpioPin = 7;
+  }
+
+  OnUp2Cfg() {
+    this.cfg.instances[0].IqrfInterface = '/dev/ttyS1';
+    this.cfg.instances[0].powerEnableGpioPin = 23;
+    this.cfg.instances[0].busEnableGpioPin = 7;
+  }
+
+  OnItfS0Cfg() {
+    this.cfg.instances[0].IqrfInterface = '/dev/ttyS0';
+  }
+
+  OnItfS1Cfg() {
+    this.cfg.instances[0].IqrfInterface = '/dev/ttyS1';
+  }
+
+  OnItfS2Cfg() {
+    this.cfg.instances[0].IqrfInterface = '/dev/ttyS2';
+  }
+
+  OnItfS3Cfg() {
+    this.cfg.instances[0].IqrfInterface = '/dev/ttyS3';
+  }
+
+  OnItfS4Cfg() {
+    this.cfg.instances[0].IqrfInterface = '/dev/ttyS4';
+  }
+
+  OnItfS5Cfg() {
+    this.cfg.instances[0].IqrfInterface = '/dev/ttyS5';
+  }
+
+  OnItfS6Cfg() {
+    this.cfg.instances[0].IqrfInterface = '/dev/ttyS6';
+  }
+
+  OnItfS7Cfg() {
+    this.cfg.instances[0].IqrfInterface = '/dev/ttyS7';
+  }
+
 }

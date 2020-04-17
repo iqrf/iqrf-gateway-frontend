@@ -1,12 +1,12 @@
 <h1>UDP interface</h1>
-<div *ngIf="cfg === null">
+<div *ngIf="apiMsg.configUdp === undefined">
   <p> No data loaded...</p>
 
 </div>
-<div *ngIf="!(cfg === null)">
+<div *ngIf="!(apiMsg.configUdp === undefined)">
   <p-card subheader="" styleClass="ui-card-shadow">
 
-    <p-table [columns]="cols" [value]="cfg.instances">
+    <p-table [columns]="cols" [value]="this.apiMsg.configUdp.instances">
       <ng-template pTemplate="header" let-columns>
         <tr>
           <th *ngFor="let col of columns" [pSortableColumn]="col.field">

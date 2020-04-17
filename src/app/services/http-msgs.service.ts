@@ -27,7 +27,8 @@ export class HttpMsgsService {
   public configMqMsg: apiHttp.ConfigComponentResponse100;
   public configMonitorServ: apiHttp.ConfigComponentResponse100;
   public configWsCpp: apiHttp.ConfigComponentResponse100;
-
+  public configJsCache: apiHttp.ConfigComponentResponse100;
+  
   public emitorMsgApi$: EventEmitter<any> = new EventEmitter();
   public emitorApiUpdated$: EventEmitter<any> = new EventEmitter();
   public emitorApiSaved$: EventEmitter<boolean> = new EventEmitter();
@@ -131,6 +132,11 @@ export class HttpMsgsService {
       console.log('Info: ' + JSON.stringify(this.configWsCpp, null, 1));
       this.emitorApiUpdated$.emit(this.configWsCpp);
 
+    } else if (type === '/config/iqrf::JsCache') {
+      this.configJsCache = data;
+      console.log('Info: ' + JSON.stringify(this.configJsCache, null, 1));
+      this.emitorApiUpdated$.emit(this.configJsCache);
+
     }
 
    }
@@ -192,7 +198,10 @@ export class HttpMsgsService {
 
     const headersI = { Accept: 'application/json', Authorization: 'Bearer ' + this.signIn.token};
 
-    this.http.get<any>(this.apiPath + '/config/' + component, { headers: headersI }).subscribe({
+    const component2 = encodeURIComponent(component);
+    console.log('before:' + component + '   after: ' + component2);
+
+    this.http.get<any>(this.apiPath + '/config/' + component2, { headers: headersI }).subscribe({
         next: data => {
           console.log('OK ' + JSON.stringify(data, null, 1));
           const resp = data as apiHttp.ConfigComponentResponse100;
@@ -226,6 +235,56 @@ export class HttpMsgsService {
         },
         error: error => {
           console.log('PutConfigComponentInstance Error: ' + JSON.stringify(error, null, 1));
+          this.emitorApiSaved$.emit(error);
+        }
+    });
+  }
+
+  PostConfigComponent(component: string, body: any) {
+    const self = this;
+
+    const headersI = { Accept: 'application/json', Authorization: 'Bearer ' + this.signIn.token};
+
+    console.log('path: ' + JSON.stringify(this.apiPath + '/config/' + component));
+    console.log('body: ' + JSON.stringify(body, null, 1));
+
+    // const instance2 = instance.replace(/\//g, '%2F');
+
+    //console.log('instance2: ' + instance2);
+
+    this.http.post<any>(this.apiPath + '/config/' + component, body, { headers: headersI }).subscribe({
+        next: data => {
+          console.log('PostConfigComponentInstance OK ' + JSON.stringify(data, null, 1));
+          this.emitorApiSaved$.emit(data);
+
+        },
+        error: error => {
+          console.log('PostConfigComponentInstance Error: ' + JSON.stringify(error, null, 1));
+          this.emitorApiSaved$.emit(error);
+        }
+    });
+  }
+
+  DeleteConfigComponentInstance(component: string, instanceName: string) {
+    const self = this;
+
+    const headersI = { Accept: 'application/json', Authorization: 'Bearer ' + this.signIn.token};
+
+    console.log('path: ' + JSON.stringify(this.apiPath + '/config/' + component + '/' + instanceName));
+    // console.log('body: ' + JSON.stringify(body, null, 1));
+
+    const instanceName2 = instanceName.replace(/\//g, '%2F');
+
+    // console.log('instance2: ' + instance2);
+
+    this.http.delete<any>(this.apiPath + '/config/' + component + '/' + instanceName2, { headers: headersI }).subscribe({
+        next: data => {
+          console.log('DeleteConfigComponentInstance OK ' + JSON.stringify(data, null, 1));
+          this.emitorApiSaved$.emit(data);
+
+        },
+        error: error => {
+          console.log('DeleteConfigComponentInstance Error: ' + JSON.stringify(error, null, 1));
           this.emitorApiSaved$.emit(error);
         }
     });

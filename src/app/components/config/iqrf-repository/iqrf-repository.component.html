@@ -1,24 +1,32 @@
 <h1>IQRF Repository</h1>
-<p-card subheader="" styleClass="ui-card-shadow">
-  <div class="p-grid p-dir-col">
 
-    <div class="p-col">
-      <label for="nm">Name of instance</label>
-      <input id="nm" type="text" pInputText [(ngModel)]="name">
-    </div>
+<div *ngIf="cfg === null">
+  <p> No data loaded...</p>
+</div>
+<div *ngIf="!(cfg === null) &&  (cfg.instances.length > 0)">
+  <p-card subheader="" styleClass="ui-card-shadow">
+    <div class="p-grid p-dir-col">
 
-    <div class="p-col">
-      <label for="rep">IQRF Repository URL</label>
-      <input id="rep" type="text" pInputText [(ngModel)]="repository">
-    </div>    
-   
-    <div class="p-col">
-      <label for="prog">Check period in minutes</label>
-      <input id="prog" type="number" pInputText [(ngModel)]="period">
+      <div class="p-col">
+        <label for="nm">Name of instance</label>
+        <input id="nm" type="text" pInputText [(ngModel)]="cfg.instances[0].instance">
+      </div>
+
+      <div class="p-col">
+        <label for="rep">IQRF Repository URL</label>
+        <input id="rep" type="text" pInputText [(ngModel)]="cfg.instances[0].urlRepo">
+      </div>
+
+      <div class="p-col">
+        <label for="prog">Check period in minutes</label>
+        <input id="prog" type="number" pInputText [(ngModel)]="cfg.instances[0].checkPeriodInMinutes">
+      </div>
+
     </div>
- 
-  </div>
-  <p-footer>
-    <button pButton type="button" label="Save" style="margin-right: .25em"></button>
-  </p-footer>
-</p-card>
+    <p-footer>
+      <button pButton type="button" label="Save" style="margin-right: .25em" (click)="OnSave()"></button>
+    </p-footer>
+  </p-card>
+</div>
+
+<p-toast></p-toast>

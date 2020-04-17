@@ -49,4 +49,43 @@ export class IqrfSpiInterfaceComponent implements OnInit {
     }
   }
 
+  OnRaspiCfg() {
+    this.cfg.instances[0].IqrfInterface = '/dev/spidev0.0';
+    this.cfg.instances[0].powerEnableGpioPin = 23;
+    this.cfg.instances[0].busEnableGpioPin = 7;
+    this.cfg.instances[0].pgmSwitchGpioPin = 22;
+  }
+
+  OnOrangeCfg() {
+    this.cfg.instances[0].IqrfInterface = '/dev/spidev1.0';
+    this.cfg.instances[0].powerEnableGpioPin = 19;
+    this.cfg.instances[0].busEnableGpioPin = 10;
+    this.cfg.instances[0].pgmSwitchGpioPin = 3;
+  }
+
+  OnUnipiCfg() {
+    this.cfg.instances[0].IqrfInterface = '/dev/spidev0.3';
+    this.cfg.instances[0].powerEnableGpioPin = 2;
+    this.cfg.instances[0].busEnableGpioPin = 18;
+    this.cfg.instances[0].pgmSwitchGpioPin = 19;
+  }
+
+  OnUpCfg() {
+    this.cfg.instances[0].IqrfInterface = '/dev/spidev2.0';
+    this.cfg.instances[0].powerEnableGpioPin = 23;
+    this.cfg.instances[0].busEnableGpioPin = 7;
+    this.cfg.instances[0].pgmSwitchGpioPin = 22;
+  }
+
+  OnUp2Cfg() {
+    this.cfg.instances[0].IqrfInterface = '/dev/spidev1.0';
+    this.cfg.instances[0].powerEnableGpioPin = 23;
+    this.cfg.instances[0].busEnableGpioPin = 7;
+    this.cfg.instances[0].pgmSwitchGpioPin = 22;
+  }
+
+  OnInterfacesCfg() {
+    this.cfg.instances[0].IqrfInterface = '/dev/spidev1.0';
+  }
+
 }

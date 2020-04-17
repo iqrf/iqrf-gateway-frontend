@@ -98,7 +98,7 @@ export interface ConfigComponentResponse100 {
     startlevel: number;
     [k: string]: any;
   };
-  instances:
+  instances: (
     | {
         id: number;
         component: string;
@@ -228,7 +228,23 @@ export interface ConfigComponentResponse100 {
         RemoteMqName: string;
         acceptAsyncMsg: boolean;
         [k: string]: any;
-      };
+      }
+    | {
+        id: number;
+        component: string;
+        instance: string;
+        urlRepo: string;
+        checkPeriodInMinutes: number;
+        [k: string]: any;
+      }
+    | {
+        id: number;
+        component: string;
+        instance: string;
+        WebsocketPort: string;
+        acceptOnlyLocalhost: number;
+        [k: string]: any;
+      })[];
   [k: string]: any;
 }
 /**
