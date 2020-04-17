@@ -198,10 +198,10 @@ export class HttpMsgsService {
 
     const headersI = { Accept: 'application/json', Authorization: 'Bearer ' + this.signIn.token};
 
-    const component2 = encodeURIComponent(component);
-    console.log('before:' + component + '   after: ' + component2);
+    // const component2 = encodeURIComponent(component);
+    // console.log('before:' + component + '   after: ' + component2);
 
-    this.http.get<any>(this.apiPath + '/config/' + component2, { headers: headersI }).subscribe({
+    this.http.get<any>(this.apiPath + '/config/' + component, { headers: headersI }).subscribe({
         next: data => {
           console.log('OK ' + JSON.stringify(data, null, 1));
           const resp = data as apiHttp.ConfigComponentResponse100;

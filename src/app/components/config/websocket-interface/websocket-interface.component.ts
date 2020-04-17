@@ -16,11 +16,11 @@ export class WebsocketInterfaceComponent implements OnInit {
   cols: any[];
 
   configName = '';
+  configNameCpp = '';
   instanceName = '';
-  configWsCppName = ''
+  instanceNameCpp = '';
   public instance: any = null;
-
-  public wsCppService: any; //paired websocket service...
+  public instanceCpp: any = null; //paired websocket service...
 
   // Dialog
   displayDlg = false;
@@ -52,7 +52,7 @@ export class WebsocketInterfaceComponent implements OnInit {
       this.configName = w.configuration.name;
 
     } else if (w.configuration.name === 'shape::WebsocketCppService') {
-      this.configWsCppName = w.configuration.name;
+      this.configNameCpp = w.configuration.name;
     }
 /*
     if ((this.configName !== '' && this.configWsCppName !== '')) {
@@ -81,6 +81,13 @@ export class WebsocketInterfaceComponent implements OnInit {
     this.instance = data;
     this.instanceName = this.instance.instance;
 
+    this.instanceCpp = this.GetWsCppInstance(this.instance);
+    this.instanceNameCpp = this.instanceCpp.instance;
+
+    if (this.instanceCpp === null || this.instanceNameCpp === null) {
+      return;
+    }
+
     this.titleDlg = 'Edit instance';
     this.operDialog = 'edit';
     this.displayDlg = true;
@@ -104,6 +111,12 @@ export class WebsocketInterfaceComponent implements OnInit {
 
     }).then((result) => {
       if (result.value) {
+
+        const instanceCpp = this.GetWsCppInstance(data);
+
+        if (instanceCpp !== null) {
+          this.apiMsg.DeleteConfigComponentInstance(this.configNameCpp, instanceCpp.instance);
+        }
         this.apiMsg.DeleteConfigComponentInstance(this.configName, data.instance);
       }
     });
@@ -112,13 +125,32 @@ export class WebsocketInterfaceComponent implements OnInit {
 
   OnAdd() {
 
+    const tst = Math.round((new Date()).getTime() / 1000);
+
+    this.instanceName = 'WebsocketMessaging' + tst.toString();
+    this.instanceNameCpp = 'WebsocketCppService' +  tst.toString();
+
     this.instance = {
       id: 0,
-      component: 'iqrf::MqMessaging',
-      instance: 'My New MQ instance',
-      LocalMqName: '',
-      RemoteMqName: '',
-      acceptAsyncMsg: false
+      component: 'iqrf::WebsocketMessaging',
+      instance: this.instanceName,
+      acceptAsyncMsg: false,
+      RequiredInterfaces: [
+        {
+          name: 'shape::IWebsocketService',
+          target: {
+            instance: this.instanceNameCpp
+          }
+        }
+      ]
+    };
+
+    this.instanceCpp = {
+      id: 2,
+      component: 'shape::WebsocketCppService',
+      instance: this.instanceNameCpp,
+      WebsocketPort: 111,
+      acceptOnlyLocalhost: false
     };
 
     this.titleDlg = 'Add instance';
@@ -129,8 +161,10 @@ export class WebsocketInterfaceComponent implements OnInit {
 
   OnDialogOK() {
     if (this.operDialog === 'edit') {
+      this.apiMsg.PutConfigComponentInstance(this.configNameCpp, this.instanceNameCpp, this.instanceCpp);
       this.apiMsg.PutConfigComponentInstance(this.configName, this.instanceName, this.instance);
     } else {
+      this.apiMsg.PostConfigComponent(this.configNameCpp, this.instanceCpp);
       this.apiMsg.PostConfigComponent(this.configName, this.instance);
     }
 
@@ -139,9 +173,6 @@ export class WebsocketInterfaceComponent implements OnInit {
   GetWsCppInstance(WsMsgInstance: any): any {
     if (WsMsgInstance.RequiredInterfaces.length > 0) {
       const name = WsMsgInstance.RequiredInterfaces[0].target.instance;
-
-      console.log('------> ' + name);
-
       for (const wsCpp of this.apiMsg.configWsCpp.instances) {
         if (wsCpp.instance === name) {
           return wsCpp;
@@ -175,6 +206,6 @@ export class WebsocketInterfaceComponent implements OnInit {
     }
     return false;
 
-  }  
+  }
 
 }
