@@ -324,5 +324,30 @@ export class HttpMsgsService {
     });
   }
 
+  PostCloudManager(clouds: string, body: any) {
+    const self = this;
+
+    const headersI = { Accept: 'application/json', Authorization: 'Bearer ' + this.signIn.token};
+
+    console.log('path: ' + JSON.stringify(this.apiPath + clouds));
+    console.log('body: ' + JSON.stringify(body, null, 1));
+
+    // const instance2 = instance.replace(/\//g, '%2F');
+
+    //console.log('instance2: ' + instance2);
+
+    this.http.post<any>(this.apiPath + clouds, body, { headers: headersI }).subscribe({
+        next: data => {
+          console.log('PostCloudManager OK ' + JSON.stringify(data, null, 1));
+          this.emitorApiSaved$.emit(data);
+
+        },
+        error: error => {
+          console.log('PostCloudManager Error: ' + JSON.stringify(error, null, 1));
+          this.emitorApiSaved$.emit(error);
+        }
+    });
+  }
+
 }
 

@@ -25,6 +25,17 @@ export class AwsComponent implements OnInit {
 
     this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: ''});
     */
-  }   
+  }
+
+  OnPdfGuide() {
+    window.open('https://github.com/iqrfsdk/iot-starter-kit/blob/master/install/pdf/iqrf-part3a.pdf');
+
+  }
+
+
+  OnVideoGuide() {
+    window.open('https://www.youtube.com/watch?v=Z9R2vdaw3KA&feature=youtu.be');
+
+  }
 
 }

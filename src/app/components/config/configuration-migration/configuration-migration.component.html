@@ -1,3 +1,14 @@
-<p>
-  configuration-migration works!
-</p>
+<h1>Configuration migration</h1>
+
+<p-card subheader="" styleClass="ui-card-shadow">
+  <p-tabView>
+    <p-tabPanel header="Import configuration">
+      <input type="file" icon="pi pi-plus-circle" name="configuration" accept=".zip" id="frm-configImportForm-configuration" required data-nette-rules='[{"op":":filled","msg":"Please select a ZIP archive with a configuration to import."},{"op":":fileSize","msg":"config.migration.The size of the uploaded file can be up to 2097152 bytes.","arg":2097152}]'>
+    </p-tabPanel>
+    <p-tabPanel header="Export configuration">
+      <button type="button" pButton icon="pi pi-arrow-circle-down" label="Export configuration" iconPos="left" (click)="OnExportCfg()"
+      style="margin-right: 0.5em;" class="ui-button-raised ui-button-secondary"></button>
+    </p-tabPanel>
+  </p-tabView>
+
+</p-card>

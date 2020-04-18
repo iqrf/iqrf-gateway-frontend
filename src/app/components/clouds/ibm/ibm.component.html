@@ -3,35 +3,35 @@
   <div class="p-grid p-dir-col">
     <div class="p-col">
       <button pButton type="button" label="Pdf Guide" class="ui-button-warning"
-        style="background-color: rgb(116, 170, 187)"></button>
+        style="background-color: rgb(116, 170, 187)" (click)="OnPdfGuide()"></button>
       &nbsp;
       <button pButton type="button" label="Video Guide" class="ui-button-danger"
-        style="background-color: salmon;"></button>
+        style="background-color: salmon;" (click)="OnVideoGuide()"></button>
     </div>
 
     <div class="p-col">
       <label for="orgid">Organization ID</label>
-      <input id="orgid" type="text">
+      <input id="orgid" type="text" pInputText [(ngModel)]="orgid">
     </div>
     <div class="p-col">
       <label for="devtype">Device type</label>
-      <input id="devtype" type="text" pInputText>
+      <input id="devtype" type="text" pInputText [(ngModel)]="devtype">
     </div>
     <div class="p-col">
       <label for="devid">Device ID</label>
-      <input id="devid" type="text" pInputText>
+      <input id="devid" type="text" pInputText [(ngModel)]="devid">
     </div>
     <div class="p-col">
       <label for="token">Authentication token</label>
-      <input id="token" type="text" pInputText>
+      <input id="token" type="text" pInputText [(ngModel)]="token">
     </div>
     <div class="p-col">
-      <label for="id">Command and event ID:</label>
-      <input id="id" type="text" pInputText>
+      <label for="cmdid">Command and event ID:</label>
+      <input id="cmdid" type="text" pInputText [(ngModel)]="cmdid">
     </div>
   </div>
   <p-footer>
-    <button pButton type="button" label="Save" style="margin-right: .25em"></button>
+    <button pButton type="button" label="Save" style="margin-right: .25em" (click)="OnSave()"></button>
     <button pButton type="button" label="Save and Restart" class="ui-button-secondary"></button>
   </p-footer>
 </p-card>

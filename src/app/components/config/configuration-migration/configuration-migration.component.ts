@@ -12,4 +12,8 @@ export class ConfigurationMigrationComponent implements OnInit {
   ngOnInit() {
   }
 
+  OnExportCfg() {
+    
+  }
+
 }
