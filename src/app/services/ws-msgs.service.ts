@@ -1,5 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { WsService } from '../shared/ws/services/ws.service';
+import { MqttService } from '../shared/mqtt/services/mqtt.service';
 import * as api from '../api';
 
 export interface MsgHeader {
@@ -38,7 +39,7 @@ export class WsMsgsService {
   public idTrConfig = 'trsConfig';
   public idStdMgr = 'idStdMgr';
 
-  constructor(public ws: WsService) {
+  constructor(public ws: WsService, public mqtt: MqttService) {
     this.msgIdRand = Math.floor(Math.random() * 100) + 1;
 
     // Indicates online/offline change

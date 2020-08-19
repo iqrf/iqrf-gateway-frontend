@@ -1,0 +1,85 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$id": "http://example.com/example.json",
+    "self": {
+        "vendor": "com.logimic",
+        "name": "wsConfig",
+        "format": "jsonschema",
+        "version": "1-0-0"
+    },
+    "type": "object",
+    "properties": {
+        "awsEndpoint": {
+            "type": "object",
+            "properties": {
+                "region": {
+                    "type": "string",
+                    "description": "Your aws region.",
+                    "default": "us-west-2"
+                },
+                "awsIotEndpoint": {
+                    "type": "string",
+                    "description": "awsIotEndpoint",
+                    "default": "us-west-2"
+                },
+                "accessKey": {
+                    "type": "string",
+                    "description": "Your accessKey ID.",
+                    "default": "us-west-2"
+                },
+                "secretKey": {
+                    "type": "string",
+                    "description": "Your secretKey ID.",
+                    "default": "us-west-2"
+                }
+            },
+            "required": [
+                "region",
+                "awsIotEndpoint",
+                "accessKey",
+                "secretKey"
+            ]
+        },
+        "mqttConfig": {
+            "type": "object",
+            "properties": {
+                "port": {
+                    "type": "number",
+                    "description": "Port of MQTT Websockets transfer.",
+                    "default": 443
+                },
+                "connectOptions": {
+                    "type": "object",
+                    "properties": {
+                        "useSSL": {
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "timeout": {
+                            "type": "number",
+                            "default": 6
+                        },
+                        "mqttVersion": {
+                            "type": "number",
+                            "default": 4
+                        }
+                    },
+                    "description": "Connect options for Paho.MQTT.Client connect function.",
+                    "required": [
+                        "useSSL",
+                        "timeout",
+                        "mqttVersion"
+                    ]
+                }
+            },
+            "required": [
+                "port",
+                "connectOptions"
+            ]
+        }
+    },
+    "required": [
+        "awsEndpoint",
+        "mqttConfig"
+    ]
+}

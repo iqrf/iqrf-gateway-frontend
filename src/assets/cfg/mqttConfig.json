@@ -1,0 +1,16 @@
+{
+  "awsEndpoint": {
+    "region": "us-east-1",
+    "awsIotEndpoint": "a2ime1u7mj2qog-ats.iot.us-east-1.amazonaws.com",
+    "accessKey": "xxx",
+    "secretKey": "xxx"
+  },
+  "mqttConfig": {
+    "port": 443,
+    "connectOptions": {
+      "useSSL": true,
+      "timeout": 6,
+      "mqttVersion": 4
+    }
+  }
+}

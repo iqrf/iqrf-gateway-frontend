@@ -52,7 +52,7 @@ export class WsService {
     const self = this;
 
     return new Promise(function(resolve, reject) {      
-      const path = './assets/wsConfig.json';
+      const path = './assets/cfg/wsConfig.json';
       self.http.get(path).subscribe(data => {
         self.wsCfg = data as wsConfig.WsConfigSchema100;
 

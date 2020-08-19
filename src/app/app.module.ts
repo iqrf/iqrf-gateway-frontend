@@ -10,6 +10,7 @@ import { KonvaModule } from "ng2-konva";
 
 //Shared services
 import { WsModule } from './shared/ws/ws.module';
+import { MqttModule } from './shared/mqtt/mqtt.module';
 
 //Primeng modules
 import {SidebarModule} from 'primeng/sidebar';
@@ -132,6 +133,7 @@ import { MonitoringServicesComponent } from './components/config/monitoring-serv
     FieldsetModule,
     CardModule,
     WsModule,
+    MqttModule,
     InputTextareaModule,
     FormsModule,
     ProgressSpinnerModule,
