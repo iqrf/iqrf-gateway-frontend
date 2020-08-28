@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MqttService } from './services/mqtt.service';
+import { MqttMsgService } from './services/mqtt-msg.service';
 
 
 
@@ -11,7 +11,7 @@ import { MqttService } from './services/mqtt.service';
   ],
   exports: [],
   providers: [
-    MqttService
+    MqttMsgService
   ]
 })
-export class MqttModule { }
+export class MqttMsgModule { }

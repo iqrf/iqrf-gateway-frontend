@@ -10,7 +10,7 @@ import { KonvaModule } from "ng2-konva";
 
 //Shared services
 import { WsModule } from './shared/ws/ws.module';
-import { MqttModule } from './shared/mqtt/mqtt.module';
+import { MqttMsgModule } from './shared/mqtt-msg/mqtt-msg.module';
 
 //Primeng modules
 import {SidebarModule} from 'primeng/sidebar';
@@ -36,6 +36,7 @@ import {DialogModule} from 'primeng/dialog';
 import {CodeHighlighterModule} from 'primeng/codehighlighter';
 import {TooltipModule} from 'primeng/tooltip';
 import {ProgressBarModule} from 'primeng/progressbar';
+import {RadioButtonModule} from 'primeng/radiobutton';
 
 
 import { SelectedComponentsComponent } from './components/config/selected-components/selected-components.component';
@@ -77,7 +78,7 @@ import { FieldPipe } from './field.pipe';
 import { IqrfInfoComponent } from './components/config/iqrf-info/iqrf-info.component';
 import { JsonMetadataApiComponent } from './components/config/json-metadata-api/json-metadata-api.component';
 import { MonitoringServicesComponent } from './components/config/monitoring-services/monitoring-services.component';
-
+import { CfgGeneralComponent } from './components/config/cfg-general/cfg-general.component';
 
 
 @NgModule({
@@ -119,7 +120,8 @@ import { MonitoringServicesComponent } from './components/config/monitoring-serv
     FieldPipe,
     IqrfInfoComponent,
     JsonMetadataApiComponent,
-    MonitoringServicesComponent
+    MonitoringServicesComponent,
+    CfgGeneralComponent
   ],
   imports: [
     BrowserModule,
@@ -133,7 +135,7 @@ import { MonitoringServicesComponent } from './components/config/monitoring-serv
     FieldsetModule,
     CardModule,
     WsModule,
-    MqttModule,
+    MqttMsgModule,
     InputTextareaModule,
     FormsModule,
     ProgressSpinnerModule,
@@ -154,7 +156,8 @@ import { MonitoringServicesComponent } from './components/config/monitoring-serv
     TooltipModule,
     HttpClientModule,
     ProgressBarModule,
-    DialogModule
+    DialogModule,
+    RadioButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent],

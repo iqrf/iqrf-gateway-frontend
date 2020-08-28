@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { MqttService } from './mqtt.service';
+import { MqttMsgService } from './mqtt-msg.service';
 
-describe('MqttService', () => {
+describe('MqttMsgService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: MqttService = TestBed.get(MqttService);
+    const service: MqttMsgService = TestBed.get(MqttMsgService);
     expect(service).toBeTruthy();
   });
 });

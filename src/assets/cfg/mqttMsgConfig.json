@@ -1,0 +1,20 @@
+{
+  "endpoint": {
+    "host": "mqtt.iqrf.org",
+    "path": "/mqtt",
+    "username": "mqttuser",
+    "password": "mqttpassword"
+  },
+  "topics": {
+    "req": "gateway/0242801d218e12ac/iqrf/requests",
+    "resp": "gateway/0242801d218e12ac/iqrf/responses"
+  },
+  "mqttConfig": {
+    "port": 443,
+    "connectOptions": {
+      "useSSL": true,
+      "timeout": 6,
+      "mqttVersion": 4
+    }
+  }
+}

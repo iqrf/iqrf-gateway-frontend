@@ -6,6 +6,7 @@ import { ChangeModeComponent } from './components/gateway/change-mode/change-mod
 import { ServiceControlComponent } from './components/gateway/service-control/service-control.component';
 import { PowerControlComponent } from './components/gateway/power-control/power-control.component';
 import { SelectedComponentsComponent } from './components/config/selected-components/selected-components.component';
+import { CfgGeneralComponent } from './components/config/cfg-general/cfg-general.component';
 import { IqrfSpiInterfaceComponent } from './components/config/iqrf-spi-interface/iqrf-spi-interface.component';
 import { IqrfCdcInterfaceComponent } from './components/config/iqrf-cdc-interface/iqrf-cdc-interface.component';
 import { IqrfUartInterfaceComponent } from './components/config/iqrf-uart-interface/iqrf-uart-interface.component';
@@ -44,6 +45,7 @@ const routes: Routes = [
   { path: 'gateway-logger-file', component: LoggerFileComponent },
   { path: 'gateway-service-control', component: ServiceControlComponent },
   { path: 'gateway-power-control', component: PowerControlComponent },
+  { path: 'config-cfg-general', component: CfgGeneralComponent },
   { path: 'config-selected-components', component: SelectedComponentsComponent },
   { path: 'config-iqrf-spi-interface', component: IqrfSpiInterfaceComponent },
   { path: 'config-iqrf-cdc-interface', component: IqrfCdcInterfaceComponent },

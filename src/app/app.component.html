@@ -1,45 +1,31 @@
-
 <div class="toplevel">
-<div class="p-grid sample-layout">
+  <div class="p-grid sample-layout">
     <div class="p-col-12 p-md-2">
 
-      <p-toolbar >
+      <p-toolbar>
         <div class="ui-toolbar-group-left">
-            <img src="/assets/themes/logo-big.svg" alt="Girl in a jacket">
+          <img src="/assets/themes/logo-big.svg" alt="Girl in a jacket">
         </div>
-        
-    
-    </p-toolbar>      
-      
-        <p-panelMenu [model]="items" [transitionOptions]="'300ms'" [multiple]="false"></p-panelMenu>
+      </p-toolbar>
+
+      <p-panelMenu [model]="items" [transitionOptions]="'300ms'" [multiple]="false"></p-panelMenu>
     </div>
     <div class="p-col-12 p-md-10 p-col-nogutter">
-        <div class="p-col-12 p-col-nogutter">
-            <p-toolbar>
-              <!--
-                <div class="ui-toolbar-group-left">
-                    <img src="/assets/themes/logo-big.svg" alt="Girl in a jacket">
-                </div>
-
-              -->
-                
-                <div class="ui-toolbar-group-right">
-                  <!--
-                    <button pButton type="button" icon="pi pi-search"></button>
-                    <button pButton type="button" icon="pi pi-calendar" class="ui-button-success"></button>
-                -->
-                    <button pButton type="button" icon="pi pi-times" class="ui-button-danger"></button>
-                </div>
-            </p-toolbar>
-        </div>
-        <div class="p-col-12 p-col-nogutter content">
-            <router-outlet></router-outlet>   
-        </div>
+      <div class="p-col-12 p-col-nogutter">
+        <p-toolbar>
+          <div class="ui-toolbar-group-right">
+            <button pButton type="button" icon="pi pi-times" class="ui-button-danger"></button>
+          </div>
+        </p-toolbar>
+      </div>
+      <div class="p-col-12 p-col-nogutter content">
+        <router-outlet></router-outlet>
+      </div>
     </div>
     <div class="p-col-12 p-col-nogutter">
       <!--  Footer -->
     </div>
-</div>
+  </div>
 
 </div>
 <!--

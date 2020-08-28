@@ -57,6 +57,7 @@ export class AppComponent implements OnInit {
             label: 'Configuration',
             icon: 'pi pi-fw pi-cog',
             items: [
+                {label: 'General', routerLink: ['/config-cfg-general']},
                 {label: 'Selected components', routerLink: ['/config-selected-components']},
                 {label: 'IQRF SPI interface', routerLink: ['/config-iqrf-spi-interface']},
                 {label: 'IQRF CDC interface', routerLink: ['/config-iqrf-cdc-interface']},

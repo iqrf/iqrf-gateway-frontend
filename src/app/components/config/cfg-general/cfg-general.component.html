@@ -1,0 +1,7 @@
+<p-card header="General" styleClass="ui-card-shadow">
+    <h3 class="first">Preffered messaging</h3>
+    <div class="ui-g" style="width:250px;margin-bottom:10px">
+        <div class="ui-g-12"><p-radioButton name="group1" value="ws" label="WS channel" [(ngModel)]="channel" inputId="opt1" (onClick) = "OnSelected($event)"></p-radioButton></div>
+        <div class="ui-g-12"><p-radioButton name="group1" value="mqtt" label="MQTT channel" [(ngModel)]="channel" inputId="opt2" (onClick) = "OnSelected($event)"></p-radioButton></div>
+    </div>
+</p-card>

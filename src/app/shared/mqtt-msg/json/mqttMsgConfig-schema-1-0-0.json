@@ -3,41 +3,58 @@
     "$id": "http://example.com/example.json",
     "self": {
         "vendor": "com.logimic",
-        "name": "wsConfig",
+        "name": "mqttMsqConfig",
         "format": "jsonschema",
         "version": "1-0-0"
     },
     "type": "object",
     "properties": {
-        "awsEndpoint": {
+        "endpoint": {
             "type": "object",
             "properties": {
-                "region": {
+                "host": {
                     "type": "string",
-                    "description": "Your aws region.",
-                    "default": "us-west-2"
+                    "description": "Host server wss://",
+                    "default": "mqtt.iqrf.org"
                 },
-                "awsIotEndpoint": {
+                "path": {
                     "type": "string",
-                    "description": "awsIotEndpoint",
-                    "default": "us-west-2"
+                    "description": "Usually /mqtt",
+                    "default": "/mqtt"
                 },
-                "accessKey": {
+                "username": {
                     "type": "string",
-                    "description": "Your accessKey ID.",
-                    "default": "us-west-2"
+                    "default": "username"
                 },
-                "secretKey": {
+                "password": {
                     "type": "string",
-                    "description": "Your secretKey ID.",
-                    "default": "us-west-2"
+                    "default": "password"
                 }
             },
             "required": [
-                "region",
-                "awsIotEndpoint",
-                "accessKey",
-                "secretKey"
+                "host",
+                "path",
+                "username",
+                "password"
+            ]
+        },
+        "topics": {
+            "type": "object",
+            "properties": {
+                "req": {
+                    "type": "string",
+                    "description": "Request topics...",
+                    "default": "gateway/req"
+                },
+                "resp": {
+                    "type": "string",
+                    "description": "Request topics...",
+                    "default": "gateway/resp"
+                }
+            },
+            "required": [
+                "req",
+                "resp"
             ]
         },
         "mqttConfig": {
@@ -79,7 +96,8 @@
         }
     },
     "required": [
-        "awsEndpoint",
+        "endpoint",
+        "topics",
         "mqttConfig"
     ]
 }

@@ -4,24 +4,29 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export interface MqttConfigSchema100 {
-  awsEndpoint: {
+export interface MqttMsgConfigSchema100 {
+  endpoint: {
     /**
-     * Your aws region.
+     * Host server wss://
      */
-    region: string;
+    host: string;
     /**
-     * awsIotEndpoint
+     * Usually /mqtt
      */
-    awsIotEndpoint: string;
+    path: string;
+    username: string;
+    password: string;
+    [k: string]: any;
+  };
+  topics: {
     /**
-     * Your accessKey ID.
+     * Request topics...
      */
-    accessKey: string;
+    req: string;
     /**
-     * Your secretKey ID.
+     * Request topics...
      */
-    secretKey: string;
+    resp: string;
     [k: string]: any;
   };
   mqttConfig: {

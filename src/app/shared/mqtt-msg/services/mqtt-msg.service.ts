@@ -1,16 +1,13 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
 import {Paho} from 'ng2-mqtt/mqttws31';
-import * as crypto from 'crypto-js';
-import * as moment from 'moment';
 
-import * as mqttConfig from './mqttConfig';
+import * as mqttMsgConfig from './mqttMsgConfig';
 
 @Injectable({
   providedIn: 'root'
 })
-export class MqttService {
+export class MqttMsgService {
 
   // Debug console traces
   private traces = false;
@@ -24,7 +21,7 @@ export class MqttService {
   private topics: string [] = [];
 
   // Config...
-  public mqttCfg: mqttConfig.MqttConfigSchema100;
+  public mqttCfg: mqttMsgConfig.MqttMsgConfigSchema100;
 
   // Emitors
   public emitorOnlineStatus$: EventEmitter<boolean> = new EventEmitter();
@@ -36,7 +33,7 @@ export class MqttService {
   }
 
   public init() {
-
+     
     const prom = this.loadConfig();
 
     prom.then(value => {
@@ -50,6 +47,7 @@ export class MqttService {
       console.log('ERROR [MqttService]: ' + JSON.stringify(error));
 
     });
+    
 
   }
 
@@ -57,9 +55,9 @@ export class MqttService {
     const self = this;
 
     return new Promise((resolve, reject) => {
-      const path = './assets/cfg/mqttConfig.json';
+      const path = './assets/cfg/mqttMsgConfig.json';
       self.http.get(path).subscribe(data => {
-        self.mqttCfg = data as mqttConfig.MqttConfigSchema100;
+        self.mqttCfg = data as mqttMsgConfig.MqttMsgConfigSchema100;
 
         if (self.traces) {
           console.log('----mqtt-----');
@@ -76,6 +74,7 @@ export class MqttService {
       );
     });
   }
+  
 
   public OnStart() {
     this.connectionTimer(2000);
@@ -97,7 +96,7 @@ export class MqttService {
   private statusTimer(step: number) {
 
     for (const topic of this.topics) {
-      this.sendMessage(topic, JSON.stringify({
+      this.sendMessage(JSON.stringify({
         msg: 'ping'
       }));
     }
@@ -135,8 +134,6 @@ export class MqttService {
       }
 
       this.topics = topics;
-
-      // this.statusTimer(40000);
     }
   }
 
@@ -148,36 +145,43 @@ export class MqttService {
 
 
   private mqttStart() {
+    
     if (this.mqttCfg === undefined) {
       return;
     }
+    
     console.log('MQTT starting....');
-
-    const endpoint = this.createEndpoint(
-    this.mqttCfg.awsEndpoint.region,             // Your Region
-    this.mqttCfg.awsEndpoint.awsIotEndpoint,     // Req. 'lowercamelcase'!!:
-                                                                 // 'aws iot describe-endpoint --endpoint-type iot:Data-ATS'
-    this.mqttCfg.awsEndpoint.accessKey,          // your Access Key ID
-    this.mqttCfg.awsEndpoint.secretKey);         // Secret Access Key
-
+  
     const clientId = Math.random().toString(36).substring(7);
-    this.client = new Paho.MQTT.Client(endpoint, clientId);
+    this.client = new Paho.MQTT.Client(this.mqttCfg.endpoint.host, 9001, clientId);
 
     this.client.onMessageArrived = this.onMessage.bind(this);
     this.client.onConnectionLost = this.onConnectionLost2.bind(this);
+    //this.client.onConnect = this.onConnected.bind(this);
 
+    
     const connectOptions = {
-      useSSL: true,
+      useSSL: false,
     //  keepalive: 60,
       timeout:  6,
-      mqttVersion: 4,
-      onSuccess: this.subscribe.bind(this),
-      onFailure: this.onFailure.bind(this)
+      // mqttVersion: 4,
+      onSuccess: this.onConnected.bind(this),
+      onFailure: this.onFailure.bind(this),
+      userName: this.mqttCfg.endpoint.username,
+      password: this.mqttCfg.endpoint.password,
     };
+    
 
     this.client.connect(connectOptions, 443);
 
     console.log('Subscribed...: ');
+
+  }
+
+  onConnected() {
+    console.log('MQTT connected....')
+
+    this.OnSubscribe([this.mqttCfg.topics.resp]) ;
 
   }
 
@@ -208,86 +212,33 @@ export class MqttService {
 
    onMessage(message) {
     const self = this;
-    //const mm = JSON.parse(message.payloadString);
-
-    self.emitorMessage$.emit(message);
-
+    
     // console.log('MESSAGE topic: ' + message.destinationName);
+    const mm = JSON.parse(message.payloadString);
     // console.log('MESSAGE: ' + JSON.stringify(mm));
+
+    self.emitorMessage$.emit(mm);
 
   }
 
-  sendMessage(topic, content) {
+  sendMessage( content) {
+    if (this.mqttCfg === undefined) {
+      return false;
+    }
+    
     const message = new Paho.MQTT.Message(content);
-    message.destinationName = topic;
+    message.destinationName = this.mqttCfg.topics.req;
 
     if (this.client !== null) {
       // window.alert( 'topic' + topic + 'MQTT send: ' + JSON.stringify(content));
       try {
         this.client.send(message);
+        return true;
       } catch (e) {
         this.connectionTimer(2000);
+        return false;
       }
     }
   }
 
-  public createEndpoint(regionName, awsIotEndpoint, accessKeyI, secretKeyI): string {
-    const time = moment.utc();
-    const dateStamp = time.format('YYYYMMDD');
-    const amzdate = dateStamp + 'T' + time.format('HHmmss') + 'Z';
-    const service = 'iotdevicegateway';
-    const region = regionName;
-    const secretKey = secretKeyI;
-    const accessKey = accessKeyI;
-    const algorithm = 'AWS4-HMAC-SHA256';
-    const method = 'GET';
-    const canonicalUri = '/mqtt';
-    const host = awsIotEndpoint;
-
-    const credentialScope = dateStamp + '/' + region + '/' + service + '/' + 'aws4_request';
-    let canonicalQuerystring = 'X-Amz-Algorithm=AWS4-HMAC-SHA256';
-    canonicalQuerystring += '&X-Amz-Credential=' + encodeURIComponent(accessKey + '/' + credentialScope);
-    canonicalQuerystring += '&X-Amz-Date=' + amzdate;
-    canonicalQuerystring += '&X-Amz-SignedHeaders=host';
-
-    const canonicalHeaders = 'host:' + host + '\n';
-    const payloadHash = this.sha256('');
-    const canonicalRequest = method + '\n' + canonicalUri + '\n' + canonicalQuerystring +
-     '\n' + canonicalHeaders + '\nhost\n' + payloadHash;
-
-    const stringToSign = algorithm + '\n' +  amzdate + '\n' +  credentialScope + '\n' +  this.sha256(canonicalRequest);
-    const signingKey = this.getSignatureKey(secretKey, dateStamp, region, service);
-    const signature = this.sign(signingKey, stringToSign);
-
-    canonicalQuerystring += '&X-Amz-Signature=' + signature;
-    return 'wss://' + host + canonicalUri + '?' + canonicalQuerystring;
-  }
-
-
-  public getSignatureKey2(key, date, region, service): string {
-    const kDate = crypto.HmacSHA256(date, 'AWS4' + key);
-    const kRegion = crypto.HmacSHA256(region, kDate);
-    const kService = crypto.HmacSHA256(service, kRegion);
-    const kSigning = crypto.HmacSHA256('aws4_request', kService);
-    return kSigning;
-  }
-
-
-  public sign(key, msg) {
-    const hash = crypto.HmacSHA256(msg, key);
-    return hash.toString(crypto.enc.Hex);
-  };
-
-  public sha256(msg) {
-    const hash = crypto.SHA256(msg);
-    return hash.toString(crypto.enc.Hex);
-  }
-
-  public getSignatureKey(key, dateStamp, regionName, serviceName): string {
-    const kDate = crypto.HmacSHA256(dateStamp, 'AWS4' + key);
-    const kRegion = crypto.HmacSHA256(regionName, kDate);
-    const kService = crypto.HmacSHA256(serviceName, kRegion);
-    const kSigning = crypto.HmacSHA256('aws4_request', kService);
-    return kSigning;
-  }
 }

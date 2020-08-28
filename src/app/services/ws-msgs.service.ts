@@ -1,6 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { WsService } from '../shared/ws/services/ws.service';
-import { MqttService } from '../shared/mqtt/services/mqtt.service';
+import { MqttMsgService } from '../shared/mqtt-msg/services/mqtt-msg.service';
 import * as api from '../api';
 
 export interface MsgHeader {
@@ -18,6 +18,9 @@ export class WsMsgsService {
   // Debug traces
   private traces = true;
   public status = false;
+
+  // Channel
+  public channel: 'mqtt'|'ws' = 'mqtt';
 
   // Random MsgId part
   public msgIdRand: number;
@@ -39,21 +42,25 @@ export class WsMsgsService {
   public idTrConfig = 'trsConfig';
   public idStdMgr = 'idStdMgr';
 
-  constructor(public ws: WsService, public mqtt: MqttService) {
+  constructor(public ws: WsService, public mqtt: MqttMsgService) {
     this.msgIdRand = Math.floor(Math.random() * 100) + 1;
 
-    // Indicates online/offline change
+    // Indicates WS online/offline change
     ws.emitorOnlineStatus$.subscribe( w => { this.EventWsOnlineStatus(w); });
 
-    // Incomming message
-    ws.emitorMessage$.subscribe( w => { this.parseIncomingMsg(w); });
+    // Indicates MQTT online/offline change
+    mqtt.emitorOnlineStatus$.subscribe( w => { this.EventMqttOnlineStatus(w); });    
+
+    // Incomming WS message
+    ws.emitorMessage$.subscribe( w => { this.parseIncomingMsg(w, 'ws'); });
+
+    // Incomming MQTT message
+    mqtt.emitorMessage$.subscribe( w => { this.parseIncomingMsg(w, 'mqtt'); });    
 
    }
 
   /* When WS gets online */
   public EventWsOnlineStatus(w: boolean) {
-
-
 
     if (w) {
       this.status = w;
@@ -74,6 +81,29 @@ export class WsMsgsService {
       }
     }
   }
+
+  /* When MQTT gets online */
+  public EventMqttOnlineStatus(w: boolean) {
+
+    if (w) {
+      this.status = w;
+
+      if (this.traces) {
+        console.log('--------MqttMsgsService--------');
+        console.log('>> online <<');
+        console.log('-----------------------------');
+      }
+
+    } else {
+      this.status = w;
+
+      if (this.traces) {
+        console.log('--------MqttMsgsService--------');
+        console.log('>> offline <<');
+        console.log('-----------------------------');
+      }
+    }
+  }  
 
   /* Sends with confirmation */
   public sendMessageConfirm(msg: any, sender: EventEmitter<any>): boolean {
@@ -103,11 +133,24 @@ export class WsMsgsService {
 
   /* Sends message over WS */
   public sendMessage(data: any): boolean {
-    return this.ws.sendMessage(JSON.stringify(data));
+    if (this.traces) {
+      console.log('Sending ower channel: ', this.channel);      
+    }
+
+    if (this.channel === 'ws') {
+      return this.ws.sendMessage(JSON.stringify(data));
+    } else {
+      return this.mqtt.sendMessage(JSON.stringify(data));
+    }
 
   }
 
-  private parseIncomingMsg(json: any) {
+  private parseIncomingMsg(json: any, channel: 'ws'|'mqtt') {
+
+    if (this.traces) {
+      console.log('Message channel: ', channel);
+      console.log('JSON: ', JSON.stringify(json, null, 1));
+    }
 
     // console.log('JSON: ', JSON.stringify(json, null, 1));
 
@@ -191,7 +234,7 @@ export class WsMsgsService {
       }
     };
     // Send message
-    return this.ws.sendMessage(JSON.stringify(json));
+    return this.sendMessage(json);
   }
 
   public msg_iqrfEmbedCoordinator_ClearRemotelyBondedMid(id: string): boolean {
@@ -207,7 +250,7 @@ export class WsMsgsService {
       }
     };
     // Send message
-    return this.ws.sendMessage(JSON.stringify(json));
+    return this.sendMessage(json);
   }
 
   public msg_iqrfEmbedCoordinator_RemoveBond(id: string, bondAddrI: number): boolean {
@@ -225,7 +268,7 @@ export class WsMsgsService {
       }
     };
     // Send message
-    return this.ws.sendMessage(JSON.stringify(json));
+    return this.sendMessage(json);
   }
 
   /**
@@ -246,7 +289,7 @@ export class WsMsgsService {
       }
     };
     // Send message
-    return this.ws.sendMessage(JSON.stringify(json));
+    return this.sendMessage(json);
   }
 
 
@@ -268,7 +311,7 @@ export class WsMsgsService {
     };
 
     // Send message
-    return this.ws.sendMessage(JSON.stringify(json));
+    return this.sendMessage(json);
   }
 
   public msg_iqrfEmbedCoordinator_BondedDevices(id: string): boolean {
@@ -286,7 +329,7 @@ export class WsMsgsService {
     };
 
     // Send message
-    return this.ws.sendMessage(JSON.stringify(json));
+    return this.sendMessage(json);
   }
 
   public msg_iqrfEmbedCoordinator_DiscoveredDevices(id: string) {
@@ -303,7 +346,7 @@ export class WsMsgsService {
     };
 
     // Send message
-    return this.ws.sendMessage(JSON.stringify(json));
+    return this.sendMessage(json);
   }
 
   public msg_iqrfEmbedCoordinatorDiscovery(id: string, discTxPowerI: number, discMaxNdAddrI: number) {
@@ -323,7 +366,7 @@ export class WsMsgsService {
     };
 
     // Send message
-    return this.ws.sendMessage(JSON.stringify(json));
+    return this.sendMessage(json);
   }
 
   public msg_iqrfEmbedFrc_SendSelective(id: string) {
@@ -353,7 +396,7 @@ export class WsMsgsService {
     };
 
     // Send message
-    return this.ws.sendMessage(JSON.stringify(json));
+    return this.sendMessage(json);
   }
 
   public msg_iqrfRaw(id: string, rDataIn: string) {
@@ -369,14 +412,14 @@ export class WsMsgsService {
     };
 
     // Send message
-    return this.ws.sendMessage(JSON.stringify(json));
+    return this.sendMessage(json);
   }
 
-  public msg_any(id: string, jsonIn: any) {
-    jsonIn.data.msgId = id + 'msg_any:' + this.msgIdRand.toString();
+  public msg_any(id: string, json: any) {
+    json.data.msgId = id + 'msg_any:' + this.msgIdRand.toString();
 
     // Send message
-    return this.ws.sendMessage(JSON.stringify(jsonIn));
+    return this.sendMessage(json);
   }
 
   public msg_iqmeshNetwork_AutoNetwork(id: string, wavesI: number, emptyWavesI: number) {
@@ -400,7 +443,7 @@ export class WsMsgsService {
     console.log(JSON.stringify(json, null, 1));
 
     // Send message
-    return this.ws.sendMessage(JSON.stringify(json));
+    return this.sendMessage(json);
   }
 
   public msg_iqmeshNetwork_ReadTrConf(id: string, deviceAddrI: number) {
@@ -419,7 +462,7 @@ export class WsMsgsService {
     // console.log(JSON.stringify(json));
 
     // Send message
-    return this.ws.sendMessage(JSON.stringify(json));
+    return this.sendMessage(json);
   }
 
   public msg_iqrfBinaryoutput_Enumerate(id: string, nAdrI: number) {
@@ -436,7 +479,7 @@ export class WsMsgsService {
     };
 
     // Send message
-    return this.ws.sendMessage(JSON.stringify(json));
+    return this.sendMessage(json);
   }
 
   public msg_iqrfBinaryoutput_SetOutput(id: string, nAdrI: number, binOutsI: {index: number, state: boolean} []) {
@@ -455,7 +498,7 @@ export class WsMsgsService {
     };
 
     // Send message
-    return this.ws.sendMessage(JSON.stringify(json));
+    return this.sendMessage(json);
   }
 
   public msg_iqrfLight_Enumerate(id: string, nAdrI: number) {
@@ -473,7 +516,7 @@ export class WsMsgsService {
     };
 
     // Send message
-    return this.ws.sendMessage(JSON.stringify(json));
+    return this.sendMessage(json);
   }
 
   public msg_iqrfLight_SetPower(id: string, nAdrI: number, lightsI: {index: number, power: number} []) {
@@ -492,7 +535,7 @@ export class WsMsgsService {
     };
 
     // Send message
-    return this.ws.sendMessage(JSON.stringify(json));
+    return this.sendMessage(json);
   }
 
   public msg_iqrfLight_IncrementPower(id: string, nAdrI: number, lightsI: {index: number, power: number} []) {
@@ -511,7 +554,7 @@ export class WsMsgsService {
     };
 
     // Send message
-    return this.ws.sendMessage(JSON.stringify(json));
+    return this.sendMessage(json);
   }
 
   public msg_iqrfLight_DecrementPower(id: string, nAdrI: number, lightsI: {index: number, power: number} []) {
@@ -530,7 +573,7 @@ export class WsMsgsService {
     };
 
     // Send message
-    return this.ws.sendMessage(JSON.stringify(json));
+    return this.sendMessage(json);
   }
 
   public msg_iqrfSensor_Enumerate(id: string, nAdrI: number) {
@@ -547,7 +590,7 @@ export class WsMsgsService {
     };
 
     // Send message
-    return this.ws.sendMessage(JSON.stringify(json));
+    return this.sendMessage(json);
   }
 
   public msg_iqrfSensor_ReadSensorsWithTypes(id: string, nAdrI: number, sensorIndexesI: number []) {
@@ -566,7 +609,7 @@ export class WsMsgsService {
     };
 
     // Send message
-    return this.ws.sendMessage(JSON.stringify(json));
+    return this.sendMessage(json);
   }
 
   public msg_iqrfDali_SendCommands(id: string, nAdrI: number, commandsI: number []) {
@@ -585,7 +628,7 @@ export class WsMsgsService {
     };
 
     // Send message
-    return this.ws.sendMessage(JSON.stringify(json));
+    return this.sendMessage(json);
   }  
 
 }
