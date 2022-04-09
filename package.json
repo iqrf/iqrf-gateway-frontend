@@ -29,7 +29,7 @@
     "lodash": "^4.17.15",
     "lodash.clonedeep": "^4.5.0",
     "material-icons": "^0.3.1",
-    "moment": "^2.27.0",
+    "moment": "^2.29.2",
     "ng2-konva": "^6.0.0",
     "ng2-mqtt": "^0.1.2",
     "primeflex": "^1.0.0",
